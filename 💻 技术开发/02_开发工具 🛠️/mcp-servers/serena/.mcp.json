@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "serena": {
+      "type": "stdio",
+      "command": "python3",
+      "args": [
+        "/Users/dangsiyuan/Documents/obsidion/launch x/💻 技术开发/02_开发工具/mcp-servers/serena/src/serena/cli.py",
+        "start_mcp_server"
+      ],
+      "env": {}
+    }
+  }
+}
