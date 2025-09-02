@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI组织结构图表 - 中文版</title>
+    <style>
+        :root {
+            /* Define colors based on the original image's palette */
+            --color-human: #e7f3ff;
+            --border-human: #007bff;
+            --color-ai: #eaf7ec;
+            --border-ai: #28a745;
+            --color-chief-ai: #eaf7ec;
+            --border-chief-ai: #1a7d30;
+
+            --color-dept-sales: #e3f0ff;
+            --border-dept-sales: #a0caff;
+            --color-dept-marketing: #e6ffe3;
+            --border-dept-marketing: #a3e0a0;
+            --color-dept-product: #fff5e3;
+            --border-dept-product: #ffd699;
+            --color-dept-backoffice: #f0e3ff;
+            --border-dept-backoffice: #c5a0ff;
+
+            --color-gantt-planning: #6c757d; /* Grey */
+            --color-gantt-testing: #fd7e14; /* Orange */
+            --color-gantt-refining: #20c997; /* Teal */
+
+            /* Subtle category background for Gantt */
+            --color-gantt-cat-content: rgba(223, 240, 216, 0.3); /* Lighter Green */
+            --color-gantt-cat-admin: rgba(233, 216, 240, 0.3); /* Lighter Purple */
+            --color-gantt-cat-sales: rgba(252, 248, 227, 0.3); /* Lighter Yellow */
+            --color-gantt-cat-marketing: rgba(240, 216, 228, 0.3); /* Lighter Pink */
+
+            --border-color: #dee2e6;
+            --background-light: #f8f9fa;
+            --background-white: #ffffff;
+            --text-color: #333;
+            --text-muted: #6c757d;
+
+            /* Priority Pill Colors */
+            --priority-high: #e74c3c;
+            --priority-medium: #f39c12;
+            --priority-low: #3498db;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+            margin: 0;
+            padding: 20px;
+            background-color: var(--background-light);
+            color: var(--text-color);
+            font-size: 13px; /* Base font size */
+        }
+
+        .container {
+            max-width: 1800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: var(--background-white);
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+        }
+
+        .main-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .main-header h1 {
+            color: #333;
+            margin-bottom: 5px;
+            font-size: 24px;
+             font-weight: 600;
+        }
+         .header-subtitle {
+             color: var(--text-muted);
+             font-size: 16px;
+         }
+
+        .top-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+         .top-section > div {
+             display: flex;
+             flex-direction: column;
+         }
+
+        .top-section-box {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            background-color: var(--background-white);
+             flex-grow: 1;
+        }
+
+        .top-section-box h3 {
+            margin-top: 0;
+            color: #444;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 8px;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        /* Specific styles for top boxes - List styling */
+        .list-styled ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            font-size: 0.95em;
+             flex-grow: 1;
+        }
+        .list-styled li {
+            margin-bottom: 8px;
+            line-height: 1.5;
+             display: flex;
+             align-items: flex-start;
+        }
+         .list-styled .icon-label { /* Refined icon label */
+            display: inline-block;
+            font-weight: bold;
+            margin-right: 8px;
+            color: var(--border-ai); /* Default AI color */
+             flex-shrink: 0;
+             width: 20px; /* Smaller width for icons */
+             text-align: center; /* Center icon/symbol */
+             font-size: 1.1em; /* Make icon slightly larger */
+        }
+         /* Specific Icon Colors */
+         .list-styled .icon-label.human { color: var(--border-human); }
+         .list-styled .icon-label.ai { color: var(--border-ai); }
+         .list-styled .icon-label.doc { color: #6f42c1; }
+         .list-styled .icon-label.trigger { color: #fd7e14; }
+         .list-styled .icon-label.whatsapp { color: #25d366; }
+         .list-styled .icon-label.gmail { color: #ea4335; }
+         .list-styled .icon-label.slack { color: #4a154b; }
+         .list-styled .icon-label.calendar { color: #34a853; }
+         .list-styled .icon-label.cloud { color: #17a2b8; }
+         .list-styled .icon-label.tool { color: #6c757d; }
+
+         .list-styled .item-text { /* Text part of the list item */
+             flex-grow: 1;
+         }
+
+        .legend-container ul { /* Specific legend layout */
+             display: grid;
+             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+             gap: 5px 10px;
+        }
+         .legend-container .icon-label { /* Legend icon size */
+             font-size: 1em;
+             width: auto; /* Auto width for legend icons */
+             margin-right: 5px;
+         }
+
+        /* Kanban Preview Styles - minor tweaks */
+        .kanban-board {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+             flex-grow: 1;
+        }
+        .kanban-column {
+            flex: 1;
+            background-color: #f1f3f5;
+            border-radius: 4px;
+            padding: 10px;
+            min-width: 100px;
+             display: flex;
+             flex-direction: column;
+        }
+        .kanban-column h4 {
+            font-size: 0.9em;
+            margin-bottom: 8px;
+            text-align: center;
+            margin-top: 0;
+            color: #555;
+             border-bottom: 1px dashed #ccc;
+             padding-bottom: 5px;
+        }
+        .kanban-card {
+            background-color: var(--background-white);
+            border: 1px solid var(--border-color);
+            border-radius: 3px;
+            padding: 8px;
+            margin-bottom: 6px;
+            font-size: 0.9em;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+         .kanban-icon {
+             display: inline-block;
+             margin-left: 5px;
+             font-size: 0.8em;
+             width: 16px;
+             height: 16px;
+             line-height: 16px;
+             border-radius: 50%;
+             text-align: center;
+             color: white;
+             vertical-align: middle; /* Align icon better */
+         }
+         .icon-todo { background-color: #ffc107; }
+         .icon-progress { background-color: #17a2b8; }
+         .icon-done { background-color: #28a745; }
+
+
+        /* Org Chart Styles */
+        .org-chart-container {
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #fdfdff;
+            margin-bottom: 30px;
+            overflow-x: auto;
+            text-align: center;
+        }
+
+        .org-chart-inner {
+             display: inline-block;
+             min-width: 1200px;
+             text-align: left;
+             position: relative;
+        }
+
+        .org-level {
+            display: flex;
+            justify-content: center;
+            gap: 15px; /* Slightly reduced gap */
+            margin-bottom: 10px;
+            position: relative;
+        }
+         .org-level.leadership { gap: 40px; } /* Reduced gap */
+
+        .org-node {
+            border: 1px solid var(--border-color);
+            padding: 6px 10px; /* Slightly reduced padding */
+            border-radius: 4px;
+            display: inline-block;
+            background-color: var(--background-white);
+            min-width: 120px; /* Slightly reduced min-width */
+            margin: 5px;
+            position: relative;
+            font-size: 0.85em; /* Slightly smaller font */
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            text-align: center;
+             vertical-align: top;
+        }
+        /* Node variations */
+        .org-node.human { border-color: var(--border-human); background-color: var(--color-human); }
+        .org-node.ai { border-color: var(--border-ai); background-color: var(--color-ai); }
+        .org-node.chief { border-width: 2px; border-color: var(--border-chief-ai); font-weight: bold; padding: 8px 12px; }
+        .org-node.head { font-weight: bold; padding: 8px 12px; }
+        .org-node.functional { font-size: 0.8em; min-width: 110px; padding: 5px 8px; }
+        .org-node.individual {
+            font-size: 0.75em; padding: 4px 6px;
+            background-color: var(--background-light);
+            border-style: dashed; border-color: #bbb;
+             min-width: 90px;
+        }
+
+        .tool-icons {
+            font-size: 0.8em;
+            color: var(--text-muted);
+            margin-top: 4px; /* Reduced margin */
+        }
+        .node-description {
+            font-size: 0.75em; /* Smaller description */
+            color: var(--text-muted);
+            margin-top: 4px;
+            max-width: 180px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .node-icon { /* Style for icons inside nodes */
+             font-size: 1.1em; /* Make icon slightly larger */
+             margin-left: 5px;
+             vertical-align: middle;
+        }
+
+        .departments-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+             align-items: flex-start;
+        }
+
+        .department-column {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 10px;
+            position: relative;
+             min-width: 280px;
+        }
+         .department-column.sales-admin { background-color: var(--color-dept-sales); border-left: 3px solid var(--border-dept-sales); }
+         .department-column.marketing { background-color: var(--color-dept-marketing); border-left: 3px solid var(--border-dept-marketing); }
+         .department-column.product { background-color: var(--color-dept-product); border-left: 3px solid var(--border-dept-product); }
+         .department-column.back-office { background-color: var(--color-dept-backoffice); border-left: 3px solid var(--border-dept-backoffice); }
+
+        .department-title {
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+             padding-bottom: 5px;
+             border-bottom: 1px solid rgba(0,0,0,0.1);
+             width: 100%;
+             text-align: center;
+        }
+
+        .functional-agents-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 5px;
+            margin-top: 10px;
+             margin-bottom: 10px;
+             width: 100%;
+        }
+         .agent-tools-footer {
+             margin-top: 10px;
+             padding-top: 10px;
+             border-top: 1px dashed #ccc;
+             width: 100%;
+             text-align: center;
+             font-size: 0.85em;
+             color: var(--text-muted);
+         }
+
+        /* Connectors Refined */
+        .connector-down {
+            width: 1px; /* Thinner line */
+            height: 20px;
+            background-color: #adb5bd; /* Muted color */
+            margin: 0 auto 0 auto;
+        }
+         .connector-down-short { height: 10px; width: 1px; background-color: #adb5bd; margin: 0 auto; }
+
+        .connector-horizontal-T {
+             width: 80%;
+             height: 1px; /* Thinner line */
+             background-color: #adb5bd; /* Muted color */
+             margin: 0 auto;
+             position: relative;
+        }
+         .connector-horizontal-T::before,
+         .connector-horizontal-T::after {
+             content: '';
+             position: absolute;
+             width: 1px; /* Thinner line */
+             height: 10px; /* Adjusted drop length */
+             background-color: #adb5bd; /* Muted color */
+             top: 0;
+         }
+          /* Adjust positioning for 4 departments */
+          .connector-horizontal-T::before { left: 12.5%; } /* Between 1st and 2nd */
+          .connector-horizontal-T::after { right: 12.5%; } /* Between 3rd and 4th */
+         /* Add middle connector line - requires extra element or pseudo-element trick */
+         .connector-horizontal-T::after { /* Repurpose one pseudo for middle */
+             left: 50%;
+             transform: translateX(-50%);
+             right: auto;
+         }
+         /* Add another pseudo for the last drop */
+         .connector-horizontal-T-extra-drop::before { /* Use a helper class on the container if needed */
+             content: '';
+             position: absolute;
+             width: 1px;
+             height: 10px;
+             background-color: #adb5bd;
+             top: 0;
+             right: 12.5%; /* Position for the last drop */
+         }
+
+
+         /* Information Sharing Arrows - Refined Positioning */
+         .info-sharing-arrow-container {
+             position: absolute;
+             width: 100%;
+             /* Adjust top based on department head node height + connector */
+             top: 190px; /* FINE TUNE THIS VALUE */
+             left: 0;
+             display: flex;
+             justify-content: space-between;
+             /* Adjust padding based on department widths and gaps */
+             padding: 0 14%; /* FINE TUNE THIS VALUE */
+             box-sizing: border-box;
+             z-index: 0;
+         }
+         .info-sharing-arrow {
+             position: relative;
+             flex-grow: 1;
+             margin: 0 5px; /* Reduced margin */
+             height: 1px; /* Thinner line */
+             background-color: var(--border-human);
+         }
+         .info-sharing-arrow::before, .info-sharing-arrow::after {
+             content: '';
+             position: absolute;
+             top: -4px; /* Adjust arrow vertical position */
+             width: 0;
+             height: 0;
+             border-top: 5px solid transparent;
+             border-bottom: 5px solid transparent;
+         }
+         .info-sharing-arrow::before {
+             left: -1px;
+             border-right: 6px solid var(--border-human); /* Smaller arrow */
+         }
+         .info-sharing-arrow::after {
+             right: -1px;
+             border-left: 6px solid var(--border-human); /* Smaller arrow */
+         }
+         .info-sharing-label {
+             position: absolute;
+             top: -16px; /* Position label closer */
+             left: 50%;
+             transform: translateX(-50%);
+             background-color: #fdfdff; /* Match org chart background */
+             padding: 0 5px;
+             font-size: 0.75em; /* Smaller label */
+             color: var(--border-human);
+             white-space: nowrap;
+         }
+
+
+        /* Bottom Section */
+        .bottom-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .bottom-box {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            background-color: var(--background-white);
+             display: flex;
+             flex-direction: column;
+        }
+
+        .bottom-box h3 {
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 15px;
+            color: #333;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #eee;
+            font-size: 16px;
+        }
+
+        /* First 8 Agents List Refined */
+        .first-agents-list {
+             list-style: none;
+             padding: 0;
+             margin: 0;
+             font-size: 0.9em;
+             flex-grow: 1;
+         }
+         .first-agents-list > li {
+             background-color: var(--color-ai);
+             padding: 10px;
+             border-radius: 5px;
+             margin-bottom: 10px;
+             border-left: 3px solid var(--border-ai);
+             box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+             display: flex;
+             align-items: flex-start;
+         }
+         .priority-pill {
+             display: inline-block;
+             padding: 2px 8px;
+             border-radius: 12px;
+             font-size: 0.75em;
+             color: white;
+             margin-right: 8px;
+             flex-shrink: 0;
+         }
+         .priority-high { background-color: var(--priority-high); }
+         .priority-medium { background-color: var(--priority-medium); }
+         .priority-low { background-color: var(--priority-low); }
+
+         .agent-details {
+             flex-grow: 1;
+         }
+         .first-agents-list strong { /* Icon/Trigger Refined */
+             display: block;
+             font-weight: bold;
+             margin-bottom: 5px;
+             color: var(--border-chief-ai);
+         }
+         .first-agents-list strong .icon-label { /* Style icon within strong */
+             display: inline-block;
+             width: auto; /* Reset width */
+             margin-right: 4px;
+             vertical-align: middle; /* Align icon better */
+         }
+         .first-agents-list ul {
+             list-style: disc;
+             padding-left: 20px;
+             margin-top: 8px;
+             font-size: 0.9em;
+             color: var(--text-muted);
+         }
+          .integrations-footer {
+              text-align: center;
+              margin-top: 15px;
+              font-size: 0.9em;
+              color: var(--text-muted);
+              padding-top: 10px;
+              border-top: 1px dashed #ccc;
+          }
+
+        /* Ready Agents Section - Minor Styling */
+         .ready-agents-container {
+             flex-grow: 1;
+         }
+         .ready-agent-item {
+             margin-bottom: 15px;
+             padding-bottom: 10px;
+             border-bottom: 1px dashed var(--border-color);
+         }
+         .ready-agent-item:last-child { border-bottom: none; }
+         .ready-agent-item h4 {
+             margin-top: 0;
+             margin-bottom: 8px;
+             font-size: 1.1em;
+             color: var(--border-chief-ai);
+         }
+          .ready-agent-item h4 .icon-label { /* Icon in heading */
+              font-size: 1em; /* Match surrounding text size */
+              width: auto;
+              vertical-align: middle;
+              margin-right: 4px;
+          }
+         .ready-agent-item h4 span {
+             font-weight: normal;
+             font-size: 0.85em;
+             color: var(--text-muted);
+             margin-left: 5px;
+         }
+         .ready-agent-item p {
+             font-size: 0.9em;
+             color: var(--text-muted);
+             margin: 5px 0;
+             font-style: italic;
+         }
+         .ready-agent-item p.placeholder-desc { /* Style for placeholder text */
+             color: #aaa;
+             font-style: normal;
+         }
+
+
+        /* Gantt Chart Styles - Task Bar Implementation */
+        .gantt-chart-container {
+            margin-top: 15px;
+            width: 100%;
+            overflow-x: auto;
+             flex-grow: 1;
+        }
+        .gantt-table {
+            width: 100%;
+             min-width: 900px;
+            border-collapse: collapse;
+            font-size: 0.85em;
+             border: 1px solid #ddd;
+             table-layout: fixed; /* Important for positioning bars */
+        }
+        .gantt-table th, .gantt-table td {
+            border: 1px solid #ddd;
+            padding: 0; /* Remove padding from cells */
+            text-align: center;
+            white-space: nowrap;
+             height: 30px; /* Set fixed row height */
+             position: relative; /* For positioning bars */
+        }
+        .gantt-table th { /* Header styling */
+            background-color: var(--background-light);
+            font-weight: bold;
+            padding: 8px 6px; /* Add padding back to headers */
+            font-size: 0.9em;
+            vertical-align: middle;
+        }
+        .gantt-category { /* Category cell styling */
+            text-align: left;
+            font-weight: bold;
+            width: 100px;
+            padding-left: 10px !important; /* Add padding back */
+            white-space: normal;
+            vertical-align: middle;
+            background-clip: padding-box; /* Prevent background spillover */
+        }
+        /* Category Row Colors - Applied to category cell only */
+        .gantt-table tr.content-row td.gantt-category { background-color: var(--color-gantt-cat-content); }
+        .gantt-table tr.admin-row td.gantt-category { background-color: var(--color-gantt-cat-admin); }
+        .gantt-table tr.sales-row td.gantt-category { background-color: var(--color-gantt-cat-sales); }
+        .gantt-table tr.marketing-row td.gantt-category { background-color: var(--color-gantt-cat-marketing); }
+
+        /* Remove background from task cells, style bars instead */
+        .gantt-task-cell {
+             padding: 0 !important;
+             background-color: #fff; /* Default background */
+             overflow: visible; /* Allow bars to overflow slightly if needed */
+        }
+         /* Ensure empty cells have correct height */
+         .gantt-table td {
+              height: 30px;
+         }
+
+         /* Positioned Task Bar */
+         .gantt-bar {
+             position: absolute;
+             top: 5px; /* Position within the cell */
+             bottom: 5px;
+             left: 0; /* Start from cell edge */
+             background-color: var(--color-gantt-planning); /* Default color */
+             border-radius: 3px;
+             overflow: hidden;
+             white-space: nowrap;
+             text-overflow: ellipsis;
+             font-size: 0.9em;
+             color: white;
+             padding: 0 5px; /* Padding inside the bar */
+             line-height: 20px; /* Center text vertically (30px cell height - 2*5px top/bottom) */
+             box-shadow: inset 0 -1px 1px rgba(0,0,0,0.1); /* Subtle inner shadow */
+             z-index: 1; /* Ensure bars are above cell background */
+         }
+         .gantt-bar.planning { background-color: var(--color-gantt-planning); color: white; }
+         .gantt-bar.testing { background-color: var(--color-gantt-testing); color: white; }
+         .gantt-bar.refining { background-color: var(--color-gantt-refining); color: white; }
+
+         /* Calculate width based on colspan - requires JS or manual setting */
+         /* Example: If a bar spans 2 columns (td), its width is 200% */
+         /* This CSS assumes width is set inline via JS or manually in HTML */
+
+
+        /* Placeholder Icon Styles - Use Unicode where appropriate */
+        .icon-placeholder {
+            display: inline-block;
+            font-weight: normal; /* Less bold */
+            margin-right: 5px;
+            font-size: 1em; /* Match surrounding text */
+            font-family: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; /* Ensure emoji font */
+            vertical-align: middle;
+        }
+        /* Keep color classes for specific styling */
+        .icon-human { color: var(--border-human); }
+        .icon-ai { color: var(--border-ai); }
+        .icon-doc { color: #6f42c1; }
+        .icon-trigger { color: #fd7e14; }
+        .icon-whatsapp { color: #25d366; }
+        .icon-gmail { color: #ea4335; }
+        .icon-slack { color: #4a154b; }
+        .icon-calendar { color: #34a853; }
+        .icon-cloud { color: #17a2b8; }
+        .icon-tool { color: #6c757d; }
+
+        /* Responsive Adjustments */
+        @media (max-width: 1400px) {
+             .departments-container { flex-wrap: wrap; }
+             .department-column { min-width: calc(50% - 10px); }
+             .org-chart-inner { min-width: 90%; }
+             .info-sharing-arrow-container { padding: 0 5%; top: 220px; /* Re-adjust if needed */ }
+        }
+
+        @media (max-width: 992px) {
+            .top-section, .bottom-section { grid-template-columns: 1fr 1fr; }
+            .org-chart-inner { min-width: 700px; }
+             .info-sharing-arrow-container { display: none; }
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 10px; font-size: 12px; } /* Smaller base font */
+            .container { padding: 15px; }
+            .top-section, .bottom-section { grid-template-columns: 1fr; }
+             .departments-container { flex-direction: column; gap: 15px; width: 100%; }
+             .department-column { min-width: 100%; width: 100%; }
+            .org-chart-inner { min-width: 100%; }
+             .main-header h1 { font-size: 20px; }
+             .top-section-box h3, .bottom-box h3 { font-size: 15px; }
+             .gantt-table { font-size: 0.8em; }
+             .gantt-category { width: 80px; }
+             .org-node { font-size: 0.8em; padding: 5px 8px; min-width: 100px; }
+             .org-node.functional { font-size: 0.75em; min-width: 90px; }
+             .org-node.individual { font-size: 0.7em; min-width: 80px; }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 标题部分 -->
+        <div class="main-header">
+            <h1>AI组织结构图表</h1>
+             <div class="header-subtitle">组织架构与AI协同工作流</div>
+        </div>
+
+        <!-- 顶部区域: 功能, 图例, 看板, 架构分解 -->
+        <div class="top-section">
+            <!-- 高级功能区域 -->
+            <div class="top-section-box high-level-functionality list-styled">
+                <h3>高层级功能</h3>
+                 <ul>
+                     <li><span class="icon-label ai">🧠</span> <span class="item-text">全部门知识库访问: 示例：总结特定渠道的过去活动...</span></li>
+                     <li><span class="icon-label ai">🧠</span> <span class="item-text">与部门负责人沟通: 示例：根据与团队的上次会议纪要，起草后续邮件...</span></li>
+                     <li><span class="icon-label ai">🧠</span> <span class="item-text">跨部门协作: 示例：总结我们播客中与特定细分市场相关的片段，并起草个性化邮件...</span></li>
+                     <li><span class="icon-label ai">🧠</span> <span class="item-text">通过 WhatsApp 互动: 示例：查找我昨天的会议记录，并使用 Google Meet 链接和议程更新日历...</span></li>
+                 </ul>
+            </div>
+
+            <!-- 图例区域 -->
+            <div class="top-section-box legend-container list-styled">
+                <h3>图例</h3>
+                 <ul>
+                     <li><span class="icon-label human">🧑</span> <span class="item-text">人类 / 手动</span></li>
+                     <li><span class="icon-label ai">🧠</span> <span class="item-text">AI 代理 / 负责人</span></li>
+                     <li><span class="icon-label doc">📄</span> <span class="item-text">文档 / 数据库</span></li>
+                     <li><span class="icon-label trigger">⚡️</span> <span class="item-text">触发器 / 代理</span></li>
+                     <li><span class="icon-label whatsapp">💬</span> <span class="item-text">WhatsApp</span></li>
+                     <li><span class="icon-label gmail">✉️</span> <span class="item-text">GMail</span></li>
+                     <li><span class="icon-label slack">#️⃣</span> <span class="item-text">Slack</span></li>
+                     <li><span class="icon-label calendar">📅</span> <span class="item-text">Calendar</span></li>
+                     <li><span class="icon-label cloud">☁️</span> <span class="item-text">云 / API</span></li>
+                     <li><span class="icon-label tool">🔧</span> <span class="item-text">其他工具/CRM</span></li>
+                 </ul>
+            </div>
+
+            <!-- 代理路线图看板预览 -->
+            <div class="top-section-box agent-roadmap-kanban">
+                <h3>代理路线图: 3月 - 5月 (看板)</h3>
+                <div class="kanban-board">
+                    <div class="kanban-column">
+                        <h4>待办 <span class="kanban-icon icon-todo">?</span></h4>
+                        <div class="kanban-card">任务示例 1</div>
+                        <div class="kanban-card">任务示例 2</div>
+                        <div class="kanban-card">任务示例 4</div>
+                    </div>
+                    <div class="kanban-column">
+                        <h4>进行中 <span class="kanban-icon icon-progress">~</span></h4>
+                        <div class="kanban-card">任务示例 3</div>
+                        <div class="kanban-card">任务示例 5</div>
+                    </div>
+                    <div class="kanban-column">
+                        <h4>完成 <span class="kanban-icon icon-done">✓</span></h4>
+                        <div class="kanban-card">任务示例 6</div>
+                        <div class="kanban-card">任务示例 7</div>
+                    </div>
+                </div>
+            </div>
+
+             <!-- 组织架构分解 -->
+            <div class="top-section-box org-chart-breakdown list-styled">
+                <h3>组织架构分解</h3>
+                 <ul>
+                     <li><span class="icon-label human">🧑</span> <span class="item-text">CEO / 人类负责人</span></li>
+                     <li><span class="icon-label ai">👑</span> <span class="item-text">首席AI代理</span></li>
+                     <li><span class="icon-label ai">💼</span> <span class="item-text">AI部门负责人</span></li>
+                     <li><span class="icon-label ai">⚙️</span> <span class="item-text">职能AI代理</span></li>
+                     <li><span class="icon-label ai">💡</span> <span class="item-text">独立AI代理</span></li>
+                     <li><span class="icon-label doc">📄</span> <span class="item-text">人类产出到AI/遗留流程转换</span></li>
+                 </ul>
+            </div>
+        </div>
+
+        <!-- 组织架构图主体 -->
+        <div class="org-chart-container">
+           <div class="org-chart-inner connector-horizontal-T-extra-drop"> <!-- Helper class for T connector -->
+                <!-- 顶层领导 -->
+                <div class="org-level leadership">
+                    <div class="org-node human">Frank Greeff <span class="icon-label human node-icon">🧑</span></div>
+                    <div class="org-node human">Jacques Greeff <span class="icon-label human node-icon">🧑</span></div>
+                </div>
+                <div class="connector-down"></div>
+
+                <!-- 首席代理 -->
+                <div class="org-level chief-agent-level">
+                    <div class="org-node ai chief">
+                        首席AI代理 <span class="icon-label ai node-icon">👑</span>
+                        <div class="tool-icons">
+                             <span class="icon-placeholder icon-gmail">✉️</span>
+                             <span class="icon-placeholder icon-slack">#️⃣</span>
+                             <span class="icon-placeholder icon-calendar">📅</span>
+                             <span class="icon-placeholder icon-whatsapp">💬</span>
+                        </div>
+                        <div class="node-description">跨部门工作，连接人类请求和AI代理工具</div>
+                    </div>
+                </div>
+                <div class="connector-down"></div>
+                 <div class="connector-horizontal-T"></div><!-- T Connector -->
+                 <div class="connector-down-short"></div>
+
+                 <!-- 部门 -->
+                 <div class="departments-container">
+                     <!-- Sales & Admin Column -->
+                    <div class="department-column sales-admin">
+                        <div class="department-title">销售与行政</div>
+                        <div class="org-node ai head">
+                            销售AI负责人 <span class="icon-label ai node-icon">💼</span>
+                            <div class="tool-icons"><span class="icon-placeholder icon-gmail">✉️</span> <span class="icon-placeholder icon-calendar">📅</span></div>
+                        </div>
+                         <div class="connector-down-short"></div>
+                        <div class="functional-agents-group">
+                            <div class="org-node ai functional">外联销售 <span class="icon-label ai node-icon">⚙️</span></div>
+                            <div class="org-node ai functional">入站销售 <span class="icon-label ai node-icon">⚙️</span></div>
+                            <div class="org-node ai functional">行政助理 <span class="icon-label ai node-icon">⚙️</span></div>
+                            <div class="org-node ai functional">客户支持 <span class="icon-label ai node-icon">⚙️</span></div>
+                        </div>
+                         <div class="connector-down-short"></div>
+                         <div class="org-node ai individual">独立AI代理 <span class="icon-label ai node-icon">💡</span></div>
+                         <div class="agent-tools-footer">
+                             工具: <span class="icon-placeholder icon-gmail">✉️</span> <span class="icon-placeholder icon-slack">#️⃣</span> <span class="icon-placeholder icon-tool">🔧</span> ...
+                         </div>
+                    </div>
+
+                     <!-- Marketing Column -->
+                    <div class="department-column marketing">
+                        <div class="department-title">市场营销</div>
+                         <div class="org-node ai head">
+                             市场营销AI负责人 <span class="icon-label ai node-icon">💼</span>
+                             <div class="tool-icons"><span class="icon-placeholder icon-gmail">✉️</span> <span class="icon-placeholder icon-calendar">📅</span></div>
+                         </div>
+                          <div class="connector-down-short"></div>
+                         <div class="functional-agents-group">
+                             <div class="org-node ai functional">社媒经理 <span class="icon-label ai node-icon">⚙️</span></div>
+                             <div class="org-node ai functional">SEO内容 <span class="icon-label ai node-icon">⚙️</span></div>
+                             <div class="org-node ai functional">SEM广告 <span class="icon-label ai node-icon">⚙️</span></div>
+                             <div class="org-node ai functional">合作关系 <span class="icon-label ai node-icon">⚙️</span></div>
+                         </div>
+                          <div class="connector-down-short"></div>
+                          <div class="org-node ai individual">独立AI代理 <span class="icon-label ai node-icon">💡</span></div>
+                          <div class="agent-tools-footer">
+                             工具: <span class="icon-placeholder icon-gmail">✉️</span> <span class="icon-placeholder icon-slack">#️⃣</span> <span class="icon-placeholder icon-tool">🔧</span> ...
+                         </div>
+                    </div>
+
+                    <!-- Product Column -->
+                    <div class="department-column product">
+                        <div class="department-title">产品</div>
+                         <div class="org-node ai head">
+                             产品AI负责人 <span class="icon-label ai node-icon">💼</span>
+                             <div class="tool-icons"><span class="icon-placeholder icon-gmail">✉️</span> <span class="icon-placeholder icon-calendar">📅</span></div>
+                         </div>
+                          <div class="connector-down-short"></div>
+                         <div class="functional-agents-group">
+                             <div class="org-node ai functional">外部洞察 <span class="icon-label ai node-icon">⚙️</span></div>
+                             <div class="org-node ai functional">社区健康 <span class="icon-label ai node-icon">⚙️</span></div>
+                             <div class="org-node ai functional">事件管理 <span class="icon-label ai node-icon">⚙️</span></div>
+                              <div class="org-node ai functional">物流管理 <span class="icon-label ai node-icon">⚙️</span></div>
+                             <div class="org-node ai functional">客户体验 <span class="icon-label ai node-icon">⚙️</span></div>
+                         </div>
+                          <div class="connector-down-short"></div>
+                          <div class="org-node ai individual">独立AI代理 <span class="icon-label ai node-icon">💡</span></div>
+                          <div class="agent-tools-footer">
+                             工具: <span class="icon-placeholder icon-gmail">✉️</span> <span class="icon-placeholder icon-slack">#️⃣</span> <span class="icon-placeholder icon-tool">🔧</span> ...
+                         </div>
+                    </div>
+
+                    <!-- Back Office Column -->
+                    <div class="department-column back-office">
+                        <div class="department-title">后台办公</div>
+                         <div class="org-node ai head">
+                             后台AI负责人 <span class="icon-label ai node-icon">💼</span>
+                             <div class="tool-icons"><span class="icon-placeholder icon-gmail">✉️</span> <span class="icon-placeholder icon-calendar">📅</span></div>
+                         </div>
+                         <div class="connector-down-short"></div>
+                         <div class="functional-agents-group">
+                             <div class="org-node ai functional">簿记 <span class="icon-label ai node-icon">⚙️</span></div>
+                             <div class="org-node ai functional">应付账款 <span class="icon-label ai node-icon">⚙️</span></div>
+                             <div class="org-node ai functional">工资单 <span class="icon-label ai node-icon">⚙️</span></div>
+                             <div class="org-node ai functional">人才获取 <span class="icon-label ai node-icon">⚙️</span></div>
+                              <div class="org-node ai functional">内部人力资源 <span class="icon-label ai node-icon">⚙️</span></div>
+                             <div class="org-node ai functional">社区管理 <span class="icon-label ai node-icon">⚙️</span></div>
+                         </div>
+                          <div class="connector-down-short"></div>
+                          <div class="org-node ai individual">独立AI代理 <span class="icon-label ai node-icon">💡</span></div>
+                          <div class="agent-tools-footer">
+                             工具: <span class="icon-placeholder icon-gmail">✉️</span> <span class="icon-placeholder icon-slack">#️⃣</span> <span class="icon-placeholder icon-tool">🔧</span> ...
+                         </div>
+                    </div>
+                 </div>
+
+                 <!-- Information Sharing Arrows -->
+                <div class="info-sharing-arrow-container">
+                    <div class="info-sharing-arrow"><span class="info-sharing-label">↔ 信息共享 ↔</span></div>
+                    <div class="info-sharing-arrow"><span class="info-sharing-label">↔ 信息共享 ↔</span></div>
+                    <div class="info-sharing-arrow"><span class="info-sharing-label">↔ 信息共享 ↔</span></div>
+                </div>
+           </div>
+        </div>
+
+        <!-- 底部区域: 优先代理, 就绪代理, 甘特图 -->
+        <div class="bottom-section">
+            <!-- 优先级前8个代理 -->
+            <div class="bottom-box first-8-agents">
+                 <h3>首选的8个优先代理</h3>
+                 <ul class="first-agents-list">
+                    <li>
+                        <span class="priority-pill priority-high">高</span>
+                         <div class="agent-details">
+                             <strong><span class="icon-label whatsapp">💬</span> 会议安排:</strong> "发送John Smith一个会议请求，时间是明天下午12:30..."
+                             <ul><li>需要: 日历访问, 邮件发送能力</li></ul>
+                         </div>
+                    </li>
+                     <li>
+                        <span class="priority-pill priority-high">高</span>
+                         <div class="agent-details">
+                             <strong><span class="icon-label whatsapp">💬</span> 航班查询:</strong> "给我从悉尼到墨尔本周五早上的最佳航班选择..."
+                             <ul><li>需要: 航班搜索API/工具访问</li></ul>
+                         </div>
+                    </li>
+                     <li>
+                         <span class="priority-pill priority-medium">中</span>
+                         <div class="agent-details">
+                             <strong><span class="icon-label whatsapp">💬</span> 会议取消/重排:</strong> "取消我周四下午1:00与市场部关于日历工具的会议..."
+                             <ul><li>需要: 日历访问</li></ul>
+                         </div>
+                    </li>
+                     <li>
+                         <span class="priority-pill priority-medium">中</span>
+                         <div class="agent-details">
+                             <strong><span class="icon-label whatsapp">💬</span> 当日会议查询:</strong> "我今天有哪些会议？"
+                             <ul><li>需要: 日历访问</li></ul>
+                         </div>
+                    </li>
+                     <li>
+                         <span class="priority-pill priority-medium">中</span>
+                         <div class="agent-details">
+                             <strong><span class="icon-label whatsapp">💬</span> 邮件总结与优先级:</strong> "总结我未读的邮件，并优先处理行动项。"
+                             <ul><li>需要: 邮件访问, 总结能力</li></ul>
+                         </div>
+                    </li>
+                    <li>
+                         <span class="priority-pill priority-low">低</span>
+                         <div class="agent-details">
+                             <strong><span class="icon-label trigger">⚡️</span> LinkedIn资料总结 (联系人):</strong> "为每个联系人总结LinkedIn个人资料..."
+                             <ul><li>需要: CRM访问, LinkedIn访问/API, 总结能力</li></ul>
+                         </div>
+                    </li>
+                     <li>
+                         <span class="priority-pill priority-low">低</span>
+                         <div class="agent-details">
+                             <strong><span class="icon-label whatsapp">💬</span> 报告请求:</strong> "给我发送本周新等待列表成员的报告。"
+                             <ul><li>需要: CRM/数据库访问</li></ul>
+                         </div>
+                    </li>
+                    <li>
+                         <span class="priority-pill priority-low">低</span>
+                         <div class="agent-details">
+                             <strong><span class="icon-label trigger">⚡️</span> LinkedIn资料总结 (公司):</strong> "为每个创始人总结领英公司简介..."
+                             <ul><li>需要: CRM访问, LinkedIn访问/API, 总结能力</li></ul>
+                         </div>
+                    </li>
+                </ul>
+                 <div class="integrations-footer">
+                     您的代理工具/集成:
+                     <span class="icon-placeholder icon-whatsapp">💬</span>
+                     <span class="icon-placeholder icon-gmail">✉️</span>
+                     <span class="icon-placeholder icon-calendar">📅</span>
+                     <span class="icon-placeholder icon-slack">#️⃣</span>
+                     <span class="icon-placeholder icon-tool">🔧</span> ...
+                 </div>
+            </div>
+
+            <!-- 准备就绪的代理+开发中 -->
+            <div class="bottom-box ready-agents">
+                 <h3>已就绪 + 开发中的AI代理</h3>
+                <div class="ready-agents-container">
+                    <div class="ready-agent-item">
+                        <h4><span class="icon-label ai">💡</span> Founder + 公司数据库丰富化 <span>(100% 完成)</span></h4>
+                        <p class="placeholder-desc">[图片/描述: Founder+公司数据库丰富化界面或工作流程描述]</p>
+                        <p>自动查找并丰富CRM中的公司和创始人信息。</p>
+                    </div>
+                     <div class="ready-agent-item">
+                        <h4><span class="icon-label ai">💡</span> Google Meeting 管理器 <span>(100% 完成)</span></h4>
+                         <p class="placeholder-desc">[图片/描述: Google Meeting 管理器界面或工作流程描述]</p>
+                         <p>管理Google Meet会议，如记录、总结、行动项跟踪。</p>
+                    </div>
+                     <div class="ready-agent-item">
+                        <h4><span class="icon-label ai">💡</span> 日历管理器 <span>(90% 完成)</span></h4>
+                         <p class="placeholder-desc">[图片/描述: 日历管理器界面或工作流程描述]</p>
+                         <p>智能安排、协调和管理日历事件。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 构建AI代理路线图 (甘特图) -->
+            <div class="bottom-box gantt-chart-box">
+                 <h3>AI代理开发路线图</h3>
+                <div class="gantt-chart-container">
+                    <table class="gantt-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 100px;"></th> <!-- Fixed width category header -->
+                                <th>3月3-7</th>
+                                <th>3月10-14</th>
+                                <th>3月17-21</th>
+                                <th>3月24-28</th>
+                                <th>4月1-4</th>
+                                <th>4月7-11</th>
+                                <th>4月14-18</th>
+                                <th>4月21-25</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Content Rows -->
+                            <tr class="content-row">
+                                <td class="gantt-category">内容</td>
+                                <!-- Task Bar Example: Spans 2 columns, offset 0 -->
+                                <td colspan="2">
+                                    <div class="gantt-bar planning" style="width: 200%; left: 0;">规划阶段: 短格式</div>
+                                </td>
+                                <!-- Task Bar Example: Spans 2 columns, offset 2 -->
+                                <td colspan="2">
+                                     <div class="gantt-bar testing" style="width: 200%; left: 0%;">测试中: 短格式</div>
+                                </td>
+                                <!-- Task Bar Example: Spans 4 columns, offset 4 -->
+                                <td colspan="4">
+                                     <div class="gantt-bar refining" style="width: 400%; left: 0%;">测试与优化阶段</div>
+                                </td>
+                            </tr>
+                             <tr class="content-row">
+                                <td class="gantt-category">内容调度</td>
+                                 <td colspan="3">
+                                      <div class="gantt-bar planning" style="width: 300%; left: 0%;">规划阶段: 内容调度</div>
+                                 </td>
+                                <td colspan="2">
+                                    <div class="gantt-bar testing" style="width: 200%; left: 0%;">测试中: (20%)</div>
+                                </td>
+                                <td colspan="3">
+                                     <div class="gantt-bar refining" style="width: 300%; left: 0%;">测试与优化阶段</div>
+                                </td>
+                            </tr>
+                             <!-- Admin Rows -->
+                             <tr class="admin-row">
+                                <td class="gantt-category">行政</td>
+                                <td colspan="1">
+                                    <div class="gantt-bar planning" style="width: 100%; left: 0%;">规划: 日历</div>
+                                </td>
+                                <td colspan="2">
+                                    <div class="gantt-bar testing" style="width: 200%; left: 0%;">测试中: 日历 (90%)</div>
+                                </td>
+                                 <td colspan="5">
+                                     <div class="gantt-bar refining" style="width: 500%; left: 0%;">测试与优化阶段</div>
+                                 </td>
+                             </tr>
+                              <tr class="admin-row">
+                                <td class="gantt-category">旅行/住宿</td>
+                                 <td colspan="2">
+                                     <div class="gantt-bar planning" style="width: 200%; left: 0%;">规划阶段</div>
+                                 </td>
+                                 <td colspan="2">
+                                     <div class="gantt-bar testing" style="width: 200%; left: 0%;">测试中: (10%)</div>
+                                 </td>
+                                 <td colspan="4">
+                                      <div class="gantt-bar refining" style="width: 400%; left: 0%;">测试与优化阶段</div>
+                                 </td>
+                              </tr>
+                               <!-- Sales Rows -->
+                              <tr class="sales-row">
+                                <td class="gantt-category">销售</td>
+                                  <td colspan="1">
+                                       <div class="gantt-bar planning" style="width: 100%; left: 0%;">规划: 入站</div>
+                                  </td>
+                                <td colspan="2">
+                                    <div class="gantt-bar testing" style="width: 200%; left: 0%;">测试中: 入站代理</div>
+                                </td>
+                                 <td colspan="5">
+                                      <div class="gantt-bar refining" style="width: 500%; left: 0%;">测试与优化阶段</div>
+                                 </td>
+                              </tr>
+                               <tr class="sales-row">
+                                <td class="gantt-category">潜在客户</td>
+                                   <td colspan="2">
+                                       <div class="gantt-bar planning" style="width: 200%; left: 0%;">规划阶段</div>
+                                   </td>
+                                   <td colspan="1">
+                                        <div class="gantt-bar testing" style="width: 100%; left: 0%;">测试中: 优先级 (50%)</div>
+                                   </td>
+                                   <td colspan="5">
+                                        <div class="gantt-bar refining" style="width: 500%; left: 0%;">测试与优化阶段</div>
+                                   </td>
+                               </tr>
+                                <tr class="sales-row">
+                                <td class="gantt-category">外联销售</td>
+                                    <td colspan="3">
+                                        <div class="gantt-bar planning" style="width: 300%; left: 0%;">规划阶段</div>
+                                    </td>
+                                    <td colspan="1">
+                                         <div class="gantt-bar testing" style="width: 100%; left: 0%;">测试中: (25%)</div>
+                                    </td>
+                                    <td colspan="4">
+                                         <div class="gantt-bar refining" style="width: 400%; left: 0%;">测试与优化阶段</div>
+                                    </td>
+                                </tr>
+                                <!-- Marketing Rows -->
+                                <tr class="marketing-row">
+                                    <td class="gantt-category">市场</td>
+                                    <td colspan="4">
+                                        <div class="gantt-bar planning" style="width: 400%; left: 0%;">规划: 广告文案</div>
+                                    </td>
+                                    <td colspan="1">
+                                         <div class="gantt-bar testing" style="width: 100%; left: 0%;">测试中: (10%)</div>
+                                    </td>
+                                    <td colspan="3">
+                                         <div class="gantt-bar refining" style="width: 300%; left: 0%;">测试与优化阶段</div>
+                                    </td>
+                                </tr>
+                                 <tr class="marketing-row">
+                                    <td class="gantt-category">广告效果</td>
+                                    <td colspan="5">
+                                        <div class="gantt-bar planning" style="width: 500%; left: 0%;">规划阶段</div>
+                                    </td>
+                                    <td colspan="1">
+                                        <div class="gantt-bar testing" style="width: 100%; left: 0%;">测试中: (10%)</div>
+                                    </td>
+                                    <td colspan="2">
+                                        <div class="gantt-bar refining" style="width: 200%; left: 0%;">测试与优化阶段</div>
+                                    </td>
+                                </tr>
+                                 <tr class="marketing-row">
+                                    <td class="gantt-category">广告趋势</td>
+                                    <td colspan="6">
+                                        <div class="gantt-bar planning" style="width: 600%; left: 0%;">规划阶段</div>
+                                    </td>
+                                    <td colspan="1">
+                                         <div class="gantt-bar testing" style="width: 100%; left: 0%;">测试中: (10%)</div>
+                                    </td>
+                                    <td colspan="1">
+                                        <div class="gantt-bar refining" style="width: 100%; left: 0%;">测试与优化</div>
+                                    </td>
+                                </tr>
+                        </tbody>
+                    </table>
+                </div>
+                 <div style="text-align: center; margin-top: 15px; font-size: 0.9em; color: var(--text-muted);">
+                     <span style="display: inline-block; width: 10px; height: 10px; background-color: var(--color-gantt-planning); border-radius: 2px; margin-right: 5px; vertical-align: middle;"></span>规划
+                     <span style="display: inline-block; width: 10px; height: 10px; background-color: var(--color-gantt-testing); border-radius: 2px; margin: 0 5px 0 15px; vertical-align: middle;"></span>测试中
+                     <span style="display: inline-block; width: 10px; height: 10px; background-color: var(--color-gantt-refining); border-radius: 2px; margin: 0 5px 0 15px; vertical-align: middle;"></span>测试与优化
+                 </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

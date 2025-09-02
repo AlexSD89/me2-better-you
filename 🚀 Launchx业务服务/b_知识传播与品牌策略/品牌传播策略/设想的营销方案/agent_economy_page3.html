@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent经济体 - 人机协作新模式</title>
+    <style>
+        /* 复用前两页的基础样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 20px;
+        }
+        
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 40px;
+            max-width: 800px;
+            width: 100%;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            margin: 0 auto;
+        }
+        
+        .page-number {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 16px;
+            font-weight: 500;
+            color: white;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 4px 10px;
+            border-radius: 12px;
+        }
+        
+        .logo-text {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 18px;
+            font-weight: 700;
+            color: white;
+            letter-spacing: 1px;
+        }
+        
+        .logo-text span {
+            color: #ff6b6b;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .title {
+            font-size: 48px;
+            font-weight: 700;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 16px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 20px;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+        
+        .roles-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin: 40px 0;
+        }
+        
+        .role {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .role:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .role-title {
+            color: white;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .role-title::before {
+            content: '👤';
+            margin-right: 8px;
+        }
+        
+        .role-desc {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .metric {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .metric-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: #4ecdc4;
+            margin-bottom: 8px;
+        }
+        
+        .metric-label {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .key-insight {
+            background: rgba(255, 255, 255, 0.1);
+            border-left: 4px solid #4ecdc4;
+            border-radius: 8px;
+            padding: 24px;
+            margin: 30px 0;
+            position: relative;
+        }
+        
+        .key-insight::before {
+            content: '💡';
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 8px;
+            border-radius: 50%;
+            font-size: 16px;
+        }
+        
+        .insight-text {
+            color: white;
+            font-size: 16px;
+            line-height: 1.6;
+            font-weight: 500;
+            margin-top: 10px;
+        }
+        
+        .source {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .source-text {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+            font-style: italic;
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        
+        .pagination-dots {
+            display: flex;
+            gap: 6px;
+        }
+        
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .dot.active {
+            background: #ff6b6b;
+            width: 20px;
+            border-radius: 4px;
+        }
+        
+        @media (max-width: 768px) {
+            .roles-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .metrics {
+                grid-template-columns: 1fr;
+            }
+            
+            .title {
+                font-size: 36px;
+            }
+            
+            .container {
+                padding: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="page-number">3/3</div>
+        
+        <div class="logo-text">Launch<span>X</span></div>
+        
+        <div class="header">
+            <h1 class="title">人机协作新模式</h1>
+            <p class="subtitle">重新定义人类角色</p>
+        </div>
+        
+        <div class="roles-grid">
+            <div class="role">
+                <h3 class="role-title">评估边界</h3>
+                <p class="role-desc">确定AI系统的能力范围和限制，设定合适的应用场景</p>
+            </div>
+            <div class="role">
+                <h3 class="role-title">任务分配</h3>
+                <p class="role-desc">根据任务特性和风险程度，合理分配人机职责</p>
+            </div>
+            <div class="role">
+                <h3 class="role-title">高风险产出</h3>
+                <p class="role-desc">处理关键决策和高风险场景的最终判断</p>
+            </div>
+            <div class="role">
+                <h3 class="role-title">创意指导</h3>
+                <p class="role-desc">提供创意方向和战略指引，引导AI发挥创造力</p>
+            </div>
+        </div>
+        
+        <div class="metrics">
+            <div class="metric">
+                <div class="metric-value">100%</div>
+                <div class="metric-label">人机协作</div>
+            </div>
+            <div class="metric">
+                <div class="metric-value">∞X</div>
+                <div class="metric-label">杠杆效应</div>
+            </div>
+            <div class="metric">
+                <div class="metric-value">↗</div>
+                <div class="metric-label">战略导向</div>
+            </div>
+        </div>
+        
+        <div class="key-insight">
+            <p class="insight-text">
+                <strong>时代机遇：</strong>掌握概率性思维和Agent管理能力的人将成为时代赢家。
+            </p>
+        </div>
+        
+        <div class="source">
+            <p class="source-text">来源：红杉美国 Konstantine Buhler | 2025 AI Ascent峰会</p>
+        </div>
+        
+        <div class="pagination">
+            <div class="pagination-dots">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot active"></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

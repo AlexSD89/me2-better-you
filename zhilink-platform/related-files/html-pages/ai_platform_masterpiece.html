@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zhilink Platform - The Masterpiece</title>
+    <style>
+        :root {
+            --bg-main: #0F172A;
+            --bg-secondary: #1E293B;
+            --accent-1: #3B82F6; /* V5's core blue */
+            --accent-2: #22D3EE;
+            --accent-3: #F97316;
+            --card-bg: rgba(30, 41, 59, 0.6);
+            --glass-blur: 8px;
+            --font-main: "Inter", "Noto Sans SC", sans-serif;
+            --text-primary: #E1E7EF;
+            --text-secondary: #7D899A;
+            --status-green: #238636;
+            --status-yellow: #D29922;
+            --status-gray: #484F58;
+        }
+        @keyframes pulse-yellow { 50% { box-shadow: 0 0 8px var(--status-yellow); } }
+        @keyframes data-flow-animation { from { transform: translateX(-100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        @keyframes card-fade-in { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes modal-fade-in { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+
+        body { background-color: var(--bg-main); color: var(--text-primary); font-family: var(--font-main); margin: 0; padding: 1rem; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        .main-container {
+            display: grid;
+            grid-template-columns: 1fr 3fr 6fr; /* The 1:3:6 Golden Ratio */
+            gap: 1rem;
+            width: 100%;
+            max-width: 1800px;
+            height: 90vh;
+            background: var(--bg-secondary);
+            border-radius: 1rem;
+            padding: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .panel { background: var(--card-bg); backdrop-filter: blur(var(--glass-blur)); border-radius: 0.75rem; padding: 1.5rem; border: 1px solid rgba(255, 255, 255, 0.1); display: flex; flex-direction: column; overflow: hidden; }
+        .panel-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 1rem; flex-shrink: 0; }
+
+        /* Far Left Panel: HUD Status Center */
+        .hud-panel { padding: 1.5rem 1rem; }
+        .hud-title { font-size: 1rem; font-weight: 600; margin-bottom: 1.5rem; text-align: center; }
+        .status-center { list-style: none; padding: 0; position: relative; }
+        .status-center::before { content: ''; position: absolute; top: 0.5rem; bottom: 0.5rem; left: 4px; width: 2px; background: rgba(255, 255, 255, 0.1); z-index: 0; }
+        .status-item { display: flex; align-items: flex-start; margin-bottom: 1.5rem; position: relative; }
+        .status-light { width: 10px; height: 10px; border-radius: 50%; margin-right: 0.75rem; margin-top: 0.375rem; flex-shrink: 0; z-index: 1; border: 1px solid rgba(0,0,0,0.5); }
+        .status-light.green { background-color: var(--status-green); box-shadow: 0 0 5px var(--status-green); }
+        .status-light.yellow { background-color: var(--status-yellow); animation: pulse-yellow 2s infinite; }
+        .status-light.gray { background-color: var(--status-gray); }
+        .status-details { }
+        .status-title { font-size: 0.9rem; font-weight: 500; margin-bottom: 0.25rem; }
+        .status-agent { font-size: 0.75rem; color: var(--text-secondary); }
+        .status-agent-name { font-weight: 500; color: var(--text-primary); }
+
+        /* Center Panel: Chat */
+        .chat-panel { padding-top: 0; }
+        .chat-header { padding: 1.5rem; margin: -1.5rem -1.5rem 1.5rem -1.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .chat-body { flex-grow: 1; display: flex; flex-direction: column; overflow-y: auto; padding-right: 1rem; margin-right:-1rem; }
+        .chat-bubble { padding: 0.75rem 1.25rem; border-radius: 1rem; margin-bottom: 1rem; max-width: 85%; line-height: 1.6; }
+        .ai-bubble { background-color: rgba(0,0,0,0.2); border-top-left-radius: 0.25rem; align-self: flex-start; }
+        .user-bubble { background-color: var(--accent-1); color: white; border-top-right-radius: 0.25rem; align-self: flex-end; }
+        .system-bubble { border: 1px dashed rgba(255,255,255,0.2); background: transparent; font-style: italic; color: var(--text-secondary); }
+        .bubble-chip-container { display: flex; flex-wrap: wrap; gap: 0.5rem; padding-left: 0.5rem; margin-top: -0.5rem; margin-bottom: 1rem; }
+        .bubble-chip { background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: var(--accent-1); border-radius: 99px; padding: 0.375rem 1rem; font-size: 0.875rem; cursor: pointer; transition: all 0.2s ease; }
+        .bubble-chip:hover { background: var(--accent-1); color: white; transform: scale(1.05); }
+        .comparison-table { width: 100%; border-collapse: collapse; margin-top: 0.5rem; }
+        .comparison-table th, .comparison-table td { padding: 0.75rem; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .comparison-table th { color: var(--text-secondary); }
+
+        /* Right Panel: Canvas */
+        .canvas-panel { position: relative; }
+        .data-flow-effect { position: absolute; top: 50%; left: 0; width: 100%; height: 100%; background: linear-gradient(90deg, rgba(59, 130, 246, 0.2), transparent); opacity: 0; animation: data-flow-animation 1.5s ease-out forwards; z-index: 1; }
+        .customer-insight-header { background: rgba(0,0,0,0.2); padding: 0.75rem 1.5rem; margin: -1.5rem -1.5rem 1.5rem -1.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); text-align: center; font-size: 0.9rem; }
+        .insight-label { color: var(--accent-2); font-weight: 500; }
+        .card-container { overflow-y: auto; }
+        .project-card { background: rgba(255,255,255,0.05); border-radius: 0.75rem; padding: 1.5rem; border: 1px solid transparent; transition: all 0.3s ease; margin-bottom: 1rem; animation: card-fade-in 0.5s ease-out forwards; opacity: 0; }
+        .project-card:nth-child(1) { animation-delay: 0.5s; }
+        .project-card:nth-child(2) { animation-delay: 0.7s; }
+        .project-card:hover { transform: translateY(-5px); border-color: var(--accent-1); }
+        .card-category { font-size: 0.75rem; font-weight: 500; margin-bottom: 0.75rem; color: var(--accent-2); }
+        .card-title { font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem; }
+        .card-desc { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 1rem; }
+        .card-actions { display: flex; justify-content: flex-end; gap: 0.5rem; }
+        .card-button { background: rgba(255,255,255,0.1); border: none; color: var(--text-primary); padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; gap: 0.5rem; }
+        .card-button:hover { background-color: var(--accent-1); }
+
+        /* Global Command Palette */
+        .cmd-k-palette { display: none; /* Toggle with JS */ position: fixed; top: 25%; left: 50%; transform: translateX(-50%); width: 100%; max-width: 600px; background: var(--card-bg); backdrop-filter: blur(var(--glass-blur)); border-radius: 0.75rem; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 10px 50px rgba(0,0,0,0.3); z-index: 999; animation: modal-fade-in 0.3s ease-out; }
+        .cmd-k-input { width: 100%; background: transparent; border: none; color: var(--text-primary); font-size: 1.25rem; padding: 1.5rem; outline: none; }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <!-- Far Left Panel (HUD Status Center) -->
+        <div class="panel hud-panel">
+            <div class="hud-title">AI专家团队</div>
+            <ul class="status-center">
+                <li class="status-item"><div class="status-light green"></div><div class="status-details"><div class="status-title">需求探索</div><div class="status-agent"><span class="status-agent-name">David</span> - 完成</div></div></li>
+                <li class="status-item"><div class="status-light yellow"></div><div class="status-details"><div class="status-title">方案推荐</div><div class="status-agent"><span class="status-agent-name">Alex</span> - 执行中</div></div></li>
+                <li class="status-item"><div class="status-light gray"></div><div class="status-details"><div class="status-title">合约报价</div><div class="status-agent"><span class="status-agent-name">Emma</span> - 待命</div></div></li>
+            </ul>
+        </div>
+
+        <!-- Center Panel (Chat) -->
+        <div class="panel chat-panel">
+            <div class="chat-header"><div class="panel-title" style="margin-bottom:0;">AI战略顾问 David</div></div>
+            <div class="chat-body">
+                <div class="ai-bubble"><p>您好，我是您的 AI 战略顾问 David，请描述您的需求...</p></div>
+                <div class="user-bubble"><p>我希望提升SaaS产品的销售转化率。</p></div>
+                <div class="ai-bubble system-bubble"><p>收到指令。我的计划是：1. 分析您的`Spec`；2. 从数据库检索初步方案；3. 结合您的偏好进行排序。</p></div>
+                <div class="ai-bubble">
+                    <p>正在为您生成结构化对比...</p>
+                    <table class="comparison-table">
+                        <thead><tr><th>维度</th><th>方案A</th><th>方案B</th></tr></thead>
+                        <tbody>
+                            <tr><td>预估ROI</td><td>+35%</td><td>+28%</td></tr>
+                            <tr><td>集成复杂度</td><td>中</td><td>低</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="bubble-chip-container"><button class="bubble-chip">就选方案A了</button></div>
+            </div>
+        </div>
+
+        <!-- Right Panel (Canvas) -->
+        <div class="panel canvas-panel">
+            <div class="customer-insight-header">基于您的偏好: <span class="insight-label">成本敏感</span> · <span class="insight-label">销售增强</span></div>
+            <div class="card-container">
+                <div class="project-card">
+                    <div class="card-category">解决方案</div>
+                    <div class="card-title">智能引导与用户画像引擎</div>
+                    <p class="card-desc">点击查看，这里包含详细成本、ROI 与案例信息。</p>
+                    <div class="card-actions"><button class="card-button">👎</button><button class="card-button">❤️</button><button class="card-button">➕ 对比</button></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Global Command Palette (hidden by default) -->
+    <div class="cmd-k-palette">
+        <input type="text" class="cmd-k-input" placeholder="下达全局指令...">
+    </div>
+</body>
+</html>

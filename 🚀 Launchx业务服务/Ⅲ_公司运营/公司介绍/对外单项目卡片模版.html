@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pally - AI 驱动的智能关系管理</title>
+    <style>
+        :root {
+            --card-bg: rgba(255, 255, 255, 0.08);
+            --card-border: rgba(255, 255, 255, 0.25);
+            --text-primary: #f0f0f5;
+            --text-secondary: #a9a9b9;
+            --highlight-accent: #8A63D2;
+            --glow-color: rgba(138, 99, 210, 0.5);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', sans-serif;
+            background-color: #0c0a09;
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 50px 20px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .aurora-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        .aurora-background .shape {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(150px);
+            opacity: 0.4;
+        }
+        .aurora-background .shape1 {
+            width: 400px;
+            height: 400px;
+            background: #4c51bf;
+            top: 10%;
+            left: 20%;
+            animation: move1 15s infinite alternate;
+        }
+        .aurora-background .shape2 {
+            width: 350px;
+            height: 350px;
+            background: #667eea;
+            bottom: 5%;
+            right: 15%;
+            animation: move2 18s infinite alternate;
+        }
+        .aurora-background .shape3 {
+            width: 250px;
+            height: 250px;
+            background: var(--highlight-accent);
+            top: 50%;
+            left: 50%;
+            animation: move3 20s infinite alternate;
+        }
+
+        @keyframes move1 { from { transform: translate(0, 0) scale(1); } to { transform: translate(50px, 100px) scale(1.2); } }
+        @keyframes move2 { from { transform: translate(0, 0) scale(1); } to { transform: translate(-80px, -50px) scale(1.1); } }
+        @keyframes move3 { from { transform: translate(-50%, -50%) scale(1); } to { transform: translate(-40%, -60%) scale(1.3); } }
+
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-auto-rows: minmax(100px, auto);
+            gap: 20px;
+            width: 100%;
+            max-width: 900px;
+        }
+
+        .bento-item {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 25px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        .bento-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15), 0 0 20px var(--glow-color);
+        }
+
+        .item-2x2 { grid-column: span 2; grid-row: span 2; }
+        .item-2x1 { grid-column: span 2; grid-row: span 1; }
+        .item-4x2 { grid-column: span 4; grid-row: span 2; }
+
+
+        .header-card {
+            justify-content: space-between;
+        }
+        .header-card .main-title { font-size: 48px; font-weight: 800; line-height: 1.1; text-shadow: 0 0 15px rgba(255,255,255,0.1); }
+        .header-card .subtitle { font-size: 18px; color: var(--text-secondary); }
+
+        .differentiator-card {
+            justify-content: center;
+            gap: 15px;
+        }
+        .differentiator-card .icon { font-size: 28px; line-height: 1; }
+        .differentiator-card .text-content .title { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+        .differentiator-card .text-content .description { font-size: 14px; color: var(--text-secondary); }
+
+        .feature-card {
+            padding: 0;
+            overflow: hidden;
+            position: relative;
+        }
+        .feature-card .text-wrapper {
+            padding: 25px;
+            z-index: 2;
+        }
+        .feature-card .feature-title { 
+            font-size: 24px; 
+            font-weight: 700; 
+            margin-bottom: 10px;
+            color: var(--highlight-accent);
+        }
+        .feature-card .feature-description { font-size: 15px; color: var(--text-secondary); }
+        .feature-card .image-wrapper {
+            position: absolute;
+            bottom: -20px;
+            right: -20px;
+            width: 70%;
+            opacity: 0.2;
+            transition: all 0.4s ease;
+        }
+        .feature-card:hover .image-wrapper {
+            opacity: 0.4;
+            transform: scale(1.1) rotate(-5deg);
+        }
+        .feature-card .image-wrapper img {
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .bento-grid { grid-template-columns: 1fr; }
+            .bento-item { grid-column: 1 / -1 !important; }
+            .header-card .main-title { font-size: 36px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="aurora-background">
+        <div class="shape shape1"></div>
+        <div class="shape shape2"></div>
+        <div class="shape shape3"></div>
+    </div>
+
+    <div class="bento-grid">
+        <div class="bento-item item-2x2 header-card">
+            <div>
+                <h1 class="main-title">Pally</h1>
+                <p class="subtitle">利用AI管理加强你社交圈子中的联系人</p>
+            </div>
+            <p style="font-size: 14px; color: var(--text-secondary);">
+                Pally是一款AI关系管理平台，旨在帮助用户监控、培养和深化与各大社交平台上重要联系人的关系。无论是商务伙伴还是亲朋好友，都能更有效地维护和加强。
+            </p>
+        </div>
+        
+        <div class="bento-item item-2x1 differentiator-card">
+            <div class="icon">🧠</div>
+            <div class="text-content">
+                <div class="title">AI 智能洞察</div>
+                <div class="description">提供可执行的关系维护建议。</div>
+            </div>
+        </div>
+
+        <div class="bento-item item-2x1 differentiator-card">
+            <div class="icon">🌐</div>
+            <div class="text-content">
+                <div class="title">全平台聚合视图</div>
+                <div class="description">一站式汇集所有社交网络信息。</div>
+            </div>
+        </div>
+        
+        <div class="bento-item item-4x2 feature-card">
+            <div class="text-wrapper">
+                <h3 class="feature-title">人工智能关系管理</h3>
+                <p class="feature-description">你所有的朋友，来自你的所有社交。<br>Pally 帮助您跟踪、搜索并与最重要的人建立关系。</p>
+            </div>
+            <div class="image-wrapper">
+                <img src="https://placehold.co/600x400/FFFFFF/000000?text=AI-Generated+Meeting+Brief" alt="人工智能关系管理 UI 截图">
+            </div>
+        </div>
+
+        <div class="bento-item item-4x2 feature-card">
+             <div class="text-wrapper">
+                <h3 class="feature-title">连接每个平台</h3>
+                <p class="feature-description">全面了解你的网络以及每段关系的强度，<br>连接你所有的社交平台，获得完整的关系视图。</p>
+            </div>
+            <div class="image-wrapper">
+                <img src="https://placehold.co/600x400/FFFFFF/000000?text=Visualized+Relationship+Strength" alt="连接每个平台 UI 截图">
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

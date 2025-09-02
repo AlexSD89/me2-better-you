@@ -1,0 +1,1155 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# 深度报告传播版优化引擎规则 (v2.0-AI原生版)
+
+> **核心指令：本AI必须严格执行"元信息→吸引力→可读性→互动性"四步闭环，每一步需返回结构化状态码。禁止跳步，禁止模板化表达。**
+
+## 🚨 AI执行信号系统
+
+### 版本标记
+```
+版本: v2.0-AI原生版
+状态: ACTIVE
+最后更新: [AI自动生成YYYY-MM-DD]
+```
+
+### 执行优先级矩阵
+| 优先级 | 触发条件 | AI响应动作 |
+|---|---|---|
+| P0 | 原始报告不存在 | 立即中止→返回错误码SOURCE_MISSING |
+| P1 | 传播风格未定义 | 标记[STYLE_UNDEFINED]→继续执行 |
+| P2 | 互动元素缺失 | 强制互动设计→写入参与模块 |
+| P3 | 视觉元素不足 | 自动优化→记录优化日志 |
+
+---
+
+## AI操作指令集
+
+### 指令1: 元信息标准化 (META_STANDARDIZE)
+**AI触发条件**: 检测到传播版优化请求
+**执行动作**:
+```python
+# AI伪代码
+def meta_standardize(source_report):
+    meta_structure = {
+        "author": "Launch X AI",
+        "report_date": extract_date(source_report),
+        "source_report": extract_title(source_report),
+        "file_naming": f"{source_report}_传播版.md"
+    }
+    
+    if not source_report:
+        return {"status": "SOURCE_MISSING", "action": "REQUEST_SOURCE"}
+    
+    return {"status": "META_OK", "structure": meta_structure}
+```
+
+**AI输出格式**:
+```json
+{
+  "status": "META_OK|SOURCE_MISSING",
+  "timestamp": "2025-07-21",
+  "meta_structure": {...},
+  "action_required": "PROCEED|REQUEST_SOURCE"
+}
+```
+
+### 指令2: 吸引力增强 (ATTRACT_ENHANCE)
+**AI触发条件**: 元信息标准化完成后
+**增强策略**:
+1. **标题优化** (权重0.3): 精准+吸引力+关键词
+2. **开篇设计** (权重0.4): 编者按+核心速览+视觉锚点
+3. **导航优化** (权重0.3): 高频小标题+表情符号锚点
+
+**AI增强执行链**:
+```python
+# 吸引力增强思考链与决策树
+def attract_enhance_chain(source_content):
+    # 阶段1: 标题优化决策树
+    title_optimization = {
+        "current_title_analysis": {
+            "execution": analyze_current_title(source_content.title),
+            "thinking": "当前标题的吸引力如何?缺少什么元素?",
+            "evaluation_criteria": ["精准性", "吸引力", "关键词密度", "可读性"]
+        },
+        
+        "title_enhancement_strategy": {
+            "设问技巧": {
+                "condition": "适用于探讨性、分析性内容",
+                "template": "如何/为什么/什么是...",
+                "example": "AI医疗的破局点在哪里?"
+            },
+            "对比手法": {
+                "condition": "适用于竞争分析、趋势对比",
+                "template": "A vs B / 传统 vs 新兴",
+                "example": "传统医疗 vs AI医疗：谁是未来?"
+            },
+            "关键词突出": {
+                "condition": "适用于技术、行业专题",
+                "template": "核心概念+价值主张",
+                "example": "多模态AI：下一个技术奇点"
+            }
+        },
+        
+        "title_selection_decision": {
+            "thinking": "哪种标题技巧最适合这个内容?",
+            "decision_matrix": {
+                "技术分析类": "关键词突出",
+                "趋势洞察类": "设问技巧",
+                "竞争分析类": "对比手法",
+                "案例研究类": "设问+关键词组合"
+            }
+        }
+    }
+    
+    # 阶段2: 开篇设计执行链
+    opening_design = {
+        "editor_note_decision": {
+            "condition_check": "是否需要编者按?",
+            "criteria": ["内容复杂度", "背景信息需求", "读者引导必要性"],
+            "decision_tree": {
+                "高复杂度 + 需要背景": "完整编者按",
+                "中等复杂度": "简化版引导",
+                "低复杂度": "直接进入核心速览"
+            }
+        },
+        
+        "editor_note_structure": {
+            "background_context": {
+                "thinking": "读者需要什么背景信息?",
+                "content": "简要说明文章背景和重要性"
+            },
+            "core_highlights": {
+                "thinking": "最吸引人的核心看点是什么?",
+                "content": "2-3个最重要的发现或观点"
+            },
+            "reading_guide": {
+                "thinking": "如何引导读者继续阅读?",
+                "content": "生动比喻或关键数据钩子"
+            }
+        },
+        
+        "preview_module_generation": {
+            "content_extraction": {
+                "execution": extract_core_insights(source_content),
+                "thinking": "哪3-5个观点最能代表文章价值?",
+                "selection_criteria": ["独特性", "重要性", "可理解性", "行动指导性"]
+            },
+            "preview_formatting": {
+                "format_options": ["本文速览", "精华看点", "核心导读"],
+                "thinking": "哪种格式最适合这个内容类型?",
+                "decision": "基于内容风格和目标受众选择"
+            }
+        }
+    }
+    
+    # 阶段3: 视觉锚点布置策略
+    visual_anchor_strategy = {
+        "anchor_selection": {
+            "symbol_mapping": {
+                "数据分析": "📊",
+                "洞察发现": "💡", 
+                "重要趋势": "🔥",
+                "技术突破": "⚡",
+                "关键结论": "🎯",
+                "未来展望": "🚀"
+            },
+            "thinking": "每个段落的核心主题是什么?应该用哪个符号?",
+            "placement_rule": "每2-3个段落至少有一个视觉锚点"
+        },
+        
+        "emphasis_strategy": {
+            "bold_keywords": {
+                "criteria": "核心概念、重要数据、关键结论",
+                "thinking": "哪些词汇需要特别强调?"
+            },
+            "color_highlighting": {
+                "usage": "关键数据点和重要专有名词",
+                "limit": "全文不超过2-3种强调色",
+                "thinking": "哪些信息需要颜色突出?"
+            }
+        }
+    }
+    
+    # 阶段4: 导航优化执行链
+    navigation_optimization = {
+        "subtitle_frequency_analysis": {
+            "current_structure": analyze_current_headings(source_content),
+            "thinking": "当前的标题结构是否便于导航?",
+            "optimization_target": "每500-800字至少一个小标题"
+        },
+        
+        "subtitle_enhancement": {
+            "clarity_improvement": "使用简洁明了的表达",
+            "visual_integration": "结合表情符号增强识别度",
+            "thinking": "如何让小标题既清晰又有吸引力?",
+            "examples": ["💡 核心发现", "📊 数据解读", "🔥 趋势洞察"]
+        }
+    }
+    
+    return {
+        "title_optimization": title_optimization,
+        "opening_design": opening_design,
+        "visual_anchors": visual_anchor_strategy,
+        "navigation": navigation_optimization
+    }
+```
+
+**AI增强动作**:
+```
+对每个吸引力维度执行：
+→ 标题重构(设问/对比/关键词技巧) - 思考: 哪种技巧最适合这个内容?
+→ 编者按生成(背景/核心看点/引导) - 思考: 读者需要什么背景信息?
+→ 速览模块创建(3-5条核心观点) - 思考: 哪些观点最能代表文章价值?
+→ 视觉锚点布置(📊💡🔥等符号+加粗) - 思考: 每个段落的核心主题是什么?
+→ 小标题频率优化(提升导航性) - 思考: 当前结构是否便于快速导航?
+```
+
+### 指令3: 可读性优化 (READABILITY_OPTIMIZE)
+**AI触发条件**: 吸引力增强完成后
+**优化策略框架**:
+```python
+# 可读性优化思考链与执行序列
+def readability_optimize_chain(content):
+    # 阶段1: 引用系统优化决策链
+    citation_optimization = {
+        "current_citation_analysis": {
+            "execution": analyze_current_citations(content),
+            "thinking": "当前的引用方式是否影响阅读流畅性?",
+            "problems_identification": ["过长的内联引用", "重复的来源信息", "缺失的参考文献"]
+        },
+        
+        "citation_strategy_decision": {
+            "inline_simplification": {
+                "rule": "仅保留核心来源信息(机构名/报告名/年份)",
+                "thinking": "哪些引用信息是读者真正需要的?",
+                "example": "根据**麦肯锡报告**(2024年)显示..."
+            },
+            "numbering_system": {
+                "rule": "使用[1], [2]...数字序号标记",
+                "thinking": "哪些引用需要详细信息但不应打断阅读?",
+                "application": "外部数据、专家观点、学术文献"
+            },
+            "reference_section": {
+                "rule": "文末独立参考文献章节",
+                "thinking": "如何组织参考文献让读者易于查找?",
+                "format": "按数字序号列出完整引用信息"
+            }
+        }
+    }
+    
+    # 阶段2: 内容真实性与自然度优化
+    authenticity_optimization = {
+        "labeling_analysis": {
+            "execution": identify_artificial_labels(content),
+            "thinking": "哪些表达显得刻意或不自然?",
+            "common_issues": ["金句时刻", "专家视角", "深度解读"]
+        },
+        
+        "natural_emphasis_strategy": {
+            "alternatives": {
+                "章节副标题": "用有意义的小标题替代标签",
+                "引用框": "用blockquote突出重要观点",
+                "自然加粗": "在段落中自然强调关键词"
+            },
+            "thinking": "如何在保持强调效果的同时让表达更自然?",
+            "decision_criteria": "优先选择最不突兀的强调方式"
+        },
+        
+        "tone_authenticity": {
+            "check": "是否有刻意模仿专家口吻的表达?",
+            "thinking": "这些表达是否真实可信?",
+            "action": "改为直接、客观的表述方式"
+        }
+    }
+    
+    # 阶段3: 信息密度处理决策树
+    information_density_management = {
+        "density_assessment": {
+            "execution": calculate_information_density(content),
+            "thinking": "哪些部分信息过于密集,影响理解?",
+            "threshold": "每段落超过5个核心概念视为高密度"
+        },
+        
+        "optimization_strategy_selection": {
+            "strategy_one_conditions": {
+                "适用场景": "信息冗余度高,有明显重复内容",
+                "execution": "直接删减,保留核心关键词",
+                "thinking": "哪些信息是真正必要的?",
+                "risk": "可能丢失重要细节"
+            },
+            
+            "strategy_two_conditions": {
+                "适用场景": "信息都很重要,但需要层次化",
+                "execution": "摘要+详解格式重构",
+                "thinking": "如何既保持完整性又提升可读性?",
+                "structure": "先概括后详细,先重要后次要"
+            },
+            
+            "strategy_decision_tree": {
+                "信息冗余度 > 30%": "优先策略一",
+                "信息重要度 > 80%": "优先策略二", 
+                "读者专业度较低": "优先策略二",
+                "篇幅限制严格": "优先策略一"
+            }
+        }
+    }
+    
+    # 阶段4: 数据突出显示优化链
+    data_highlighting_optimization = {
+        "key_data_identification": {
+            "execution": extract_key_data_points(content),
+            "thinking": "哪些数据点最重要,需要特别突出?",
+            "criteria": ["关键性", "独特性", "支撑力", "可信度"]
+        },
+        
+        "highlighting_method_selection": {
+            "color_emphasis": {
+                "usage": "<font color='teal'>关键数据</font>",
+                "thinking": "哪些数据需要颜色突出?",
+                "limit": "全文不超过2-3种强调色",
+                "priority": "最核心的数据点"
+            },
+            
+            "sentence_bolding": {
+                "usage": "**完整的关键结论句**",
+                "thinking": "哪些完整句子包含重要结论?",
+                "criteria": "总结性、结论性、行动指导性"
+            },
+            
+            "term_emphasis": {
+                "usage": "**重要专有名词**",
+                "thinking": "哪些术语对理解至关重要?",
+                "rule": "首次出现时加粗,后续正常显示"
+            }
+        }
+    }
+    
+    # 阶段5: 段落结构优化执行链
+    paragraph_structure_optimization = {
+        "current_structure_analysis": {
+            "execution": analyze_paragraph_lengths(content),
+            "thinking": "当前段落长度是否适合阅读?",
+            "ideal_length": "3-5行为宜,最多不超过8行"
+        },
+        
+        "restructuring_strategy": {
+            "long_paragraph_handling": {
+                "method": "按逻辑点分割成多个短段落",
+                "thinking": "这个长段落包含几个独立的观点?",
+                "action": "每个观点独立成段"
+            },
+            
+            "sentence_optimization": {
+                "method": "复杂句拆分为简单句",
+                "thinking": "这个句子是否包含过多信息?",
+                "target": "每句话表达一个核心观点"
+            },
+            
+            "list_conversion": {
+                "method": "复杂信息转换为列表格式",
+                "thinking": "这些信息是否适合列表化呈现?",
+                "criteria": "并列关系、步骤关系、分类关系"
+            }
+        }
+    }
+    
+    return {
+        "citation_system": citation_optimization,
+        "authenticity": authenticity_optimization,
+        "information_density": information_density_management,
+        "data_highlighting": data_highlighting_optimization,
+        "paragraph_structure": paragraph_structure_optimization
+    }
+```
+
+### 指令4: 互动性设计 (INTERACTION_DESIGN)
+**AI触发条件**: 可读性优化完成后
+**互动模块生成**:
+```python
+# 互动性设计思考链与执行序列
+def interaction_design_chain(content):
+    # 阶段1: 互动需求分析
+    interaction_needs_analysis = {
+        "content_type_assessment": {
+            "execution": classify_content_type(content),
+            "thinking": "这是什么类型的内容?需要什么样的互动?",
+            "type_mapping": {
+                "技术分析": "专业讨论+经验分享",
+                "趋势洞察": "观点交流+预测讨论", 
+                "案例研究": "经验分享+类似案例",
+                "方法论": "实践应用+改进建议"
+            }
+        },
+        
+        "audience_engagement_level": {
+            "execution": assess_target_audience(content),
+            "thinking": "目标读者的参与意愿和能力如何?",
+            "levels": {
+                "专业人士": "深度技术讨论",
+                "行业从业者": "实践经验交流",
+                "一般读者": "观点分享和疑问解答"
+            }
+        }
+    }
+    
+    # 阶段2: 引导性结尾设计决策树
+    guided_ending_design = {
+        "ending_style_selection": {
+            "formal_professional": {
+                "format": "🤔 您的看法是？",
+                "适用": "严肃的技术或商业分析",
+                "thinking": "需要正式的专业讨论氛围"
+            },
+            "casual_friendly": {
+                "format": "💬 欢迎交流",
+                "适用": "轻松的趋势分享或观点讨论",
+                "thinking": "营造轻松友好的交流氛围"
+            },
+            "interactive_moment": {
+                "format": "**互动时刻 💬**",
+                "适用": "需要强调互动重要性的内容",
+                "thinking": "突出互动环节的特殊性"
+            }
+        },
+        
+        "ending_customization": {
+            "thinking": "基于内容特点,哪种结尾最合适?",
+            "decision_factors": ["内容严肃程度", "目标受众", "互动期望", "品牌调性"]
+        }
+    }
+    
+    # 阶段3: 开放性问题生成策略
+    open_questions_generation = {
+        "question_type_framework": {
+            "experience_sharing": {
+                "template": "您在[相关领域]有什么类似经验?",
+                "thinking": "如何引导读者分享实践经验?",
+                "example": "您在AI项目实施中遇到过哪些挑战?"
+            },
+            
+            "opinion_exploration": {
+                "template": "您如何看待[核心观点]?",
+                "thinking": "哪个观点最值得深入讨论?",
+                "example": "您认为AI医疗的最大障碍是什么?"
+            },
+            
+            "future_prediction": {
+                "template": "您预测[趋势方向]会如何发展?",
+                "thinking": "哪个趋势最具讨论价值?",
+                "example": "您认为多模态AI的下一个突破点在哪里?"
+            },
+            
+            "practical_application": {
+                "template": "这个[方法/观点]在您的工作中如何应用?",
+                "thinking": "如何让讨论更具实用价值?",
+                "example": "这个分析框架在您的投资决策中有用吗?"
+            }
+        },
+        
+        "question_selection_strategy": {
+            "quantity_decision": {
+                "2个问题": "内容较简单,重点突出",
+                "3个问题": "标准配置,平衡深度和广度", 
+                "4个问题": "内容复杂,多角度讨论",
+                "thinking": "基于内容复杂度确定问题数量"
+            },
+            
+            "question_progression": {
+                "sequence": "从具体到抽象,从个人到行业",
+                "thinking": "如何设计问题的递进关系?",
+                "logic": "先易后难,逐步深入"
+            }
+        }
+    }
+    
+    # 阶段4: 参与引导语设计
+    participation_guide_design = {
+        "guide_content_elements": {
+            "invitation_clarity": {
+                "content": "清晰邀请评论区分享",
+                "thinking": "如何让邀请既明确又不显突兀?",
+                "examples": [
+                    "欢迎在评论区分享您的观点和经验",
+                    "期待听到您的不同见解",
+                    "您的实践经验对其他读者很有价值"
+                ]
+            },
+            
+            "interaction_specificity": {
+                "content": "具体说明期望的互动类型",
+                "thinking": "读者应该分享什么样的内容?",
+                "specifications": ["观点", "经验", "疑问", "案例", "建议"]
+            },
+            
+            "value_proposition": {
+                "content": "说明参与讨论的价值",
+                "thinking": "为什么读者应该花时间参与讨论?",
+                "benefits": ["学习交流", "经验分享", "网络建设", "思维碰撞"]
+            }
+        }
+    }
+    
+    # 阶段5: 行动号召设计策略
+    action_call_design = {
+        "call_to_action_types": {
+            "discussion_focused": {
+                "template": "让我们一起探讨[核心话题]的未来发展",
+                "thinking": "如何激发持续的讨论兴趣?",
+                "适用": "观点性、趋势性内容"
+            },
+            
+            "action_oriented": {
+                "template": "是时候在[相关领域]采取行动了",
+                "thinking": "如何激发读者的行动意愿?",
+                "适用": "方法论、策略性内容"
+            },
+            
+            "inspirational": {
+                "template": "未来已来,让我们一起拥抱变革",
+                "thinking": "如何在结尾留下深刻印象?",
+                "适用": "前瞻性、启发性内容"
+            }
+        },
+        
+        "call_customization": {
+            "thinking": "基于内容主题和目标,哪种号召最合适?",
+            "decision_matrix": {
+                "技术分析": "discussion_focused",
+                "商业策略": "action_oriented",
+                "趋势洞察": "inspirational",
+                "案例研究": "discussion_focused"
+            }
+        }
+    }
+    
+    return {
+        "interaction_needs": interaction_needs_analysis,
+        "guided_ending": guided_ending_design,
+        "open_questions": open_questions_generation,
+        "participation_guide": participation_guide_design,
+        "action_call": action_call_design
+    }
+```
+---
+
+## AI统一执行流程：四步核心循环
+
+> **历史映射：AI内部将四步核心循环映射为传统六步流程，确保兼容性**
+
+### AI四步核心循环
+
+#### STEP 1: 元信息标准化与来源清晰 (META_STANDARDIZE)
+**AI内部映射**: 传统第1步"文件元信息与来源清晰化"
+
+**AI执行逻辑**:
+```python
+# --- 细节注入 ---
+# 作者署名: "作者：Launch X AI" (统一标准)
+# 报告日期: "报告日期：YYYY年MM月DD日" (从原始报告提取)
+# 来源报告: "来源报告：[原始报告完整标题]" (明确标注)
+# 正文简洁性: 避免重复引用原始报告文件名，保持阅读流畅
+# 传播版文件命名: 原始文件名 + "_传播版.md" 或 "_circulated.md"
+# 元数据完整性检查: 确保所有必需字段填充完整
+# --- 细节注入结束 ---
+def step1_meta_standardize(source_report):
+    if not source_report:
+        return {"status": "SOURCE_MISSING", "action": "REQUEST_SOURCE"}
+    
+    meta_structure = {
+        "author_line": "作者：Launch X AI",
+        "report_date": f"报告日期：{extract_date(source_report)}",
+        "source_line": f"来源报告：{extract_title(source_report)}",
+        "output_filename": f"{source_report}_传播版.md",
+        "content_flow_check": verify_no_redundant_references(source_report)
+    }
+    
+    return {"status": "META_OK", "structure": meta_structure}
+```
+
+#### STEP 2: 吸引力增强与导航优化 (ATTRACT_ENHANCE)
+**AI内部映射**: 传统第2步"提升内容吸引力与导航性"
+
+**AI执行逻辑**:
+```python
+# --- 细节注入 ---
+# 标题优化: 精准+吸引力+关键词技巧(设问/对比/关键词)
+# 编者按设计: 独立醒目引导模块，特殊视觉设计(背景色/边框/卡片样式)
+#   内容包含: 文章背景/核心议题重要性/引人入胜钩子(生动比喻/关键数据)
+#   适用场景: 访谈/编译/特定视角解读内容
+#   包含要素: 文章背景/核心看点/主要人物介绍/节选来源
+# 核心内容速览: "本文速览/精华看点/核心导读"模块
+#   格式: 列表形式(3-5条为宜)
+#   内容: 最核心观点/发现/关键问题
+#   目的: 帮助读者快速决策是否深入阅读
+# 段内视觉锚点: "表情符号/简单图标 + 核心词加粗"组合
+#   示例: 📊 **数据不会说谎：** / 💡 **破局点：**
+#   作用: 快速定位和理解信息模块
+# 高频小标题: 简洁明了小标题分割内容
+#   采用视觉锚点形式，提升长文阅读体验
+#   功能: 快速把握段落大意，方便跳读回顾
+# --- 细节注入结束 ---
+def step2_attract_enhance(content):
+    enhancement_pipeline = {
+        "title_optimization": {
+            "techniques": ["设问技巧", "对比手法", "关键词突出"],
+            "criteria": ["精准性", "吸引力", "主题概括性"]
+        },
+        
+        "editor_note_design": {
+            "structure": "独立醒目引导模块",
+            "visual_elements": ["背景色", "边框", "卡片样式"],
+            "content_elements": ["文章背景", "核心看点", "人物介绍", "节选来源"],
+            "hook_types": ["生动比喻", "关键数据", "核心议题重要性"]
+        },
+        
+        "content_preview": {
+            "module_names": ["本文速览", "精华看点", "核心导读"],
+            "format": "列表形式",
+            "item_count": "3-5条",
+            "content_focus": ["核心观点", "重要发现", "关键问题"]
+        },
+        
+        "visual_anchors": {
+            "format": "表情符号 + 核心词加粗",
+            "examples": ["📊 **数据不会说谎：**", "💡 **破局点：**", "🔥 **关键洞察：**"],
+            "placement": "段落内关键主题句或列表项起始处"
+        },
+        
+        "subtitle_frequency": {
+            "style": "简洁明了",
+            "visual_integration": "采用视觉锚点形式",
+            "function": ["快速把握段落大意", "方便跳读", "便于回顾"]
+        }
+    }
+    
+    return enhancement_pipeline
+```
+
+#### STEP 3: 可读性优化与专业性平衡 (READABILITY_OPTIMIZE)
+**AI内部映射**: 传统第3步"优化正文可读性与专业性"
+
+**AI执行逻辑**:
+```python
+# --- 细节注入 ---
+# 引用规范与简化:
+#   简化内联引用: 仅标注核心来源信息(机构名/报告名/年份)
+#   数字标记法: [1], [2]...序号标记外部引用
+#   文末参考文献: 独立"## 参考文献"章节，按序号列出完整引用信息
+#   引用准确性: 示意性引用需明确提示"请替换为源报告准确细节"
+# 避免刻意标签化: 优先章节副标题/引用框/自然加粗，避免"金句时刻"等标签
+# 内容真实直接: 避免刻意模仿专家口吻，确保信息真实直接可信
+# 占位符处理: 最终定稿前用准确内容替换，无法获得信息保留清晰提示
+# 数据选择时效性: 优先最新最具代表性数据，新数据需遵守引用规范
+# AI示意性内容处理: AI必须明确告知示意性内容，提示用户替换
+# 关键信息突出显示:
+#   颜色强调: <font color="teal">文字</font> (平台兼容性，全文不超过2-3种强调色)
+#   完整句加粗: 总结性关键完整句子直接加粗
+#   专有名词强化: 首次出现重要专有名词和企业名称加粗
+# 信息密度处理:
+#   策略一: 内容缩减精炼，保留核心关键词，移除详细描述
+#   策略二: 层次化呈现，摘要+详解格式，先概括后详细展开
+# 附录使用: 专业术语/项目名称/背景解释集中文末说明
+# 排版友好性: 短段落(3-5行)/短句/列表化/多级标题优化阅读节奏
+# --- 细节注入结束 ---
+def step3_readability_optimize(content):
+    optimization_engine = {
+        "citation_system": {
+            "inline_simplification": "仅标注核心来源信息",
+            "numbering_system": "[1], [2]...数字序号标记",
+            "reference_section": "独立参考文献章节",
+            "accuracy_prompts": "示意性引用明确提示替换"
+        },
+        
+        "content_authenticity": {
+            "avoid_labeling": "避免刻意标签化固定格式",
+            "natural_emphasis": ["章节副标题", "引用框", "自然加粗"],
+            "authentic_tone": "真实直接，避免刻意模仿专家口吻"
+        },
+        
+        "data_highlighting": {
+            "color_emphasis": "<font color='teal'>关键数据</font>",
+            "color_limit": "全文不超过2-3种强调色",
+            "sentence_bolding": "关键完整句子加粗",
+            "term_emphasis": "重要专有名词首次出现加粗"
+        },
+        
+        "information_density": {
+            "strategy_one": "内容缩减精炼，保留核心关键词",
+            "strategy_two": "层次化呈现，摘要+详解格式",
+            "decision_logic": "先尝试策略一，信息损失过多转策略二"
+        },
+        
+        "layout_optimization": {
+            "paragraph_length": "3-5行为宜",
+            "sentence_structure": "简练短句",
+            "list_usage": "列表化复杂信息",
+            "heading_hierarchy": "多级标题优化阅读节奏"
+        }
+    }
+    
+    return optimization_engine
+```
+
+#### STEP 4: 互动性设计与视觉增强 (INTERACTION_DESIGN)
+**AI内部映射**: 传统第4-6步"强化互动+视觉元素+持续迭代"
+
+**AI执行逻辑**:
+```python
+# --- 细节注入 ---
+# 互动模块设计:
+#   引导性结尾: 专门互动模块("🤔 您的看法是？"/"💬 欢迎交流"/"**互动时刻 💬**")
+#   开放性问题: 2-4个深度延展性问题，激发思考讨论
+#   明确互动引导: 清晰邀请评论区分享观点/经验/疑问
+#   行动号召结语: 直接有力号召，激发共鸣行动意愿
+# 视觉元素规范:
+#   图文结合: 高质量相关图表/信息图/数据卡片/截图
+#   图表设计原则: 清晰传递信息，简洁明了，数据突出，视觉美观
+#   Markdown表格: 作为文字版示意图呈现结构化对比信息
+#   复杂信息策略: 摘要型表格+详细展开说明
+#   图表占位符: **[此处建议图表：主题描述，核心要求，期望数据点]**
+# AI作图提示词规范:
+#   占位符标记: **[AI作图提示占位符]** / **[此处应有AI生成图表]**
+#   图片主题: 简要说明核心内容或期望传达信息
+#   提示词要素: 图像风格/核心元素构图/颜色氛围/包含文字/反向提示
+#   格式兼容性: 考虑平台发布需求，转换通用图片格式
+# 持续迭代: 根据实践经验优化更新，收集用户反馈
+# --- 细节注入结束 ---
+def step4_interaction_design(content):
+    interaction_pipeline = {
+        "interaction_modules": {
+            "guided_endings": ["🤔 您的看法是？", "💬 欢迎交流", "**互动时刻 💬**"],
+            "open_questions": {
+                "count": "2-4个",
+                "characteristics": ["深度性", "延展性", "讨论性"]
+            },
+            "participation_guide": "清晰邀请评论区分享观点/经验/疑问",
+            "action_call": "直接有力行动号召，激发共鸣行动意愿"
+        },
+        
+        "visual_enhancement": {
+            "content_integration": ["图表", "信息图", "数据卡片", "截图"],
+            "design_principles": ["清晰传递信息", "简洁明了", "数据突出", "视觉美观"],
+            "markdown_tables": "文字版示意图呈现结构化信息",
+            "complex_info_strategy": "摘要型表格 + 详细展开说明"
+        },
+        
+        "ai_image_generation": {
+            "placeholder_format": "**[AI作图提示占位符]**",
+            "required_elements": [
+                "图片主题/标题",
+                "图像风格描述", 
+                "核心元素与构图",
+                "颜色与氛围",
+                "需包含的文字",
+                "反向提示(可选)"
+            ],
+            "compatibility_check": "考虑平台发布格式要求"
+        },
+        
+        "continuous_iteration": {
+            "optimization_basis": "实践经验和优秀传播案例",
+            "feedback_collection": "用户使用过程问题和建议",
+            "update_mechanism": "共同维护迭代，提升实效性"
+        }
+    }
+    
+    return interaction_pipeline
+```
+
+### 历史兼容性层
+
+#### 六步传统流程 → 四步AI映射表
+| 传统步骤 | AI核心步骤 | 处理阶段 | AI内部状态 |
+|---|---|---|---|
+| 第1步 元信息来源清晰 | STEP 1 元信息标准化 | 预处理 | `STANDARDIZE_META` |
+| 第2步 内容吸引力导航 | STEP 2 吸引力增强 | 吸引力设计 | `ENHANCE_ATTRACT` |
+| 第3步 正文可读性专业性 | STEP 3 可读性优化 | 内容优化 | `OPTIMIZE_READABILITY` |
+| 第4步 强化互动参与感 | STEP 4 互动设计 | 互动模块 | `DESIGN_INTERACTION` |
+| 第5步 视觉元素AI作图 | STEP 4 互动设计 | 视觉增强 | `ENHANCE_VISUAL` |
+| 第6步 持续迭代 | STEP 4 互动设计 | 迭代优化 | `ITERATE_OPTIMIZE` |
+
+#### AI状态机
+```
+[START] → STEP1 → STEP2 → STEP3 → STEP4 → [END]
+   ↓       ↓      ↓      ↓      ↓
+ERROR → FIX → RETRY → WARN → COMPLETE
+```
+
+### AI统一输出格式
+```json
+{
+  "ai_flow": "4step_core",
+  "traditional_mapping": "6step_compatible",
+  "current_step": "STEP1|STEP2|STEP3|STEP4",
+  "status": "SUCCESS|ERROR|WARNING",
+  "historical_step_equivalent": "第1-6步中的对应步骤",
+  "next_action": "下一步指令"
+}
+```
+
+## 3. 优化正文可读性与专业性
+
+*   **3.1 引用规范与简化：**
+    *   **简化内联引用优先：** 在正文中提及数据或观点时，仅需标注最核心的来源信息（如机构名、报告名、年份等），例如"根据**XX机构**的报告 (2024年) 显示..."，避免在正文中加入过多细节干扰阅读。
+    *   **数字标记法：** 对于正文中需要引用的外部数据、报告、专家观点或文献，应采用数字序号标记（如 `[1]`, `[2]`...）。
+    *   **文末参考文献：** 在文章主体内容之后、互动区之前，设立独立的"## 参考文献"章节，按照数字序号逐条列出完整的引用信息。此列表应只包含真实、可查证的外部文献来源（如公开报告、新闻文章、学术论文等），不应列出内部报告或分析文档。
+    *   **引用准确性提示：** 对于示意性或需要用户从源报告核对的引用，应在参考文献列表中明确提示（例如："（请替换为源报告中的准确引用细节）"）。
+**3.2 避免刻意标签化：**
+    *   对于\"金句\"或特别强调的观点，优先考虑通过将其融入章节副标题、使用引用框（blockquote）、或在段落中自然地加粗强调等方式来突出，避免使用过于标签化且可能显得刻意的固定格式（如\"金句时刻：\"）。
+*   **3.3 内容真实与直接：** 除非原始报告本身包含此类表述，否则应避免在传播稿中为了营造某种风格（例如，刻意模仿\"专家口吻\"或\"分析师视角\"）而添加显得不自然或缺乏具体支撑的表述，应优先确保信息传达的真实、直接和可信度。
+*   **3.4 占位符处理：** 传播稿模板或初稿中若包含待填充的数据、案例细节或其他信息的占位符，必须在最终定稿前用准确、具体的内容替换。若某些信息确实无法立即获得，应保留清晰的提示（例如：\"（具体案例请从源报告补充）\"），并由内容负责人跟进完成。
+*   **3.5 数据选择与时效性：**
+    *   在从原始深度报告中提取数据用于传播稿时，应优先选用最新、最具代表性的数据点。
+    *   若在传播稿的准备过程中，获得了比原始报告中更新的、更权威的相关数据（例如，用户在交互中提供了最新的行业报告数据），在确保数据可靠性的前提下，应考虑在传播稿中采用这些更新的数据，以增强内容的即时性和价值。
+    *   所有引用的数据，无论新旧，均需严格遵守3.1中关于数字标记法和文末参考文献的规范，确保来源清晰可查。
+*   **3.6 AI辅助下的示意性内容处理：**
+    *   当AI助手在协助修改或生成传播稿内容时，如果使用了示意性、占位性或非最终确认的数据、案例描述或引言等，AI助手必须明确、主动地告知用户这些是"示意性内容"或"占位符内容"。
+    *   AI助手应同时提示用户，在最终发布前务必使用来自原始报告或经过核实的准确信息替换这些示意性内容，以确保传播内容的真实性和专业性。
+    *   **内容完整性与来源提示：** 在引用内部数据或有待从更详尽报告中补充细节时，可使用括号明确注明，例如 `（具体新兴领域分析请从源报告补充）` 或 `（此处数据来源于内部测试）`，保持透明度并为后续完善提供线索。
+*   **3.7 关键信息（含数字）的突出显示：**
+    *   除了常规的加粗，对于核心数据点、关键百分比、重要专有名词、企业名称、人名等，可考虑使用特定颜色（如通过 `<font color="teal">需要突出显示的文字</font>` HTML标签，需注意平台兼容性并保持用色统一与克制，建议全文不超过2-3种强调色）进行强调，以增强视觉吸引力并提升数据的易读性。
+    *   对于总结性的、极为关键的**完整句子**，也可直接进行**加粗**处理，以最大限度地强化核心观点的传递。
+    *   对文中首次出现的、重要的专有名词（如技术术语、法案名称）和企业名称进行适当强化（如**加粗**），以提升专业性和可读性。
+*   **3.8 处理信息密度过高的问题：** 当某一模块（如图表、长列表）因包含过多细节而显得臃肿、可读性差时，应主动寻求优化。推荐以下两种策略：
+    *   **策略一：内容缩减与精炼。** 直接大幅精简原始内容，保留最核心的关键词和成果，移除大部分详细描述和案例细节。此方法追求极致的简洁和概览性，适用于读者对细节要求不高，或希望快速获取核心信息的场景。
+    *   **策略二：改变表述格式，实现层次化呈现（例如"摘要+详解"）。** 首先创建一个高度概括的摘要版本（如一个非常精炼的表格或几个核心要点列表），为读者提供快速入口。然后，在此摘要之后，另起段落或使用更详细的列表、子标题等形式，对摘要中的每一个核心条目进行详细的展开说明、案例补充和深度解读。此方法通过结构上的层次化，较好地平衡了信息密度与阅读体验，适用于既要保证概览性，又不能丢失重要细节的场景。
+    *   **决策偏好：** 在面对信息臃肿时，可以先尝试策略一进行精简。如果发现信息损失过多，或精简后依然难以达到理想的易读性，则应积极转向策略二，通过重构信息的呈现方式来优化。在某些情况下，基于对内容特性和目标受众的判断，也可以直接选择策略二。
+*   **3.9 附录的酌情使用：** 对于包含较多专业术语、特定项目/平台名称或需要额外背景解释的内容，可在文末设置独立的"## 附录"（或类似标题，如"名词解释"、`## 附：文中AI项目/平台/术语引用解释`）进行集中说明，以保持正文的流畅性，避免过多打断主线叙事。
+*   **3.10 排版友好性：**
+    *   **短段落与短句：** 尽量使用短段落（建议3-5行为宜）和简练的句子，避免大段文字带来的阅读压迫感。
+    *   **结构化呈现：** 多用列表（有序/无序）、项目符号将复杂信息拆解，清晰呈现要点。
+    *   **合理的段落切分与多级标题：** 长文尤其要注意通过合理的段落切分和多级标题（可结合2.3中的视觉锚点形式）来优化阅读节奏。
+
+## 4. 强化互动与参与感
+
+*   **4.1 引导性结尾：** 在文章主要内容（及参考文献、附录之后），应设置专门的互动模块（例如，使用"🤔 您的看法是？"、"💬 欢迎交流"、"深度思考"、"**互动时刻 💬**"等小标题）。
+*   **4.2 开放性问题：** 提出2-4个与文章主题相关的、能够激发读者思考和讨论的开放性问题。问题设计应具有一定的深度和延展性。
+*   **4.3 明确互动引导：** 清晰地邀请读者在评论区分享观点、经验或提出疑问（例如："欢迎在评论区留下您的宝贵见解！"或设计更具体的引导语，如："**您认为AI将如何改变XX行业？或者，您在应用AI方面有哪些经验或困惑？欢迎在评论区分享您的想法或提问，我们将一起探讨未来的发展方向！**"）。
+*   **4.4 （新增）强化行动号召力结语：** 在互动引导之后或作为结语的一部分，可以加入直接且有力的行动号召或深刻寄语，激发读者的共鸣与行动意愿，例如："**未来已来，唯变不变。让我们一起拥抱变革，创造未来！**"
+
+## 5. 视觉元素与AI作图规范
+*(原第5节“内容风格与呈现策略”的核心思想已迁移至《深度内容传播策略与风格指南.md》，此处聚焦传播稿的视觉呈现具体操作)*
+
+*   **5.1 图文结合的必要性：** 鼓励在适当位置使用高质量、高度相关的图表、信息图、数据卡片、截图等视觉元素，以辅助信息传递、提升阅读体验、打破文字单调感和增强内容吸引力。
+*   **5.2 图表设计与呈现：**
+    *   **原则：** 以"清晰传递信息"为首要目标，追求简洁明了、数据突出、视觉美观，避免信息过载。
+    *   **Markdown表格作为示意图：** 可作为一种有效的"文字版示意图"来呈现结构化的对比信息或流程。
+    *   **复杂信息呈现策略（参考3.8策略二）：** 针对需要兼顾概览与细节的复杂信息（如价值链分析、多维度对比等），可首先构建一个高度凝练的摘要型Markdown表格，为读者提供快速入口；然后，在此摘要表格之后，另起段落或使用列表形式，对表格中的每一个核心条目进行详细的展开说明、案例补充和深度解读。
+    *   **图表占位符：** 当直接在初稿（如Markdown环境）中嵌入复杂图表不可行时，可使用清晰的占位符提前规划图表需求，例如：`**[此处建议图表：图表的主题描述，核心要求和期望呈现的数据点]**`。
+*   **5.3 AI作图提示词规范：**
+    *   当计划使用AI工具（如ChatGPT等文生图模型）生成图片或信息图时，应在文档中设置明确的占位符。该占位符应包含：
+        *   清晰的标记，例如：**[AI作图提示占位符]** 或 **[此处应有AI生成图表/图片]**。
+        *   **图片主题/标题：** 简要说明该图片的核心内容或期望传达的信息。
+        *   **AI作图核心提示词 (Prompt for AI Image Generation)：** 提供具体、详细、结构化的提示词，以指导AI生成符合预期的图像。提示词应尽可能包含以下要素：
+            *   **图像风格：** 例如信息图（Infographic style）、卡通风格、科技感线条风、简约扁平风、数据可视化图表等。
+            *   **核心元素与构图：** 描述图片中必须包含的关键对象、符号、场景布局、元素之间的关系等。
+            *   **颜色与氛围：** 若有特定的颜色偏好（如品牌色）或期望的整体氛围（如专业严谨、生动活泼），应予以说明。
+            *   **需包含的文字：** 若图片中需要嵌入特定的标题、数据标签、关键词等文字内容，需明确列出。
+            *   **反向提示（可选）：** 不希望出现的元素或风格。
+        *   **（可选）备注或参考示例：** 对图片的其他特殊要求或可供AI参考的类似图片风格描述。
+*   **5.4 非AI生成图表与格式兼容性：**
+    *   对于非AI生成的图表（例如，根据数据手动制作的图表，或由Mermaid等代码直接转换的图表），应确保其简洁明了，数据来源清晰。
+    *   对于需要在特定平台（如微信公众号）发布的复杂格式图表（如Mermaid生成的SVG），需提前考虑转换为通用图片格式（如PNG, JPG）并保证其清晰度和可读性。
+
+## 6. 持续迭代
+
+*   本指引将根据实践经验和新的优秀传播案例持续优化和更新。鼓励用户在使用本指引的过程中，将遇到的新问题、总结的新经验或认为可以优化的点及时反馈，以便共同维护和迭代本指引，使其更具实效性。
+-
+--
+
+## AI执行链条总览与思考流程
+
+### 完整执行序列图
+```
+[传播版优化请求]
+    ↓
+[STEP 1: 元信息标准化] → 思考: 来源信息是否清晰? → 决策: 标准化/请求补充
+    ↓
+[STEP 2: 吸引力增强] → 思考: 如何让内容更吸引人? → 决策: 标题技巧/开篇设计/视觉锚点
+    ↓
+[STEP 3: 可读性优化] → 思考: 如何平衡专业性和易读性? → 决策: 简化/层次化/突出重点
+    ↓
+[STEP 4: 互动性设计] → 思考: 如何激发读者参与? → 决策: 问题设计/引导语/行动号召
+    ↓
+[传播版完成]
+```
+
+### 关键决策节点思考框架
+```python
+# 传播优化核心思考链条
+optimization_decision_framework = {
+    "吸引力评估阶段": {
+        "关键问题": "这个标题和开篇能吸引目标读者吗?",
+        "思考路径": "分析受众→选择技巧→设计开篇→布置锚点",
+        "决策标准": "标题有吸引力,开篇有引导性,视觉有层次感"
+    },
+    
+    "可读性平衡阶段": {
+        "关键问题": "如何在保持专业性的同时提升可读性?",
+        "思考路径": "评估密度→选择策略→优化结构→突出重点",
+        "决策标准": "信息完整但不冗余,表达专业但不晦涩"
+    },
+    
+    "互动设计阶段": {
+        "关键问题": "什么样的互动最适合这个内容和受众?",
+        "思考路径": "分析内容→了解受众→设计问题→引导参与",
+        "决策标准": "问题有深度,引导有针对性,号召有感染力"
+    }
+}
+```
+
+### 优化策略选择思考链
+```python
+# 不同情况下的策略选择思考过程
+strategy_selection_thinking = {
+    "信息密度过高": {
+        "思考": "是信息冗余还是都很重要?读者的专业程度如何?",
+        "策略一": "直接精简 - 适用于冗余度高的情况",
+        "策略二": "层次化呈现 - 适用于信息都重要的情况",
+        "决策依据": "冗余度+重要度+读者专业度+篇幅限制"
+    },
+    
+    "专业术语处理": {
+        "思考": "这些术语对理解有多重要?读者能理解吗?",
+        "内联解释": "简短术语,不打断阅读流",
+        "附录说明": "复杂术语,集中在文末解释",
+        "决策依据": "术语复杂度+出现频率+理解必要性"
+    },
+    
+    "互动问题设计": {
+        "思考": "什么样的问题能激发有价值的讨论?",
+        "经验分享型": "适用于实践性强的内容",
+        "观点探讨型": "适用于争议性或前瞻性内容",
+        "应用导向型": "适用于方法论或工具类内容",
+        "决策依据": "内容性质+受众特点+讨论价值"
+    }
+}
+```
+
+### 质量评估思考框架
+```python
+# 传播版质量的多维度评估思考
+quality_assessment_thinking = {
+    "吸引力维度": {
+        "评估问题": "标题是否让人想点击?开篇是否让人想继续读?",
+        "思考要点": "目标受众的兴趣点+内容的独特价值+表达的新颖性"
+    },
+    
+    "可读性维度": {
+        "评估问题": "专业读者和普通读者都能理解吗?阅读是否流畅?",
+        "思考要点": "术语解释充分性+段落长度合理性+逻辑清晰度"
+    },
+    
+    "互动性维度": {
+        "评估问题": "读者会想要参与讨论吗?问题是否有讨论价值?",
+        "思考要点": "问题的开放性+讨论的实用性+参与的便利性"
+    },
+    
+    "完整性维度": {
+        "评估问题": "传播版是否保持了原报告的核心价值?",
+        "思考要点": "关键信息保留度+逻辑完整性+结论准确性"
+    }
+}
+```
+
+---
+
+## AI异常处理协议
+
+### 原始报告异常
+```
+ERROR: SOURCE_MISSING
+ACTION: 立即暂停优化流程
+OUTPUT: 生成源报告请求指令
+```
+
+### 传播风格异常  
+```
+ERROR: STYLE_UNDEFINED
+ACTION: 标记[风格未定义]
+OUTPUT: 生成风格选择任务
+```
+
+### 互动元素异常
+```
+ERROR: INTERACTION_MISSING
+ACTION: 强制互动模块设计
+OUTPUT: 生成参与感增强方案
+```
+
+### 视觉元素异常
+```
+ERROR: VISUAL_INSUFFICIENT
+ACTION: 自动视觉优化
+OUTPUT: 生成视觉增强清单
+```
+
+---
+
+## AI记忆与上下文管理
+
+### 长期记忆 (Persistent Memory)
+- 当前活跃传播风格模板
+- 历史传播版优化记录
+- 视觉元素设计库
+- 互动模块成功案例
+
+### 短期记忆 (Session Memory)  
+- 本次优化批次ID
+- 待处理视觉元素清单
+- 临时发现的可读性问题
+- 需要用户确认的风格选择
+
+### 上下文切换 (Context Switch)
+```
+当切换传播项目时，AI必须:
+1. 保存当前优化状态
+2. 加载新项目传播上下文
+3. 重置短期记忆
+4. 保持长期记忆
+```
+
+---
+
+## AI输出规范
+
+### 统一返回格式 (基于传播优化实战经验)
+```json
+{
+  "status": "SUCCESS|ERROR|WARNING",
+  "step": "当前执行步骤",
+  "source_report": "原始报告名称",
+  "optimization_applied": ["应用的优化策略"],
+  "engagement_elements": ["增加的互动元素"],
+  "quality_metrics": {
+    "readability_score": "95%",
+    "engagement_potential": "权重计算值",
+    "visual_enhancement": "90%",
+    "interaction_completeness": "98%"
+  },
+  "validation_layers": [
+    "ai_meta_standardization_passed",
+    "attraction_enhancement_complete", 
+    "readability_optimization_verified",
+    "interaction_design_implemented"
+  ],
+  "error_classification": {
+    "type": "recoverable|source_missing|style_undefined",
+    "impact": "low|medium|high",
+    "escalation": "auto_retry|user_notice|manual_intervention"
+  },
+  "output_info": {
+    "file_path": "[原始文件名]_传播版.md",
+    "optimization_type": "确定的优化类型",
+    "batch_id": "优化批次ID",
+    "completion_time": "2025-07-21T10:30:00Z"
+  },
+  "performance_metrics": {
+    "processing_time": "<2min_per_report",
+    "engagement_enhancement_rate": ">85%",
+    "readability_improvement": ">90%",
+    "visual_compliance": "100%"
+  },
+  "next_action": "下一步指令",
+  "timestamp": "2025-07-21T10:30:00Z"
+}
+```
+
+### 错误码系统 (传播优化专用)
+**基础错误码 (优化级)**
+- E001: 原始报告缺失 → 请求源报告
+- E002: 传播风格未定义 → 标记[风格未定义]继续执行  
+- E003: 互动元素缺失 → 强制互动模块设计
+- E004: 视觉元素不足 → 自动视觉优化并记录日志
+- E005: 可读性不达标 → 重新执行可读性优化
+
+**质量错误码 (内容级)**
+- E101: 吸引力不足 (<80%) → 触发吸引力增强
+- E102: 互动性过低 (<70%) → 强化互动设计
+- E103: 视觉元素缺失 (<60%) → 补充视觉增强
+
+**性能错误码 (效率级)**
+- E301: 处理时间超限 (>5min) → 启用快速模式
+- E302: 批量优化失败 → 回退到单报告处理
+- E303: 风格应用失败 → 重新选择传播风格
+
+---
+
+## AI性能优化 (基于传播优化实战经验)
+
+### 批量优化策略
+```yaml
+batch_optimization:
+  optimal_size: 3_reports          # 传播版优化最佳批次大小
+  max_concurrent: 2                # 避免风格混淆
+  processing_mode:
+    single_report: "深度优化模式"   # 完整四步流程
+    batch_report: "高效优化模式"    # 优化处理策略
+  
+  error_handling:
+    source_missing: "user_confirmation_required"
+    style_undefined: "continue_with_default"
+    interaction_missing: "auto_generate"
+```
+
+### 效率指标 (传播优化专用)
+```yaml
+performance_targets:
+  processing_time: "<2min_per_report"      # 单报告优化时间
+  engagement_enhancement_rate: ">85%"      # 互动性提升率
+  readability_improvement: ">90%"          # 可读性改善率
+  visual_compliance: "100%"                # 视觉规范符合率
+  
+  # 质量SLA
+  attraction_score: ">80%"                 # 吸引力评分
+  interaction_completeness: ">95%"         # 互动完整性
+  visual_enhancement: ">85%"               # 视觉增强度
+```
+
+### 传播风格优化库
+```yaml
+style_optimization:
+  data_driven_analysis: "数据驱动深度分析风格"
+  expert_sharing: "专家与实践者分享系列"
+  thought_leader_dialogue: "思想领袖级深度对话风格"
+  insight_analysis: "洞察本质的深度分析风格"
+  
+  style_application:
+    title_optimization: ["设问技巧", "对比手法", "关键词突出"]
+    content_structure: ["编者按设计", "速览模块", "视觉锚点"]
+    interaction_design: ["开放性问题", "参与引导", "行动号召"]
+```
+
+---
+
+## 附录：传播风格与视觉规范
+
+### 传播风格选择矩阵
+```python
+# AI伪代码
+def select_communication_style(content_type, target_audience):
+    style_matrix = {
+        "technical_analysis": "数据驱动深度分析风格",
+        "industry_insight": "专家与实践者分享系列", 
+        "strategic_discussion": "思想领袖级深度对话风格",
+        "trend_analysis": "洞察本质的深度分析风格"
+    }
+    return style_matrix.get(content_type)
+```
+
+### 视觉元素标准库
+```yaml
+visual_standards:
+  emoji_anchors: ["📊", "💡", "🔥", "⚡", "🎯", "🚀"]
+  color_palette: ["teal", "blue", "orange"]  # 限制2-3种强调色
+  layout_principles: ["短段落", "列表化", "多级标题"]
+  chart_types: ["信息图", "数据卡片", "流程图", "对比表格"]
+```
+
+---
+
+> **AI执行确认**: 本规则文件为AI原生优化版本，所有指令均可直接执行。每次传播版优化后，AI必须在此处记录执行时间和结果摘要。

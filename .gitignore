@@ -1,42 +1,132 @@
-# Global ignores
-node_modules/
-.obsidian/
-.env
-.env.*
-*.pem
-*.key
-*.p12
-*.keystore
-*.jks
-*.pfx
-*.crt
-*.cer
-*.der
-*.csr
-*.DS_Store
-*.log
-*.sqlite
-*.db
-*.db-wal
-*.db-shm
-.lock
-.idea/
+# macOS系统文件
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# 编辑器配置文件
 .vscode/
-coverage/
+.idea/
+*.swp
+*.swo
+*~
+
+# 环境配置文件
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+config.env
+
+# 依赖目录
+node_modules/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# 日志文件
+*.log
+logs/
+*.log.*
+
+# 数据库文件
+*.db
+*.sqlite
+*.sqlite3
+
+# 临时文件
+*.tmp
+*.temp
+temp/
+tmp/
+
+# 缓存文件
+.cache/
+.parcel-cache/
+.next/
+.nuxt/
+.vuepress/dist
+
+# 构建输出
 dist/
 build/
+out/
 .next/
-.vercel/
-.cache/
-.next/cache/
-**/node_modules/
-**/.env
-**/.env.*
-**/*.secret
-**/*.token
-**/*.bak
-**/*.backup
-**/*.orig
-**/*.swp
-**/*.swo
-**/*~
+.nuxt/
+
+# 测试覆盖率
+coverage/
+.nyc_output/
+
+# 运行时文件
+.pid
+.pid.lock
+
+# 本地配置文件
+mcp_config.json
+mcp_config_standardized.json
+
+# Obsidian插件缓存
+.obsidian/plugins/*/data.json
+.obsidian/plugins/*/main.js
+.obsidian/plugins/*/manifest.json
+.obsidian/plugins/*/styles.css
+
+# 个人工作区文件 - 允许配置文件但忽略缓存
+.kiro/cache/
+.kiro/temp/
+.cursor/cache/
+.cursor/temp/
+
+# 允许重要的配置文件
+!.kiro/specs/
+!.kiro/settings/
+!.cursor/rules/
+!.claude/
+!.obsidian/
+
+# 忽略配置目录中的缓存和日志文件
+.claude/cache/
+.claude/logs/
+.claude/.DS_Store
+
+# 图片和媒体文件（可选，根据需要调整）
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.mp4
+*.mov
+*.avi
+
+# 文档文件（可选，根据需要调整）
+*.pdf
+*.docx
+*.xlsx
+*.pptx
+
+# 递归忽略（适用于多层子项目）
+**/node_modules/**
+**/__pycache__/**
+**/.venv/**

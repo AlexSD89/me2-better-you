@@ -1,0 +1,669 @@
+# 投资研究报告生成引擎规则 (v4.3-跳转记录增强版)
+
+> **核心功能**：本规则指导AI自动生成高质量投资研究报告，集成v4.2动态plan机制和跳转记录系统，通过"跳跃式思考+网状逻辑链+跳转记录"机制，实现思维发散、数据收集、收敛的完整闭环。
+
+> **v4.3创新亮点**：
+> - 继承v4.2的"发现驱动+思考+plan"创新机制
+> - 新增"跳跃式思考"和"网状逻辑链"设计
+> - 集成"跳转记录系统"，记录思维跳转链条
+> - 建立"跳转记录文件夹"，标准化跳转管理
+> - 实现"思维发散→数据收集→收敛"的完整闭环
+
+## 【核心执行逻辑】
+
+### 跳转记录是v4设计的核心
+**跳转记录的重要性**：
+- **思维发散验证**：记录思维如何从线性走向网状
+- **逻辑链条追踪**：追踪每个发现如何驱动下一个思考
+- **v4设计验证**：验证跳跃式思考和网状逻辑链的有效性
+- **方法论优化**：为v4增强版提供实证数据
+
+**跳转记录的核心价值**：
+- 记录A发现→B假设→C验证→回到A的复杂跳转
+- 记录A发现→3验证→回到A的提前验证
+- 记录2思考→5反证→回到2的风险驱动更新
+- 实现真正的网状思维，而非线性思维
+
+## 【自动化执行步骤】
+
+### 步骤1：路由器文件生成 (ROUTER_FILE_GENERATION)
+**目标**：首先生成路由器文件作为动态跳转路径记录的核心
+**自动化执行**：无人工干预，1分钟内自动完成
+
+**执行命令**：
+```python
+def router_file_generation(analysis_request):
+    # 目标：首先生成路由器文件
+    # 自动化：无人工干预，1分钟内自动完成
+    start_time = get_current_time()
+    
+    # 创建路由器文件结构
+    router_file_structure = {
+        "main_folder": f"knowledge/03_研究报告/6.1_专题分析报告/{analysis_request['topic']}/",
+        "router_file": f"📋00_{analysis_request['topic']}_Plan_Todo管理.md",  # 路由器文件
+        "jump_visualization_file": "🔄_跳转路径可视化.md",  # 动态跳转路径图
+        "jump_effect_file": "📊_跳转效果评估.md",  # 跳转效果评估
+        "jump_optimization_file": "🎯_跳转优化建议.md"  # 优化建议
+    }
+    
+    # 创建路由器文件（必须首先生成）
+    router_file = create_router_file(router_file_structure, analysis_request)
+    
+    # 初始化动态跳转路径内容
+    dynamic_jump_content = {
+        "mermaid_graph": "",  # Mermaid格式的跳转路径图
+        "dynamic_nodes": [],  # 动态生成的节点
+        "dynamic_connections": [],  # 动态生成的连接
+        "jump_chains": [],  # 跳转链条记录
+        "smart_recommendations": []  # 智能推荐
+    }
+    
+    return {
+        "status": "ROUTER_FILE_GENERATED",
+        "router_file_structure": router_file_structure,
+        "router_file": router_file,
+        "dynamic_jump_content": dynamic_jump_content,
+        "auto_advance": "READY_FOR_DISCOVERY_PHASE"
+    }
+```
+
+### 步骤2：发现驱动+路由器更新 (DISCOVERY_DRIVEN_WITH_ROUTER_UPDATE)
+**目标**：启动发现驱动思维，同时更新路由器文件
+**自动化执行**：无人工干预，3分钟内自动完成
+
+**执行命令**：
+```python
+def discovery_driven_with_router_update(analysis_request, router_file, dynamic_jump_content):
+    # 目标：发现驱动+路由器更新
+    # 自动化：无人工干预，3分钟内自动完成
+    start_time = get_current_time()
+    
+    # 检查是否需要网络搜索借鉴
+    if needs_reference_search(analysis_request):
+        learned_patterns = search_and_learn_from_network(
+            analysis_request['topic'], 
+            analysis_request['current_challenge']
+        )
+        if learned_patterns:
+            # 根据借鉴内容动态调整分析框架
+            adjusted_framework = dynamic_adjust_analysis_framework(
+                analysis_request['topic'], 
+                learned_patterns
+            )
+            analysis_request.update(adjusted_framework)
+    
+    # 灵活生成文件
+    files = flexible_file_generation(analysis_request['topic'], analysis_request['current_needs'])
+    
+    # 生成发现文件
+    discovery_file = auto_create_discovery_file(analysis_request)
+    
+    # 更新路由器文件 - 添加新节点
+    new_node = {
+        "id": "01_discovery",
+        "name": files[0] if files else "01_发现_市场机会识别",
+        "type": "discovery",
+        "content": "识别市场机会和投资价值"
+    }
+    dynamic_jump_content["dynamic_nodes"].append(new_node)
+    
+    # 更新路由器文件 - 添加连接
+    new_connection = {
+        "from": "initial_request",
+        "to": "01_discovery",
+        "type": "linear_jump",
+        "reason": "启动发现驱动思维"
+    }
+    dynamic_jump_content["dynamic_connections"].append(new_connection)
+    
+    # 更新Mermaid图
+    update_mermaid_graph(router_file, dynamic_jump_content)
+    
+    # 检查是否需要跳跃式思考
+    if needs_jump_thinking(discovery_file):
+        # 触发跳跃式思考并更新路由器
+        jump_connection = {
+            "from": "01_discovery",
+            "to": "04_verification",  # 直接跳到验证阶段
+            "type": "jump_thinking",
+            "reason": "提前验证核心假设"
+        }
+        dynamic_jump_content["dynamic_connections"].append(jump_connection)
+        update_mermaid_graph(router_file, dynamic_jump_content)
+    
+    return {
+        "status": "DISCOVERY_COMPLETED_WITH_ROUTER_UPDATE",
+        "discovery_file": discovery_file,
+        "router_file": router_file,
+        "dynamic_jump_content": dynamic_jump_content,
+        "auto_advance": "READY_FOR_THINKING_PHASE"
+    }
+```
+
+### 步骤3：动态Plan+路由器更新+收敛检查 (DYNAMIC_PLAN_WITH_ROUTER_UPDATE_AND_CONVERGENCE)
+**目标**：基于current_thinking动态生成plan，同时更新路由器文件，并进行收敛检查
+**自动化执行**：无人工干预，5分钟内自动完成
+
+**执行命令**：
+```python
+def dynamic_plan_with_router_update_and_convergence(current_thinking, router_file, dynamic_jump_content, search_count, time_elapsed):
+    # 目标：动态plan+路由器更新+收敛检查
+    # 自动化：无人工干预，5分钟内自动完成
+    start_time = get_current_time()
+    
+    # 生成动态plan
+    dynamic_plan = generate_dynamic_plan(current_thinking)
+    
+    # 更新路由器文件 - 记录plan执行中的跳转
+    for plan_item in dynamic_plan:
+        if plan_item["requires_jump"]:
+            # 添加跳跃式连接
+            jump_connection = {
+                "from": plan_item["current_phase"],
+                "to": plan_item["jump_target"],
+                "type": "jump_thinking",
+                "reason": plan_item["jump_reason"]
+            }
+            dynamic_jump_content["dynamic_connections"].append(jump_connection)
+    
+    # 执行plan并更新路由器
+    execution_results = execute_dynamic_plan(dynamic_plan)
+    
+    # 每次执行后更新路由器文件
+    for result in execution_results:
+        if result["status"] == "success":
+            # 添加新节点
+            new_node = {
+                "id": result["phase_id"],
+                "name": result["file_name"],
+                "type": result["phase_type"],
+                "content": result["summary"]
+            }
+            dynamic_jump_content["dynamic_nodes"].append(new_node)
+            
+            # 添加连接
+            new_connection = {
+                "from": result["from_phase"],
+                "to": result["phase_id"],
+                "type": "linear_jump",
+                "reason": result["connection_reason"]
+            }
+            dynamic_jump_content["dynamic_connections"].append(new_connection)
+    
+    # 更新Mermaid图
+    update_mermaid_graph(router_file, dynamic_jump_content)
+    
+    # 第一性原理收敛检查
+    convergence_check = first_principles_convergence_check(
+        current_thinking, 
+        search_count, 
+        time_elapsed
+    )
+    
+    if convergence_check["should_converge"]:
+        # 强制收敛
+        convergence_result = force_convergence(current_thinking, convergence_check["convergence_reason"])
+        return {
+            "status": "FORCED_CONVERGENCE",
+            "convergence_result": convergence_result,
+            "router_file": router_file,
+            "dynamic_jump_content": dynamic_jump_content,
+            "auto_advance": "COMPLETE_ANALYSIS"
+        }
+    
+    return {
+        "status": "DYNAMIC_PLAN_COMPLETED_WITH_ROUTER_UPDATE",
+        "dynamic_plan": dynamic_plan,
+        "execution_results": execution_results,
+        "router_file": router_file,
+        "dynamic_jump_content": dynamic_jump_content,
+        "auto_advance": "READY_FOR_NEXT_PHASE"
+    }
+```
+
+### 路由器更新函数 (ROUTER_UPDATE_FUNCTIONS)
+**目标**：提供具体的路由器更新功能
+
+**执行命令**：
+```python
+def update_mermaid_graph(router_file, dynamic_jump_content):
+    """更新路由器文件中的Mermaid图"""
+    mermaid_code = "graph TD\n"
+    
+    # 添加节点
+    for node in dynamic_jump_content["dynamic_nodes"]:
+        mermaid_code += f'    {node["id"]}[{node["name"]}]\n'
+    
+    # 添加连接
+    for connection in dynamic_jump_content["dynamic_connections"]:
+        mermaid_code += f'    {connection["from"]} --> {connection["to"]}\n'
+    
+    # 更新路由器文件
+    update_router_file_content(router_file, mermaid_code)
+
+def add_jump_connection(router_file, dynamic_jump_content, from_phase, to_phase, reason):
+    """添加跳跃式连接"""
+    jump_connection = {
+        "from": from_phase,
+        "to": to_phase,
+        "type": "jump_thinking",
+        "reason": reason
+    }
+    dynamic_jump_content["dynamic_connections"].append(jump_connection)
+    update_mermaid_graph(router_file, dynamic_jump_content)
+
+def add_new_node(router_file, dynamic_jump_content, node_id, node_name, node_type, content):
+    """添加新节点"""
+    new_node = {
+        "id": node_id,
+        "name": node_name,
+        "type": node_type,
+        "content": content
+    }
+    dynamic_jump_content["dynamic_nodes"].append(new_node)
+    update_mermaid_graph(router_file, dynamic_jump_content)
+
+def search_and_learn_from_network(analysis_topic, current_challenge):
+    """当不知道怎么做时，搜索网络寻找借鉴"""
+    search_queries = [
+        f"{analysis_topic} 投资分析报告 案例",
+        f"{analysis_topic} 研究方法论",
+        f"{analysis_topic} 分析框架 模板",
+        f"{current_challenge} 解决方案 案例"
+    ]
+    
+    for query in search_queries:
+        search_results = web_search(query)
+        for result in search_results:
+            if is_relevant_reference(result):
+                return extract_useful_patterns(result)
+    
+    return None
+
+def dynamic_adjust_analysis_framework(analysis_topic, learned_patterns):
+    """根据借鉴内容动态调整分析框架"""
+    if learned_patterns:
+        # 调整文件数量和标题
+        adjusted_files = generate_files_based_on_patterns(learned_patterns)
+        
+        # 调整分析方法
+        adjusted_methods = select_methods_from_patterns(learned_patterns)
+        
+        # 调整逻辑链条
+        adjusted_logic = build_logic_from_patterns(learned_patterns)
+        
+        return {
+            "files": adjusted_files,
+            "methods": adjusted_methods,
+            "logic": adjusted_logic
+        }
+    
+    return None
+
+def flexible_file_generation(analysis_topic, current_needs):
+    """根据当前需要灵活生成文件"""
+    files = []
+    
+    # 根据分析主题特点决定文件数量
+    if is_market_analysis(analysis_topic):
+        files.extend([
+            "01_市场机会识别.md",
+            "02_竞争格局分析.md",
+            "03_投资策略制定.md"
+        ])
+    elif is_company_analysis(analysis_topic):
+        files.extend([
+            "01_公司基本面分析.md",
+            "02_财务分析.md",
+            "03_估值分析.md"
+        ])
+    else:
+        # 动态生成文件
+        files = generate_files_dynamically(analysis_topic, current_needs)
+    
+    return files
+
+def first_principles_convergence_check(current_analysis, search_count, time_elapsed):
+    """第一性原理收敛检查"""
+    convergence_conditions = {
+        "found_root_cause": check_if_root_cause_found(current_analysis),
+        "actionable_conclusion": check_if_actionable_conclusion(current_analysis),
+        "diminishing_returns": check_diminishing_returns(search_count),
+        "time_cost": check_time_cost(time_elapsed),
+        "depth_achieved": check_analysis_depth(current_analysis)
+    }
+    
+    # 如果满足任一收敛条件，强制收敛
+    if any(convergence_conditions.values()):
+        return {
+            "should_converge": True,
+            "convergence_reason": get_convergence_reason(convergence_conditions),
+            "next_action": "complete_analysis"
+        }
+    
+    return {"should_converge": False}
+
+def check_if_root_cause_found(analysis):
+    """检查是否已找到根本原因"""
+    # 检查是否已回到问题的本质
+    key_insights = extract_key_insights(analysis)
+    if len(key_insights) >= 3 and all_insights_are_fundamental(key_insights):
+        return True
+    return False
+
+def check_if_actionable_conclusion(analysis):
+    """检查是否已形成可操作的结论"""
+    conclusions = extract_conclusions(analysis)
+    if len(conclusions) >= 2 and all_conclusions_are_actionable(conclusions):
+        return True
+    return False
+
+def check_diminishing_returns(search_count):
+    """检查是否出现收益递减"""
+    if search_count > 5:  # 超过5次搜索后检查收益递减
+        recent_value = calculate_recent_search_value()
+        if recent_value < 0.3:  # 最近搜索的价值低于30%
+            return True
+    return False
+
+def check_time_cost(time_elapsed):
+    """检查时间成本"""
+    max_time = 15 * 60  # 15分钟
+    if time_elapsed > max_time:
+        return True
+    return False
+
+def force_convergence(analysis, convergence_reason):
+    """强制收敛"""
+    # 停止进一步搜索
+    stop_search_and_validation()
+    
+    # 总结核心发现
+    core_findings = extract_core_findings(analysis)
+    
+    # 形成最终结论
+    final_conclusion = form_final_conclusion(core_findings)
+    
+    # 更新路由器文件
+    update_router_with_convergence(analysis, convergence_reason)
+    
+    return {
+        "status": "FORCED_CONVERGENCE",
+        "convergence_reason": convergence_reason,
+        "core_findings": core_findings,
+        "final_conclusion": final_conclusion
+    }
+```
+```
+
+## 【动态跳转路径记录系统】
+
+### 核心设计理念
+**动态生成节点和连接**：像Mermaid图一样，节点名称和功能不是预设的，而是边做边生成的
+
+### 路由器文件结构
+```
+knowledge/03_研究报告/6.1_专题分析报告/
+├── [专题名称]/
+│   ├── 📋00_[专题名称]_Plan_Todo管理.md  # 路由器文件（必须首先生成）
+
+│   └── [其他分析文件]
+```
+
+### 路由器文件核心功能
+**📋00_[专题名称]_Plan_Todo管理.md** 作为路由器文件，包含：
+1. **动态跳转路径图**：Mermaid格式的可视化跳转路径
+2. **简单跳转记录**：记录每次跳转（从→到→原因）
+3. **实时更新**：每次分析进展都更新路由器文件
+4. **灵活调整**：文件数量、标题、方法都可根据需要动态调整
+
+### 动态调整机制
+**不确定性处理**：
+- **文件数量不确定**：根据分析需要动态增减文件
+- **内容标题不确定**：根据实际内容动态生成标题
+- **分析方法不确定**：根据主题特点选择最适合的方法
+- **逻辑链条不确定**：根据发现动态调整分析逻辑
+
+### 网络搜索借鉴机制
+**当不知道怎么做时**：
+1. **搜索相似案例**：寻找与目标最相近的分析案例
+2. **借鉴格式逻辑**：参考成功案例的格式和逻辑
+3. **借鉴方法论**：学习相关领域的分析方法
+4. **动态调整**：根据借鉴内容调整自己的分析框架
+
+### 简单跳转记录示例
+**路由器文件中的跳转记录**：
+```
+## 跳转记录
+- 01 → 02：市场机会识别 → 投资策略制定
+- 02 → 03：投资策略分析 → 目标企业识别
+- 01 → 04：发现阶段直接跳到验证阶段（提前验证）
+- 02 → 05：思考阶段直接跳到反证阶段（提前识别风险）
+```
+
+
+
+## 【文件流转机制】
+
+### 文件间逻辑驱动关系
+```
+发现 → 思考 → 假设 → 验证 → 反证 → 结论 → 新发现
+  ↓      ↓      ↓      ↓      ↓      ↓      ↓
+驱动思考  驱动假设  驱动验证  驱动反证  驱动结论  驱动行动  驱动新思考
+```
+
+### 跳跃式思考机制（核心创新）
+**支持非线性跳转**：
+```
+A发现 → B假设 → C验证 → 回到A（验证驱动更新）
+A发现 → 3验证 → 回到A（提前验证）
+2思考 → 5反证 → 回到2（风险驱动更新）
+```
+
+**跳转触发条件**：
+- 发现关键假设需要提前验证
+- 识别潜在风险需要提前分析
+- 形成初步结论需要提前确认
+- 数据支撑不足需要补充验证
+
+### 每个文件必须包含
+1. **文件头部链条标注**：
+   ```
+   ---
+   文件ID：[序号]_[类型]_[具体内容]
+   上游驱动：[上一个文件的ID和核心发现]
+   下游驱动：[驱动下一个文件的问题/假设/发现]
+   状态码：[#0001-#0006]
+   生成时间：YYYY-MM-DD HH:MM
+   ---
+   ```
+
+2. **跳转记录标注**（新增）：
+   ```
+   ---
+   跳转类型：[线性跳转/跳跃式跳转]
+   跳转原因：[为什么进行这次跳转]
+   跳转价值：[这次跳转带来的价值]
+   跳转质量：[跳转质量评估]
+   ---
+   ```
+
+3. **核心内容结构**：
+   - 发现/思考/验证/反证的具体内容
+   - 权威信源支撑（必须标注信源）
+   - 逻辑推导过程
+   - 驱动下一个文件的明确指示
+4. **质量检查**：
+   - 每个观点都有权威信源支撑
+   - 逻辑链条清晰完整
+   - 驱动关系明确
+
+## 【软性收敛与交付机制】
+
+### 第一性原理收敛机制
+**核心原则**：回到第一性原理，避免无限搜索和验证
+
+#### 收敛判断标准
+每轮"发现-思考-反证"后，需主动判断是否达到收敛条件：
+
+1. **第一性原理收敛**
+   - 是否已回到问题的本质？
+   - 是否已找到根本原因？
+   - 是否已形成核心洞察？
+
+2. **假设验证收敛**
+   - 主要假设已被多轮证据充分验证或反驳
+   - 关键争议点已有明确结论
+   - 反证分析已覆盖主要质疑
+
+3. **数据覆盖收敛**
+   - 关键数据已收集完整
+   - 权威报告已充分引用
+   - 案例对比已全面分析
+
+4. **逻辑链条收敛**
+   - 发现之间的逻辑关系已清晰
+   - 多维度交叉验证已完成
+   - 结论推导过程已完整
+
+5. **价值产出收敛**
+   - 已形成可操作的结论
+   - 投资启示已明确
+   - 进一步发散无新增高价值信息
+
+6. **跳转记录收敛**
+   - 跳转链条已完整记录
+   - 跳跃式思考已充分验证
+   - 跳转效果已评估完成
+
+#### 收敛触发条件
+**当满足以下任一条件时，强制收敛**：
+- 已找到问题的根本原因（第一性原理）
+- 已形成可操作的核心结论
+- 进一步搜索无新增高价值信息
+- 时间成本超过预期收益
+- 分析深度已达到目标要求
+
+### 软性收敛执行机制
+- **禁止跳步**：必须按顺序执行，不能跳过任何阶段
+- **禁止主观推断**：每个结论必须有证据支撑
+- **强制软性收敛判断**：每个阶段结束后必须判断是否收敛
+- **支持跳跃式思考**：允许在适当时机进行跳跃式思考
+- **支持文件动态更新**：允许根据新发现动态更新任何文件
+- **强制跳转记录**：每次跳转都必须记录在跳转记录文件中
+
+## 【执行指令】
+
+### 核心执行逻辑
+```
+当收到专题分析请求时，AI必须：
+
+1. 立即生成路由器文件（📋00_[专题名称]_Plan_Todo管理.md）
+   - 这是必须首先生成的文件
+   - 作为动态跳转路径记录的核心路由器
+   - 包含Mermaid格式的可视化跳转路径
+
+2. 处理不确定性（文件数量、标题、方法都不确定）
+   - 根据分析主题特点动态决定文件数量
+   - 根据实际内容动态生成文件标题
+   - 根据主题特点选择最适合的分析方法
+   - 根据发现动态调整分析逻辑
+
+3. 网络搜索借鉴（当不知道怎么做时）
+   - 搜索与目标最相近的分析案例
+   - 借鉴成功案例的格式和逻辑
+   - 学习相关领域的分析方法
+   - 根据借鉴内容调整分析框架
+
+4. 启动发现驱动思维模式，同时更新路由器文件
+   - 每次分析进展都实时更新路由器文件
+   - 动态生成节点和连接
+   - 记录所有跳转路径
+
+5. 按照思考流转机制生成文件：
+   - 从具体发现开始
+   - 每个发现驱动下一个思考
+   - 每个文件都有明确的逻辑驱动关系
+   - 每次跳转都更新路由器文件
+
+6. 确保每个观点都有具体的数据、案例和权威来源支撑
+
+7. 通过交叉验证和反证分析确保客观性
+
+8. 在适当时机进行第一性原理收敛判断
+   - 检查是否已找到根本原因
+   - 检查是否已形成可操作结论
+   - 检查是否出现收益递减
+   - 检查时间成本是否超限
+
+9. 基于current_thinking动态生成plan
+
+10. 执行plan循环并进行收敛检查
+   - 每次执行后检查收敛条件
+   - 满足任一收敛条件时强制收敛
+   - 避免无限搜索和验证
+
+11. 完成路由器文件总结
+
+12. 最终形成可操作的结论和策略建议
+```
+
+## 【强制执行原则】
+
+### 强制执行原则
+1. **路由器文件优先**：必须首先生成路由器文件（📋00_[专题名称]_Plan_Todo管理.md）
+2. **严格按照步骤执行**：不能跳步，不能主观推断
+3. **每个文件都要有驱动关系**：上游驱动和下游驱动必须明确
+4. **权威信源优先**：只采纳权威信源，其他仅作补充
+5. **时间控制严格**：15分钟内必须完成或收敛
+6. **质量保证**：每个观点都要有证据支撑
+7. **动态plan机制**：基于current_thinking动态生成plan，支持执行循环
+8. **软性收敛判断**：每轮分析后主动判断是否达到收敛条件
+9. **跳跃式思考**：支持文件动态更新和网状逻辑链构建
+10. **执行循环机制**：必须实现plan → execute → update → new plan的循环
+11. **路由器文件更新强制**：每次跳转都必须更新路由器文件，路由器文件是v4设计的核心
+
+### 跳转记录质量保证机制
+1. **跳转记录完整性检查**：确保每次跳转都被记录
+2. **跳转逻辑清晰度检查**：确保跳转原因和价值明确
+3. **跳转效果评估检查**：确保跳转效果被量化评估
+4. **跳转优化建议检查**：确保基于跳转记录提出优化建议
+
+---
+
+> **AI执行确认**: 本规则文件为v4.3跳转记录增强版，专注于跳转记录机制、跳跃式思考和网状逻辑链，确保思维发散、数据收集、收敛的完整闭环。跳转记录是v4设计的核心，其他都是配套。
+
+---
+
+# 附录：v4.3跳转记录大逻辑与设计理念（README）
+
+## v4.3跳转记录大逻辑
+
+```
+跳转记录初始化 → 发现驱动+跳转记录 → 动态Plan+跳转记录 → 软性收敛判断 → 跳转记录总结 → 完成交付
+```
+
+- 每一步都自动推进、自动判断、自动记录跳转
+- 所有跳转、思维链条、优化建议都融入每个执行步骤
+- 用户只需输入需求，系统自动完成全流程并记录跳转
+
+## 设计理念
+
+- **路由器文件是核心**：路由器文件（📋00_[专题名称]_Plan_Todo管理.md）是v4设计的核心，其他都是配套
+- **动态生成节点和连接**：像Mermaid图一样，节点名称和功能不是预设的，而是边做边生成的
+- **思维发散验证**：通过路由器文件验证思维如何从线性走向网状
+- **逻辑链条追踪**：追踪每个发现如何驱动下一个思考
+- **v4设计验证**：验证跳跃式思考和网状逻辑链的有效性
+- **方法论优化**：为v4增强版提供实证数据
+- **持续学习**：通过路由器文件积累和复用经验
+
+## 跳转记录的核心价值
+
+1. **记录复杂跳转**：A发现→B假设→C验证→回到A
+2. **记录提前验证**：A发现→3验证→回到A
+3. **记录风险驱动**：2思考→5反证→回到2
+4. **实现网状思维**：从线性思维到网状思维的进化
+description:
+globs:
+alwaysApply: false
+---

@@ -1,0 +1,607 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# 投资研究与知识资产报告生成引擎规则 (v2.0-AI原生版)
+
+> **核心指令：本AI必须严格执行"范围→采集→分析→交付"四步闭环，每一步需返回结构化状态码。禁止跳步，禁止主观推断。**
+
+## 🚨 AI执行信号系统
+
+### 版本标记
+```
+版本: v2.0-AI原生版
+状态: ACTIVE
+最后更新: [AI自动生成YYYY-MM-DD]
+```
+
+### 执行优先级矩阵
+| 优先级 | 触发条件 | AI响应动作 |
+|---|---|---|
+| P0 | 报告类型不匹配 | 立即中止→返回错误码TYPE_MISMATCH |
+| P1 | 信源不可达 | 标记[INFO_MISSING]→继续执行 |
+| P2 | 框架未选择 | 强制框架决策→写入分析结构 |
+| P3 | 格式不规范 | 自动修复→记录修复日志 |
+
+---
+
+## AI操作指令集
+
+### 指令1: 报告类型识别 (TYPE_IDENTIFY)
+**AI触发条件**: 检测到报告生成请求
+**执行动作**:
+```python
+# AI伪代码
+def type_identify(request_content):
+    report_types = {
+        "T": "趋势洞察",
+        "C": "关键结论", 
+        "ARG": "商业论证",
+        "P": "人物画像",
+        "TECH": "技术分析",
+        "F": "分析框架",
+        "S": "投资策略"
+    }
+    
+    target_directory = determine_output_path(request_content)
+    report_structure = select_analysis_framework(request_content)
+    
+    return {"type": report_types.get(type_code), "path": target_directory, "framework": report_structure}
+```
+
+**AI输出格式**:
+```json
+{
+  "report_type": "T|C|ARG|P|TECH|F|S",
+  "output_path": "knowledge/03_研究报告/[子目录]/",
+  "framework": "选定的分析框架",
+  "timestamp": "2025-07-21"
+}
+```
+
+### 指令2: 多源信息采集 (INFO_HARVEST)
+**AI触发条件**: 确认报告类型后
+**采集层级**:
+1. **权威机构报告** (权重1.0): 政府/国际组织/知名咨询公司
+2. **学术研究** (权重0.9): 期刊文章/会议论文/学术数据库
+3. **行业媒体** (权重0.7): 专业媒体/行业出版物/KOL观点
+4. **公司官方** (权重0.8): 年报/白皮书/官方声明
+
+**AI采集动作**:
+```
+对每个信息维度执行：
+→ 关键词矩阵生成
+→ 多数据库检索
+→ 权威性评估
+→ 交叉验证执行
+→ 时效性检查
+→ 数据标准化处理
+```
+
+### 指令3: 分析框架选择 (FRAMEWORK_SELECT)
+**AI触发条件**: 完成信息采集后
+**框架决策矩阵**:
+```python
+# AI伪代码
+def framework_select(report_type, content_scope):
+    frameworks = {
+        "market_analysis": ["SWOT", "PESTEL", "Porter_Five_Forces"],
+        "tech_trend": ["Technology_Adoption_Lifecycle", "Hype_Cycle"],
+        "investment": ["DCF", "Comparable_Analysis", "Risk_Assessment"],
+        "competitive": ["Competitive_Positioning", "Value_Chain_Analysis"]
+    }
+    
+    selected_framework = match_framework(report_type, content_scope)
+    analysis_structure = generate_analysis_outline(selected_framework)
+    
+    return {"framework": selected_framework, "structure": analysis_structure}
+```
+
+### 指令4: 内容结构生成 (STRUCTURE_GEN)
+**AI触发条件**: 框架选择完成后
+**结构生成规则**:
+```python
+# AI伪代码
+def structure_generate():
+    standard_structure = {
+        "frontmatter": generate_metadata(),
+        "executive_summary": create_summary_outline(),
+        "main_analysis": apply_selected_framework(),
+        "conclusions": structure_conclusions(),
+        "references": format_citations(),
+        "appendices": organize_supplementary_data()
+    }
+    return standard_structure
+```
+
+---
+
+## AI统一执行流程：四步核心循环
+
+> **历史映射：AI内部将四步核心循环映射为传统十二步流程，确保兼容性**
+
+### AI四步核心循环
+
+#### STEP 1: 范围界定与框架选择 (SCOPE_DEFINE)
+**AI内部映射**: 传统第1-3步"目标确定+信息收集+框架构建"
+
+**AI执行逻辑**:
+```python
+# --- 细节注入 ---
+# 报告类型识别: T/C/ARG/P/TECH/F/S系列命名规范
+# 目标目录确定: knowledge/03_研究报告/[1_趋势洞察|2_商业分析|4_技术洞察|5_方法论|5.1_投资相关]/
+# 读者画像分析: 决策者/投资者/技术团队/市场人员
+# 范围界定: 时间跨度/地域范围/行业边界
+# 框架选择: SWOT/PESTEL/Porter五力/技术采用生命周期/炒作周期
+# 预期成果: 趋势预测/机会识别/风险评估/竞品分析
+# 元数据生成: YAML Frontmatter (报告生成日期/版本/作者/目的/核心标签)
+# --- 细节注入结束 ---
+def step1_scope_define(request_content):
+    scope_analysis = {
+        "report_classification": classify_report_type(request_content),
+        "target_audience": analyze_reader_profile(request_content),
+        "scope_boundaries": define_analysis_scope(request_content),
+        "framework_selection": select_analysis_framework(request_content),
+        "output_specification": determine_deliverables(request_content)
+    }
+    
+    # 历史兼容：传统1-3步映射
+    scope_analysis["traditional_steps"] = {
+        "step1_objectives": scope_analysis["output_specification"],
+        "step2_initial_gathering": scope_analysis["scope_boundaries"], 
+        "step3_framework_development": scope_analysis["framework_selection"]
+    }
+    
+    return scope_analysis
+```
+
+#### STEP 2: 深度信息采集与验证 (INFO_HARVEST)
+**AI内部映射**: 传统第4步"深度信息挖掘与验证"
+
+**AI执行逻辑**:
+```python
+# --- 细节注入 ---
+# 多源外部搜索策略:
+#   关键词矩阵: [核心主题, 长尾关键词, 英文术语, 中文术语]
+#   搜索引擎: Google/Bing + 专业数据库(Google Scholar/IEEE/PubMed/Statista/Crunchbase/PitchBook)
+#   信息来源多样性:
+#     权威机构报告(1.0): 政府部门/国际组织/知名咨询公司(Gartner/Forrester/McKinsey/Deloitte)/行业协会
+#     学术研究(0.9): 期刊文章/会议论文/学术数据库
+#     行业媒体(0.7): 专业新闻网站/杂志/博客/KOL观点
+#     公司官方(0.8): 年报/白皮书/新闻稿/官方网站
+#     金融市场数据(0.8): 财报/分析师报告/投融资信息
+#     社交媒体(0.3): LinkedIn/Twitter专家讨论(谨慎甄别)
+# 来源权威性评估: 发布者背景/数据准确性/观点客观性/行业认可度
+# 信息交叉验证: 关键数据至少2-3个独立信源确认
+# 数据驱动分析: 市场规模/增长率/CAGR/市场份额/用户数量/渗透率/融资额/研发投入
+# 数据时效性: 优先最新数据，标注发布日期
+# 数据来源标注: 清晰记录所有引用数据来源，便于追溯核实
+# 案例与细节填充: 公司案例/产品信息/技术细节/事件背景
+# 识别信息空白与局限性: 坦诚面对难以获取或存在争议的信息
+# --- 细节注入结束 ---
+def step2_info_harvest(scope_definition):
+    # 历史数据源优化经验整合
+    harvest_pipeline = {
+        "source_hierarchy": {
+            "tier1_authoritative": {     # 权重1.0
+                "government_reports": "政府部门报告",
+                "international_orgs": "国际组织数据",
+                "top_consulting": "顶级咨询公司报告",
+                "industry_associations": "行业协会发布"
+            },
+            "tier2_academic": {          # 权重0.9
+                "peer_reviewed": "同行评议期刊",
+                "conference_papers": "会议论文",
+                "academic_databases": "学术数据库"
+            },
+            "tier3_industry": {          # 权重0.7-0.8
+                "professional_media": "专业媒体报道",
+                "company_official": "公司官方信息",
+                "financial_data": "金融市场数据",
+                "analyst_reports": "分析师报告"
+            },
+            "tier4_contextual": {        # 权重0.3
+                "social_media": "社交媒体专家观点",
+                "forums": "专业论坛讨论"
+            }
+        },
+        
+        "search_strategy": {
+            "keyword_matrix": generate_keyword_combinations(scope_definition),
+            "database_coverage": ["Google_Scholar", "IEEE_Xplore", "PubMed", "Statista", "Crunchbase", "PitchBook"],
+            "language_priority": ["English", "Chinese"],
+            "time_range": "prioritize_recent_5_years"
+        },
+        
+        "validation_pipeline": {
+            "cross_validation": "minimum_2_sources_per_key_datapoint",
+            "authority_assessment": "evaluate_publisher_credibility",
+            "recency_check": "prioritize_latest_available_data",
+            "consistency_verification": "flag_conflicting_data"
+        },
+        
+        "data_extraction": {
+            "quantitative_metrics": ["market_size", "growth_rate", "CAGR", "market_share", "user_metrics"],
+            "qualitative_insights": ["trends", "patterns", "expert_opinions", "case_studies"],
+            "supporting_evidence": ["company_examples", "product_details", "technical_specifications"]
+        }
+    }
+    
+    return harvest_pipeline
+```
+
+#### STEP 3: 内容整合与深度分析 (CONTENT_ANALYZE)
+**AI内部映射**: 传统第5步"内容整合与分析"
+
+**AI执行逻辑**:
+```python
+# --- 细节注入 ---
+# 系统性整合: 按报告框架组织信息到相应章节
+# 核心分析章节内部逻辑结构: "总-分-总"/并列式/子标题结构化呈现
+# 逻辑连接词和过渡句: 确保内容流畅
+# 关键外部信息融入: 权威参考文献的关键数据/核心观点/分析结论有机融入
+# 批判性思维与深度分析:
+#   超越信息罗列: 避免简单堆砌事实数据
+#   提炼核心观点: 从繁杂信息中提炼关键洞察/核心论点/主要趋势
+#   模式识别: 分析数据和事件关联，识别发展模式/驱动因素/潜在规律
+#   因果分析: 探讨现象背后原因，分析不同因素相互作用和影响机制
+#   比较分析: 对比不同技术路径/市场参与者/区域市场优劣势特点
+# 保持客观中立: 基于事实和数据分析，区分事实陈述与观点推测
+# 观点提炼与升华: 每章节末尾小结，提炼核心观点
+# --- 细节注入结束 ---
+def step3_content_analyze(harvest_data):
+    # 内部映射：第5步内容整合分析
+    analysis_engine = {
+        "systematic_integration": organize_by_framework(harvest_data),
+        "critical_analysis": {
+            "pattern_recognition": identify_trends_and_patterns(harvest_data),
+            "causal_analysis": analyze_cause_effect_relationships(harvest_data),
+            "comparative_analysis": conduct_comparative_studies(harvest_data),
+            "core_insights": extract_key_insights(harvest_data)
+        },
+        "content_synthesis": {
+            "executive_summary": generate_executive_summary(harvest_data),
+            "main_analysis": structure_main_content(harvest_data),
+            "conclusions": formulate_conclusions(harvest_data),
+            "recommendations": develop_recommendations(harvest_data)
+        },
+        "quality_assurance": {
+            "objectivity_check": ensure_neutral_stance(harvest_data),
+            "logic_flow": verify_logical_coherence(harvest_data),
+            "evidence_support": validate_claim_support(harvest_data)
+        }
+    }
+    
+    return analysis_engine
+```
+
+#### STEP 4: 结构优化与交付 (STRUCTURE_DELIVER)
+**AI内部映射**: 传统第6-12步"结构迭代+可视化+语言优化+记录溯源+持续迭代"
+
+**AI执行逻辑**:
+```python
+# --- 细节注入 ---
+# 动态调整框架: 内容填充过程中灵活调整章节设置/顺序/层级
+# 逻辑流检查: 各章节间/各段落间逻辑关系清晰连贯
+# 章节平衡与详略得当:
+#   核心分析与结论部分: 高信息密度和分析深度，论证充分，细节丰富
+#   辅助性与背景性内容: 精炼语言，高度概括，列表形式，直接切入核心
+# 引人入胜的开篇与强有力收尾: 执行摘要抓住注意力，结论总结全文回应问题
+# 可视化与呈现:
+#   图表有效运用: 选择合适图表类型(饼图/柱状图/折线图/散点图/流程图/甘特图)
+#   Mermaid语法: pie/bar/flowchart/sequenceDiagram/gantt
+#   Markdown格式规范: 标题层级/列表/表格/代码块/引用/强调/链接
+# 语言专业性与准确性:
+#   专业术语准确使用，首次出现时解释
+#   客观严谨表达，避免夸张主观臆断
+#   语法拼写检查，术语数据单位缩略语全文一致
+# 记录与溯源:
+#   元数据Frontmatter: 报告生成日期/版本/作者/目的/主要信息来源/核心标签
+#   引用与参考文献: 直接引用数据/图表/重要观点文末列出参考文献
+#   修改日志: 长期维护报告可维护修改日志
+# 持续迭代与反馈: 初稿评审/基于反馈修改/版本控制/定期更新机制
+# 附录与补充材料: 详细数据表格/公司列表/案例清单/调研问卷/缩略语表
+# --- 细节注入结束 ---
+def step4_structure_deliver(analysis_results):
+    # 内部映射：第6-12步完整交付流程
+    delivery_pipeline = {
+        "structure_optimization": {
+            "framework_adjustment": optimize_chapter_structure(analysis_results),
+            "logic_flow_check": verify_coherent_narrative(analysis_results),
+            "content_balance": balance_section_depth(analysis_results)
+        },
+        
+        "visualization_enhancement": {
+            "chart_integration": embed_appropriate_charts(analysis_results),
+            "mermaid_diagrams": generate_process_flows(analysis_results),
+            "markdown_formatting": apply_formatting_standards(analysis_results)
+        },
+        
+        "language_refinement": {
+            "terminology_consistency": standardize_professional_terms(analysis_results),
+            "objectivity_assurance": maintain_neutral_tone(analysis_results),
+            "readability_optimization": enhance_clarity_and_flow(analysis_results)
+        },
+        
+        "documentation_completion": {
+            "metadata_generation": create_frontmatter(analysis_results),
+            "citation_formatting": format_references(analysis_results),
+            "appendix_organization": structure_supplementary_materials(analysis_results)
+        },
+        
+        "quality_validation": {
+            "completeness_check": verify_all_sections_complete(analysis_results),
+            "accuracy_verification": validate_data_and_claims(analysis_results),
+            "format_compliance": ensure_markdown_standards(analysis_results)
+        }
+    }
+    
+    return delivery_pipeline
+```
+
+### 历史兼容性层
+
+#### 十二步传统流程 → 四步AI映射表
+| 传统步骤 | AI核心步骤 | 处理阶段 | AI内部状态 |
+|---|---|---|---|
+| 第1步 目标范围确定 | STEP 1 范围界定 | 预处理 | `DEFINE_SCOPE` |
+| 第2步 初始信息收集 | STEP 1 范围界定 | 框架选择 | `SELECT_FRAMEWORK` |
+| 第3步 构建报告框架 | STEP 1 范围界定 | 结构设计 | `DESIGN_STRUCTURE` |
+| 第4步 深度信息挖掘 | STEP 2 信息采集 | 多源检索 | `HARVEST_INFO` |
+| 第5步 内容整合分析 | STEP 3 内容分析 | 深度分析 | `ANALYZE_CONTENT` |
+| 第6步 结构迭代优化 | STEP 4 结构交付 | 结构优化 | `OPTIMIZE_STRUCTURE` |
+| 第7步 可视化呈现 | STEP 4 结构交付 | 可视化 | `ENHANCE_VISUAL` |
+| 第8步 语言专业性 | STEP 4 结构交付 | 语言优化 | `REFINE_LANGUAGE` |
+| 第9步 记录与溯源 | STEP 4 结构交付 | 文档完善 | `COMPLETE_DOCS` |
+| 第10步 持续迭代 | STEP 4 结构交付 | 质量验证 | `VALIDATE_QUALITY` |
+| 第11步 附录补充 | STEP 4 结构交付 | 附录整理 | `ORGANIZE_APPENDIX` |
+| 第12步 结构化表达 | STEP 4 结构交付 | 最终交付 | `FINAL_DELIVER` |
+
+#### AI状态机
+```
+[START] → STEP1 → STEP2 → STEP3 → STEP4 → [END]
+   ↓       ↓      ↓      ↓      ↓
+ERROR → FIX → RETRY → WARN → COMPLETE
+```
+
+### AI统一输出格式
+```json
+{
+  "ai_flow": "4step_core",
+  "traditional_mapping": "12step_compatible",
+  "current_step": "STEP1|STEP2|STEP3|STEP4",
+  "status": "SUCCESS|ERROR|WARNING",
+  "historical_step_equivalent": "第1-12步中的对应步骤",
+  "next_action": "下一步指令"
+}
+```
+
+---
+
+## AI异常处理协议
+
+### 报告类型异常
+```
+ERROR: TYPE_MISMATCH
+ACTION: 立即进入类型识别模式
+OUTPUT: 生成类型确认指令清单
+```
+
+### 信息采集异常  
+```
+ERROR: SOURCE_UNREACHABLE
+ACTION: 标记[信息暂缺]
+OUTPUT: 生成替代信源任务
+```
+
+### 框架选择异常
+```
+ERROR: FRAMEWORK_UNDEFINED
+ACTION: 强制执行框架决策
+OUTPUT: 生成框架建议报告
+```
+
+### 结构生成异常
+```
+ERROR: STRUCTURE_INCOMPLETE
+ACTION: 自动补全结构模板
+OUTPUT: 生成结构修复清单
+```
+
+---
+
+## AI记忆与上下文管理
+
+### 长期记忆 (Persistent Memory)
+- 当前活跃报告模板库
+- 历史报告生成记录
+- 框架选择决策树
+- 质量评分基准线
+
+### 短期记忆 (Session Memory)  
+- 本次报告生成批次ID
+- 待验证信息清单
+- 临时发现的数据冲突
+- 需要用户确认的框架选择
+
+### 上下文切换 (Context Switch)
+```
+当切换报告类型时，AI必须:
+1. 保存当前生成状态
+2. 加载新报告类型上下文
+3. 重置短期记忆
+4. 保持长期记忆
+```
+
+---
+
+## AI输出规范
+
+### 统一返回格式 (基于知识生产流水线经验)
+```json
+{
+  "status": "SUCCESS|ERROR|WARNING",
+  "step": "当前执行步骤",
+  "report_type": "T|C|ARG|P|TECH|F|S",
+  "output_path": "knowledge/03_研究报告/[子目录]/",
+  "framework_applied": "选用的分析框架",
+  "quality_metrics": {
+    "information_completeness": "95%",
+    "source_authority": "权重计算值",
+    "analysis_depth": "90%",
+    "structure_coherence": "98%"
+  },
+  "validation_layers": [
+    "ai_type_identification_passed",
+    "multi_source_harvest_complete", 
+    "framework_application_verified",
+    "structure_optimization_passed"
+  ],
+  "error_classification": {
+    "type": "recoverable|framework_selection|system_failure",
+    "impact": "low|medium|high",
+    "escalation": "auto_retry|user_notice|manual_intervention"
+  },
+  "report_info": {
+    "file_path": "knowledge/03_研究报告/[分类]/[报告名称].md",
+    "report_classification": "确定的报告类型",
+    "batch_id": "生成批次ID",
+    "completion_time": "2025-07-21T10:30:00Z"
+  },
+  "performance_metrics": {
+    "processing_time": "<5min_per_report",
+    "source_coverage_rate": ">80%",
+    "framework_accuracy": ">95%",
+    "format_compliance": "100%"
+  },
+  "next_action": "下一步指令",
+  "timestamp": "2025-07-21T10:30:00Z"
+}
+```
+
+### 错误码系统 (报告生成专用)
+**基础错误码 (生成级)**
+- E001: 报告类型不匹配 → 强制类型识别
+- E002: 信源不可达 → 标记[信息暂缺]继续执行  
+- E003: 框架未定义 → 强制执行框架决策
+- E004: 结构不完整 → 自动补全并记录日志
+- E005: 输出路径错误 → 重新执行路径决策
+
+**质量错误码 (内容级)**
+- E101: 信息完整性不足 (<80%) → 触发补充采集
+- E102: 信源权威性过低 (<70%) → 提升信源等级要求
+- E103: 分析深度不足 (<85%) → 强制深度分析
+
+**性能错误码 (效率级)**
+- E301: 处理时间超限 (>10min) → 启用快速模式
+- E302: 批量生成失败 → 回退到单报告处理
+- E303: 框架应用失败 → 重新选择框架
+
+---
+
+## AI性能优化 (基于知识生产流水线实战经验)
+
+### 批量生成策略
+```yaml
+batch_generation:
+  optimal_size: 3_reports          # 报告生成最佳批次大小
+  max_concurrent: 2                # 避免信息混淆
+  processing_mode:
+    single_report: "深度模式"       # 完整四步流程
+    batch_report: "高效模式"        # 优化检索策略
+  
+  error_handling:
+    type_mismatch: "user_confirmation_required"
+    missing_sources: "continue_with_marking"
+    framework_conflict: "manual_selection"
+```
+
+### 效率指标 (报告生成专用)
+```yaml
+performance_targets:
+  processing_time: "<5min_per_report"      # 单报告生成时间
+  source_coverage_rate: ">80%"             # 信源覆盖完成率
+  framework_accuracy: ">95%"               # 框架选择准确率
+  structure_compliance: "100%"             # 结构规范符合率
+  
+  # 质量SLA
+  information_completeness: ">90%"         # 信息完整性
+  source_authority: ">75%"                 # 信源权威性
+  analysis_depth: ">85%"                   # 分析深度
+```
+
+### 框架优化策略
+```yaml
+framework_optimization:
+  selection_accuracy: ">95%"               # 框架选择准确率
+  application_consistency: "100%"          # 框架应用一致性
+  adaptation_flexibility: "high"           # 框架适应灵活性
+  
+  framework_library:
+    market_analysis: ["SWOT", "PESTEL", "Porter_Five_Forces"]
+    tech_analysis: ["Technology_Adoption_Lifecycle", "Hype_Cycle", "S_Curve"]
+    investment_analysis: ["DCF", "Comparable_Analysis", "Risk_Assessment"]
+    competitive_analysis: ["Competitive_Positioning", "Value_Chain_Analysis"]
+```
+
+---
+
+## 附录：输出路径映射 (基于知识生产流水线架构)
+
+### 报告类型与目录映射
+```python
+# AI伪代码
+def determine_output_path(report_type):
+    path_mapping = {
+                "T": "knowledge/03_研究报告/1_趋势洞察/",
+        "C": "knowledge/03_研究报告/1_趋势洞察/",
+        "ARG": "knowledge/03_研究报告/2_商业分析/",
+        "P": "knowledge/03_研究报告/3_组织与人/",
+        "TECH": "knowledge/03_研究报告/4_技术洞察/",
+        "F": "knowledge/03_研究报告/5_方法论/",
+        "S": "knowledge/03_研究报告/5.1_投资相关/",
+        "专题分析": "knowledge/03_研究报告/6.1_专题分析报告/",
+        "动态分析": "knowledge/03_研究报告/6.2_动态分析报告/"
+    }
+    return path_mapping.get(report_type)
+```
+
+### 命名体系规范
+```yaml
+naming_conventions:
+  T_series: "T[数字]_[趋势主题].md"
+  C_series: "C[数字]_[关键结论].md"
+  ARG_series: "ARG[数字]_[商业论证主题].md"
+  P_series: "P[数字]_[人物/组织名称].md"
+  TECH_series: "TECH_[技术主题].md"
+  F_series: "F[数字]_[框架名称].md"
+  S_series: "S[数字]_[策略主题].md"
+```
+
+### 质量控制检查清单
+```yaml
+quality_checklist:
+  structure_completeness:
+    - frontmatter_metadata: "完整"
+    - executive_summary: "必需"
+    - main_analysis: "结构化"
+    - conclusions: "明确"
+    - references: "格式统一"
+  
+  content_quality:
+    - source_authority: ">75%"
+    - information_density: "高"
+    - analysis_depth: ">85%"
+    - objectivity: "中立"
+  
+  format_compliance:
+    - markdown_standards: "100%"
+    - mermaid_diagrams: "规范"
+    - citation_format: "统一"
+    - link_validity: "有效"
+```
+
+---
+
+> **AI执行确认**: 本规则文件为AI原生优化版本，所有指令均可直接执行。每次报告生成后，AI必须在此处记录执行时间和结果摘要。

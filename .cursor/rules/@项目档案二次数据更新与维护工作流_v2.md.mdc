@@ -1,0 +1,1021 @@
+# AI项目档案更新引擎规则 (v2.4-AI原生版)
+
+> **核心指令：本AI必须严格执行"结构→数据→结论→交付"四步闭环，每一步需返回结构化状态码。禁止跳步，禁止主观推断。**
+
+## 🚨 AI执行信号系统
+
+### 版本标记
+```
+版本: v2.4-AI原生版
+状态: ACTIVE
+最后更新: [AI自动生成YYYY-MM-DD]
+```
+
+### 执行优先级矩阵
+| 优先级 | 触发条件 | AI响应动作 |
+|---|---|---|
+| P0 | 结构不匹配 | 立即中止→返回错误码STRUCT_MISMATCH |
+| P1 | 数据无来源 | 标记[INFO_MISSING]→继续执行 |
+| P2 | 趋势未关联 | 强制思考→写入洞察区块 |
+| P3 | 格式不规范 | 自动修复→记录修复日志 |
+
+---
+
+## AI操作指令集
+
+### 指令1: 结构扫描 (STRUCT_SCAN)
+**AI触发条件**: 检测到任何档案内容
+**执行动作**:
+```python
+# AI伪代码
+def struct_scan(content):
+    required_sections = [
+        "I项目概览", "高光看板", "II重大变化与AI价值分析",
+        "III三维价值评估", "VI数据溯源与历史记录"
+    ]
+    
+    missing = [s for s in required_sections if s not in content]
+    if missing:
+        return {"status": "STRUCT_MISMATCH", "missing": missing}
+    return {"status": "STRUCT_OK"}
+```
+
+**AI输出格式**:
+```json
+{
+  "status": "STRUCT_OK|STRUCT_MISMATCH",
+  "timestamp": "2025-07-18",
+  "missing_sections": [...],
+  "action_required": "IMMEDIATE_FIX"
+}
+```
+
+### 指令2: 数据溯源验证 (DATA_VERIFY)
+**AI触发条件**: 检测到任何数据声明
+**验证层级**:
+1. **一级信源** (权重1.0): 官网/创始人/财报
+2. **二级信源** (权重0.8): 权威媒体/VC公告  
+3. **三级信源** (权重0.6): 行业报告/深度评测
+
+**AI验证执行链**:
+```python
+# 数据验证思考链
+def data_verification_chain(data_point):
+    # 步骤1: 数据提取与分类
+    extracted_data = extract_data_content(data_point)
+    data_category = classify_data_type(extracted_data)  # 融资/团队/产品/市场
+    
+    # 步骤2: 信源层级判断
+    source_tier = determine_source_tier(data_point.source)
+    confidence_weight = get_tier_weight(source_tier)
+    
+    # 步骤3: VI区映射验证
+    vi_section = locate_vi_section(data_category)
+    existing_entry = find_existing_entry(vi_section, extracted_data)
+    
+    # 步骤4: URL活性与时效性检查
+    url_status = verify_url_alive(data_point.source_url)
+    data_freshness = calculate_data_age(data_point.timestamp)
+    
+    # 步骤5: 可信度综合评分
+    credibility_score = calculate_credibility(
+        confidence_weight, url_status, data_freshness, existing_entry
+    )
+    
+    # 步骤6: 等级标记决策树
+    if credibility_score >= 0.8:
+        reliability_tag = "[高]"
+    elif credibility_score >= 0.6:
+        reliability_tag = "[中]"
+    else:
+        reliability_tag = "[低]"
+    
+    return {
+        "data": extracted_data,
+        "vi_location": vi_section,
+        "credibility": credibility_score,
+        "tag": reliability_tag,
+        "action": determine_next_action(credibility_score)
+    }
+
+# 决策树: 验证失败处理
+def handle_verification_failure(failure_type):
+    decision_tree = {
+        "URL_DEAD": "尝试Wayback Machine → 寻找替代来源 → 标记[链接失效]",
+        "DATA_CONFLICT": "记录所有版本 → 标注差异原因 → 优先最新权威来源",
+        "SOURCE_UNRELIABLE": "降低权重 → 寻找佐证 → 标记[待验证]",
+        "INFO_MISSING": "标记[信息暂缺] → 记录搜索路径 → 设置后续跟进"
+    }
+    return decision_tree.get(failure_type)
+```
+
+**AI验证动作**:
+```
+对每个数据点执行：
+→ 提取数据内容 (思考: 这是什么类型的数据?)
+→ 定位VI区对应条目 (思考: 应该归档到哪个数据表?)
+→ 验证来源URL活性 (思考: 来源是否可靠且可访问?)
+→ 计算可信度分数 (思考: 综合评估可信度如何?)
+→ 标记[高/中/低]等级 (决策: 基于评分确定标记)
+→ 执行后续动作 (决策: 是否需要进一步验证或标记?)
+```
+
+### 指令3: 趋势强制关联 (TREND_LINK)
+**AI触发条件**: 完成数据更新后
+**趋势分析思考链**:
+```python
+# 趋势关联分析执行链
+def trend_analysis_chain(project_changes):
+    # 步骤1: 变化识别与分类
+    change_type = classify_change_type(project_changes)  # 融资/产品/团队/市场
+    change_magnitude = assess_change_magnitude(project_changes)  # 重大/中等/轻微
+    
+    # 步骤2: 相似项目聚类分析
+    similar_projects = find_similar_projects(project_changes.project_profile)
+    cluster_patterns = analyze_cluster_patterns(similar_projects)
+    
+    # 步骤3: 宏观趋势映射
+    macro_trends = load_trend_observatory_data()
+    trend_matches = map_to_macro_trends(change_type, cluster_patterns, macro_trends)
+    
+    # 步骤4: 反趋势案例排查
+    counter_examples = search_counter_trend_cases(trend_matches)
+    risk_signals = identify_risk_indicators(counter_examples)
+    
+    # 步骤5: 趋势强度评级决策树
+    trend_strength = calculate_trend_strength(
+        cluster_patterns, trend_matches, counter_examples
+    )
+    
+    if trend_strength >= 0.8 and len(counter_examples) <= 2:
+        trend_rating = "🔥强趋势"
+    elif trend_strength >= 0.6 and len(counter_examples) <= 5:
+        trend_rating = "📈中等趋势"
+    elif trend_strength >= 0.4:
+        trend_rating = "🌱弱趋势"
+    else:
+        trend_rating = "❌伪趋势"
+    
+    # 步骤6: 影响评估与结论生成
+    impact_assessment = assess_trend_impact(trend_matches, trend_rating)
+    
+    return {
+        "trend_type": change_type,
+        "similar_cluster": cluster_patterns,
+        "macro_connection": trend_matches,
+        "counter_signals": risk_signals,
+        "strength_rating": trend_rating,
+        "impact_conclusion": impact_assessment
+    }
+
+# 强制思考决策树
+def trend_impact_decision_tree(analysis_result):
+    if analysis_result["macro_connection"]:
+        if analysis_result["counter_signals"]:
+            return "验证既有趋势 + 识别风险信号"
+        else:
+            return "强化既有趋势判断"
+    elif analysis_result["counter_signals"]:
+        return "挑战既有假设 (提供反例)"
+    elif analysis_result["strength_rating"] in ["🔥强趋势", "📈中等趋势"]:
+        return "新增信号 (描述新趋势)"
+    else:
+        return "无影响 (说明原因)"
+```
+
+**强制思考框架**:
+```
+此变化对@[living]AI宏观趋势与投资策略观察哨的影响：
+□ 验证既有趋势 (提供证据) - 思考: 这个变化是否支持我们已知的趋势?
+□ 挑战既有假设 (提供反例) - 思考: 这个变化是否与现有判断相矛盾?
+□ 新增信号 (描述新趋势) - 思考: 这是否揭示了一个新的发展方向?
+□ 无影响 (说明原因) - 思考: 为什么这个变化对宏观趋势没有影响?
+
+执行顺序:
+1. 先进行相似项目聚类 (至少找到2-3个同类项目)
+2. 再进行宏观趋势关联 (明确对应观察哨中的哪个趋势)
+3. 然后进行反趋势案例排查 (必须搜索失败案例和风险信号)
+4. 最后进行趋势强度评级 (🔥强趋势/📈中等趋势/🌱弱趋势/❌伪趋势)
+```
+
+### 指令4: 格式自动修复 (FORMAT_FIX)
+**AI修复规则**:
+- 表格字段缺失→自动补齐空白单元格
+- 日期格式错误→统一为YYYY-MM-DD
+- 链接失效→标记[LINK_BROKEN]
+- 文件名不符→自动生成rename建议
+
+---
+
+## AI统一执行流程：四步核心循环
+
+> **历史映射：AI内部将四步核心循环映射为六步传统流程，确保兼容性**
+
+### AI四步核心循环
+
+#### STEP 1: 结构识别与验证 (STRUCT_SCAN)
+**AI内部映射**: 传统第1步"模版对齐" + 第6步"交付检查"的前置验证
+
+**🚨 模板对齐100%验证要求**:
+1. 读取 `knowledge/@外部项目内容模版_场景化增强版.md` 获取最新结构标准
+2. 逐项结构检查：8大主体分区、23个关键子区、7个VI数据溯源区、所有表格格式、元数据字段
+3. 发现任何缺失章节或格式不符，必须先按最新模版补全
+4. 验证不通过禁止继续，只有100%通过才能进入后续步骤
+5. **强制要求**：所有内容、表格、字段、VI区等，均以模版为唯一源头，禁止主观扩展或删减
+
+**AI执行逻辑**:
+```python
+# --- 细节注入 ---
+# 日期字段: YYYY-MM-DD（date +%Y-%m-%d）
+# 路径规范: knowledge/市场项目档案/[一级目录]/[二级目录]/项目名称-描述.md
+# 必须分区: 8大主体分区(1-7区) + 7个VI数据溯源区(A-G区)
+# 表格/元数据字段与模版完全一致
+# 文件名、归档路径、分类标签与内容一致
+# 缺失/不符: return STRUCT_MISMATCH
+# 文件名/路径不符: return RENAME_SUGGEST
+# 标记需验证点
+# 强制要求: 以knowledge/@外部项目内容模版_场景化增强版.md为唯一标准
+# --- 细节注入结束 ---
+def step1_struct_scan(content):
+    # 与knowledge/@外部项目内容模版_场景化增强版.md完全对齐的结构校验
+    required_sections = [
+        "1. 项目核心概览",
+        "2. 核心数据分析", 
+        "3. 技术价值分析",
+        "4. 市场地位评估",
+        "5. 投资价值判断",
+        "6. LaunchX集成评估",
+        "7. 学习价值提取",
+        "8. 完整数据溯源"
+    ]
+    
+    # 子区校验（关键子区）
+    required_sub_sections = [
+        "1.1 价值定位",
+        "1.2 关键数据快照", 
+        "1.3 发展阶段判断",
+        "1.4 团队核心优势",
+        "2.1 融资历程与估值增长",
+        "2.2 用户增长与留存数据",
+        "2.3 收入结构与盈利模式",
+        "3.1 技术演进路径",
+        "3.2 AI价值创造分析", 
+        "3.3 三大技术突破点",
+        "4.1 竞争地位分析",
+        "4.2 竞品对比分析",
+        "4.3 市场份额与差距分析",
+        "4.4 差异化优势分析",
+        "5.1 投资价值评估矩阵",
+        "5.2 投资亮点分析",
+        "5.3 风险评估与建议",
+        "6.1 集成可行性分析",
+        "6.2 价值倍增潜力分析", 
+        "6.3 集成策略优先级",
+        "7.1 核心学习洞察",
+        "7.2 价值分发矩阵",
+        "7.3 可复用经验总结"
+    ]
+    
+    # VI区数据溯源校验（A~G区）
+    required_vi_sections = [
+        "A区：基础信息数据",
+        "B区：市场与商业数据", 
+        "C区：技术产品数据",
+        "D区：财务投资数据",
+        "E区：LaunchX集成数据",
+        "F区：知识价值数据",
+        "G区：补充信息"
+    ]
+    
+    missing_main = [s for s in required_sections if s not in content]
+    missing_sub = [s for s in required_sub_sections if s not in content] 
+    missing_vi = [s for s in required_vi_sections if s not in content]
+    
+    if missing_main or missing_sub or missing_vi:
+        return {
+            "status": "STRUCT_MISMATCH", 
+            "missing_main_sections": missing_main,
+            "missing_sub_sections": missing_sub,
+            "missing_vi_sections": missing_vi,
+            "action_required": "IMMEDIATE_FIX_TO_TEMPLATE"
+        }
+    return {"status": "STRUCT_OK"}
+```
+
+#### STEP 2: 数据收集与溯源 (DATA_COLLECT)
+**AI内部映射**: 传统第2步"数据收集" + 第3步"差异分析" + 历史数据源优化经验
+
+**🚨 强制执行顺序**: 必须先完成VI区数据更新，再进行主体内容更新
+**🔧 外科手术式追加**: 精确定位VI区对应数据表，执行原子化追加操作
+
+**AI执行逻辑**:
+```python
+# --- 细节注入 ---
+# 关键词矩阵: [项目名, 融资, 创始人, 产品新闻, ...]
+# 优先信源: 官网/官方公告/权威媒体/第三方数据库
+# 每条数据: 必须有来源链接(http/https)和可信度评级(高/中/低)
+# 信源分级:
+#   1. 一级: 官网/创始人/官方公告
+#   2. 二级: 权威媒体/VC公告
+#   3. 三级: 行业报告/深度评测
+#   4. 四级: 社交媒体/论坛/员工评价
+# 数据去重/合并: 合并同类项, "最新摘要+历史压缩"表格
+# 信息缺失: 标注[信息暂缺]
+# 禁止主观推断/凭空补全
+# VI区为所有数据详细来源区, 分主题/表格/分级别列出
+# 采集方法/完整性/时效性/局限性/可信度评估需在VI区说明
+# 自动化检测: 检查每条数据有链接和评级, 检查去重/合并
+# --- 细节注入结束 ---
+def step2_data_collect(project_name, last_update):
+    # 历史数据源优化经验整合
+    data_pipeline = {
+        "source_hierarchy": {
+            "tier1_primary": {           # 权重1.0
+                "company_website": "官网验证",
+                "founder_statements": "创始人声明",
+                "official_announcements": "官方公告"
+            },
+            "tier2_authoritative": {     # 权重0.8
+                "vc_announcements": "VC投资公告",
+                "reputable_media": "权威媒体报道",
+                "industry_reports": "行业深度报告"
+            },
+            "tier3_industry": {          # 权重0.6
+                "analyst_reports": "分析师报告",
+                "conference_talks": "会议演讲",
+                "patent_filings": "专利申请"
+            },
+            "tier4_contextual": {        # 权重0.3
+                "social_media": "社交媒体",
+                "forum_discussions": "论坛讨论",
+                "employee_reviews": "员工评价"
+            }
+        },
+        
+        "collection_strategy": {
+            "search_matrix": {
+                "keywords": generate_search_keywords(project_name),
+                "time_range": f"{last_update} to today",
+                "geographic_scope": ["US", "China", "Europe"],
+                "language_priority": ["English", "Chinese"]
+            },
+            
+            "tools_stack": {
+                "primary": ["Google_Search", "Crunchbase", "PitchBook"],
+                "secondary": ["Wayback_Machine", "LinkedIn", "Twitter_API"],
+                "specialized": ["FDA_Database", "Patent_Office", "Clinical_Trials"],
+                "social_media": ["微博", "Twitter", "LinkedIn", "Medium"],
+                "chinese_sources": ["36氪", "虎嗅", "钛媒体", "亿欧"]
+            },
+            
+            "fallback_chain": {
+                "level_1": "官方网站+权威媒体",
+                "level_2": "社交媒体+行业报告", 
+                "level_3": "论坛讨论+员工评价",
+                "level_4": "标记[信息暂缺]+说明搜索路径"
+            },
+            
+            "search_documentation": {
+                "required_fields": [
+                    "搜索执行时间",
+                    "搜索关键词矩阵", 
+                    "各层级搜索状态",
+                    "获取信息质量评估",
+                    "搜索局限性说明",
+                    "后续改进建议"
+                ],
+                "search_record_table": "必须在VI区记录完整搜索过程表格",
+                "failure_handling": "无法获取时必须说明具体原因和尝试路径"
+            },
+            
+            "quality_filters": {
+                "accuracy_threshold": 92,       # 历史验证标准
+                "recency_weight": 0.25,         # 时效性权重
+                "source_credibility": "tier_weighted",
+                "cross_validation": "minimum_2_sources"
+            }
+        },
+        
+        "validation_pipeline": {
+            "layer1_source_validation": {
+                "url_alive_check": True,
+                "domain_authority": ">50",
+                "content_freshness": "<30_days"
+            },
+            
+            "layer2_cross_validation": {
+                "minimum_sources": 2,
+                "consistency_threshold": 80,
+                "outlier_detection": "statistical_method"
+            },
+            
+            "layer3_temporal_check": {
+                "data_currency": "check_last_update",
+                "version_tracking": "detect_document_changes",
+                "archival_validation": "wayback_comparison"
+            }
+        },
+        
+        "data_extraction": {
+            "funding_data": {
+                "sources": ["Crunchbase", "PitchBook", "Official_PR"],
+                "validation": "SEC_filings_where_available",
+                "currency_conversion": "real_time_rates"
+            },
+            
+            "team_data": {
+                "sources": ["LinkedIn", "Company_Website", "Crunchbase"],
+                "verification": "cross_reference_multiple_sources",
+                "update_frequency": "monthly"
+            },
+            
+            "technology_data": {
+                "sources": ["Patents", "GitHub", "Technical_Blogs"],
+                "validation": "expert_review_sample",
+                "technical_accuracy": "peer_review"
+            }
+        },
+        
+        "old_data": extract_existing_data(),
+        "delta_calculation": compute_differences(),
+        "confidence_scoring": calculate_source_confidence()
+    }
+    
+    # 历史优化：质量评分和权重计算
+    data_pipeline["quality_score"] = weighted_quality_assessment(
+        data_pipeline["source_hierarchy"],
+        data_pipeline["validation_pipeline"]
+    )
+    
+    return data_pipeline
+```
+
+#### STEP 3: 内容生成与洞察 (CONTENT_GEN)
+**AI内部映射**: 传统第4步"主体更新" + 第5步"趋势洞察"
+
+**🚨 强制依赖**: 只能基于STEP 2完成的VI区数据进行主体更新
+**📊 趋势验证框架**: 相似项目聚类→宏观趋势关联→反趋势案例排查→强度评级
+
+**AI执行逻辑**:
+```python
+# --- 细节注入 ---
+# 🚨 强制执行顺序: 必须先完成VI区数据更新，再更新主体内容
+# 📋 更新范围: I项目概览、高光看板、II重大变化、III三维价值评估
+# 🔗 数据依赖: 所有评分/评级/结论必须有VI区数据支撑，格式为"**🔗数据源:** VI.X.Y"
+# 📊 趋势分析强制框架:
+#   Step 1: 相似项目聚类 (至少找到2-3个同类项目)
+#   Step 2: 宏观趋势关联 (明确对应观察哨中的哪个趋势)
+#   Step 3: 反趋势案例排查 (必须搜索失败案例和风险信号)
+#   Step 4: 趋势强度评级 (🔥强趋势/📈中等趋势/🌱弱趋势/❌伪趋势)
+# ❓ 强制回答: "此变化对@[living]AI宏观趋势与投资策略观察哨有何影响?"
+# 📚 知识库沉淀: 趋势洞察必须归档至knowledge/03_研究报告/对应子目录
+#   - 1_趋势洞察/ (宏观趋势相关)
+#   - 2_商业分析/ (商业模式、竞争分析)
+#   - 3_组织与人/ (团队、创始人分析)
+#   - 4_技术洞察/ (技术发展趋势)
+#   - 5_方法论/ (分析框架、方法)
+#   - 5.1_投资相关/ (投资策略、案例)
+# ✅ 质量检查: 内容精炼/无外链/表格一致/趋势洞察完整
+# --- 细节注入结束 ---
+def step3_content_gen(data_pipeline):
+    # 内容生成思考链与执行序列
+    content_generation_chain = {
+        # 阶段1: 数据依赖验证思考链
+        "dependency_verification": {
+            "vi_completeness_check": {
+                "execution": verify_vi_section_completeness(data_pipeline),
+                "thinking": "VI区的数据是否完整且可追溯?",
+                "decision": "不完整则暂停主体更新，返回STEP2"
+            },
+            "source_traceability": {
+                "execution": check_all_conclusions_have_vi_support(),
+                "thinking": "每个结论都有对应的VI区数据支撑吗?",
+                "validation": "格式必须为'**🔗数据源:** VI.X.Y'"
+            },
+            "data_currency": {
+                "execution": validate_data_freshness(data_pipeline),
+                "thinking": "数据的时效性如何?是否需要更新?",
+                "threshold": "超过30天的关键数据需要重新验证"
+            }
+        },
+        
+        # 阶段2: 主体内容更新决策树
+        "content_update_strategy": {
+            "section_priority_matrix": {
+                "high_priority": ["II重大变化", "高光看板"],
+                "medium_priority": ["I项目概览", "III三维价值评估"],
+                "thinking": "哪些章节需要优先更新?",
+                "decision_logic": "重大变化>数据更新>概览调整>评估微调"
+            },
+            
+            "update_depth_decision": {
+                "major_changes": "全面重写相关章节",
+                "incremental_updates": "精准修改特定段落",
+                "data_refresh": "更新数字和时间戳",
+                "thinking": "这次更新的深度应该是什么级别?",
+                "criteria": "基于变化重要性和影响范围决定"
+            }
+        },
+        
+        # 阶段3: 趋势洞察生成执行链
+        "trend_insight_generation": {
+            "similar_project_clustering": {
+                "execution_steps": [
+                    "识别项目核心特征(技术/商业模式/市场)",
+                    "搜索knowledge/市场项目档案/相关分类",
+                    "筛选出2-3个最相似项目",
+                    "分析共同模式和差异点"
+                ],
+                "thinking_process": "这个项目与哪些已知项目最相似?它们有什么共同特征?",
+                "validation_criteria": "至少找到2个同类项目，相似度>70%"
+            },
+            
+            "macro_trend_mapping": {
+                "execution_steps": [
+                    "加载@[living]AI宏观趋势观察哨最新状态",
+                    "识别当前变化对应的趋势类别",
+                    "分析变化对趋势的支持/挑战程度",
+                    "确定具体影响方向和强度"
+                ],
+                "thinking_process": "这个变化对应观察哨中的哪个具体趋势?是支持还是挑战现有判断?",
+                "decision_tree": {
+                    "支持现有趋势": "提供新的验证证据",
+                    "挑战现有趋势": "分析矛盾原因，调整趋势判断",
+                    "发现新趋势": "识别新的发展方向",
+                    "无明显影响": "说明原因和边界条件"
+                }
+            },
+            
+            "counter_trend_analysis": {
+                "execution_steps": [
+                    "搜索相关领域的失败案例",
+                    "识别风险信号和负面指标",
+                    "分析反向证据的可信度",
+                    "评估对趋势判断的影响"
+                ],
+                "thinking_process": "有哪些反例或风险信号需要考虑?这些反向证据有多可信?",
+                "search_strategy": "关键词+失败+风险+问题+挑战+困难"
+            },
+            
+            "trend_strength_rating": {
+                "calculation_formula": {
+                    "supporting_evidence_weight": 0.4,
+                    "similar_cases_consistency": 0.3,
+                    "counter_evidence_impact": -0.2,
+                    "data_quality_factor": 0.1
+                },
+                "rating_decision_tree": {
+                    "score >= 0.8 && counter_examples <= 2": "🔥强趋势",
+                    "score >= 0.6 && counter_examples <= 5": "📈中等趋势",
+                    "score >= 0.4": "🌱弱趋势",
+                    "else": "❌伪趋势"
+                },
+                "thinking_process": "基于所有证据，这个趋势的强度如何?需要考虑哪些不确定因素?"
+            }
+        },
+        
+        # 阶段4: 知识库沉淀决策链
+        "knowledge_archiving": {
+            "insight_classification": {
+                "trend_type_mapping": {
+                    "宏观趋势": "1_趋势洞察/",
+                    "商业模式": "2_商业分析/",
+                    "团队组织": "3_组织与人/",
+                    "技术发展": "4_技术洞察/",
+                    "分析方法": "5_方法论/",
+                    "投资策略": "5.1_投资相关/"
+                },
+                "thinking": "这个洞察应该归档到哪个知识库分类?",
+                "decision": "基于洞察的主要内容和价值确定分类"
+            },
+            
+            "archiving_priority": {
+                "high_value_insights": "立即创建独立文档",
+                "incremental_insights": "追加到现有相关文档",
+                "routine_updates": "记录在项目档案中",
+                "thinking": "这个洞察的价值等级如何?需要什么级别的归档?"
+            }
+        },
+        
+        # 阶段5: 质量验证执行链
+        "quality_validation_chain": {
+            "content_precision": {
+                "check": "内容是否精炼，避免冗余",
+                "action": "删除重复信息，保留核心要点"
+            },
+            "external_link_removal": {
+                "check": "I-III区是否包含外部链接",
+                "action": "移除所有外链，保持内容独立性"
+            },
+            "table_consistency": {
+                "check": "表格格式是否与模板一致",
+                "action": "调整表格结构，确保格式统一"
+            },
+            "vi_reference_accuracy": {
+                "check": "所有VI区引用是否准确",
+                "action": "验证每个VI.X.Y引用的有效性"
+            }
+        }
+    }
+    
+    # 执行内容生成
+    generation_result = execute_content_generation_with_thinking(content_generation_chain)
+    
+    # 内部映射：第4步主体更新 + 第5步趋势提炼
+    return {
+        "executive_summary": generation_result["updated_sections"],
+        "trend_insights": generation_result["trend_analysis"],
+        "knowledge_sync": generation_result["observatory_sync"],
+        "quality_metrics": generation_result["validation_results"],
+        "thinking_log": generation_result["decision_trace"]
+    }
+```
+
+#### STEP 4: 交付验证与归档 (DELIVER_CHECK)
+**AI内部映射**: 传统第6步"交付检查"的验证阶段
+
+**🔍 OK清单自动化核查标准**:
+1. **结构完整性**: 必须包含8大主体分区(1-7区) + 7个VI数据溯源区(A-G区)
+2. **子区完整性**: 必须包含23个关键子区(1.1-7.3)
+3. **表格格式一致性**: 所有表格与knowledge/@外部项目内容模版_场景化增强版.md完全一致
+4. **元数据规范**: 关注等级、更新日期、数据截至等字段格式正确(YYYY-MM-DD)
+5. **数据溯源完整**: VI区(A-G区)每条数据有来源链接和可信度评级
+6. **内容去重**: VI区无重复数据，采用合并更新策略
+7. **主体区精炼**: 1-7区无外链/块ID，内容精炼
+8. **文件名规范**: 文件名与内容、分类一致
+9. **分类准确**: 分类标签与行业分类标准一致
+10. **趋势洞察**: 每次更新有趋势洞察产出
+11. **知识库沉淀**: 洞察已归档至knowledge/03_研究报告/对应目录
+12. **模版对齐**: 所有内容、字段、格式均以模版为唯一标准
+
+**AI执行逻辑**:
+```python
+# --- 细节注入 ---
+# 按OK清单核查自动化规则逐项检测(8大分区/23个子区/7个VI区/表格/元数据/数据溯源/去重/内容精炼/文件名路径/分类/趋势洞察/批次经验)
+# 自动检测未通过或边界情况, 人工复查补充
+# 检查并修正文件名/归档路径/分类方式与内容一致
+# 批次归档前必须完成所有知识库沉淀, 趋势洞察/批次经验归档无遗漏
+# 每次更新/归档/趋势洞察/批次经验等, 记录批次ID/完成时间/归档路径
+# 自动化检测与人工复核结合, 确保零遗漏
+# 强制要求: 所有检测均以knowledge/@外部项目内容模版_场景化增强版.md为唯一标准
+# --- 细节注入结束 ---
+def step4_deliver_check(final_content):
+    # 内部映射：第6步最终验证
+    validation = {
+        "ok_checklist": run_automated_checks(final_content),
+        "archive_path": validate_naming_and_path(),
+        "batch_completion": record_batch_summary()
+    }
+    return validation
+```
+
+### 历史兼容性层
+
+#### 六步传统流程 → 四步AI映射表
+| 传统步骤 | AI核心步骤 | 处理阶段 | AI内部状态 |
+|---|---|---|---|
+| 第1步 模版对齐 | STEP 1 结构验证 | 预处理 | `PREPARE_STRUCTURE` |
+| 第2步 数据收集 | STEP 2 数据溯源 | 数据获取 | `COLLECT_DATA` |
+| 第3步 差异分析 | STEP 2 数据溯源 | 数据对比 | `COMPUTE_DELTA` |
+| 第4步 主体更新 | STEP 3 内容生成 | 内容生成 | `GENERATE_CONTENT` |
+| 第5步 趋势洞察 | STEP 3 内容生成 | 洞察提炼 | `EXTRACT_INSIGHTS` |
+| 第6步 交付检查 | STEP 4 验证归档 | 最终验证 | `FINAL_VALIDATE` |
+
+#### AI状态机
+```
+[START] → STEP1 → STEP2 → STEP3 → STEP4 → [END]
+   ↓       ↓      ↓      ↓      ↓
+ERROR → FIX → RETRY → WARN → COMPLETE
+```
+
+### AI统一输出格式
+```json
+{
+  "ai_flow": "4step_core",
+  "traditional_mapping": "6step_compatible",
+  "current_step": "STEP1|STEP2|STEP3|STEP4",
+  "status": "SUCCESS|ERROR|WARNING",
+  "historical_step_equivalent": "第1-6步中的对应步骤",
+  "next_action": "下一步指令"
+}
+```
+
+---
+
+## AI执行链条总览与思考流程
+
+### 完整执行序列图
+```
+[项目档案更新请求] 
+    ↓
+[STEP 1: 结构验证] → 思考: 结构是否完整? → 决策: 通过/修复/中止
+    ↓
+[STEP 2: 数据收集] → 思考: 数据来源可靠吗? → 决策: 采用/验证/标记
+    ↓
+[STEP 3: 内容生成] → 思考: 趋势影响如何? → 决策: 强化/挑战/新增/无影响
+    ↓
+[STEP 4: 交付验证] → 思考: 质量达标吗? → 决策: 通过/返工/优化
+    ↓
+[完成归档]
+```
+
+### 关键决策节点思考框架
+```python
+# 核心思考链条
+decision_framework = {
+    "结构验证阶段": {
+        "关键问题": "这个档案的结构是否符合最新模板标准?",
+        "思考路径": "检查→对比→识别差异→决定修复策略",
+        "决策标准": "100%符合才能继续,否则必须修复"
+    },
+    
+    "数据收集阶段": {
+        "关键问题": "这些数据的可信度如何?来源是否权威?",
+        "思考路径": "分级→验证→交叉检查→评估可信度",
+        "决策标准": "一级信源优先,多源验证,标记不确定信息"
+    },
+    
+    "内容生成阶段": {
+        "关键问题": "这个变化对宏观趋势有什么影响?",
+        "思考路径": "聚类→关联→排查→评级→结论",
+        "决策标准": "必须有明确的趋势判断和证据支撑"
+    },
+    
+    "交付验证阶段": {
+        "关键问题": "这个档案是否达到发布标准?",
+        "思考路径": "逐项检查→发现问题→修复→再检查",
+        "决策标准": "OK清单100%通过才能归档"
+    }
+}
+```
+
+### 异常处理思考链
+```python
+# 异常情况的思考和处理流程
+exception_handling_chain = {
+    "数据冲突": {
+        "思考": "为什么不同来源的数据不一致?哪个更可信?",
+        "处理": "记录所有版本→分析差异原因→选择最权威来源→标注不确定性"
+    },
+    
+    "信息缺失": {
+        "思考": "这个信息对分析有多重要?是否有替代方案?",
+        "处理": "评估重要性→尝试多渠道搜索→标记缺失→设置后续跟进"
+    },
+    
+    "趋势判断困难": {
+        "思考": "证据不足还是趋势本身不明确?需要更多数据吗?",
+        "处理": "扩大搜索范围→寻找更多案例→承认不确定性→标记待观察"
+    }
+}
+```
+
+---
+
+## AI异常处理协议
+
+### 结构异常
+```
+ERROR: STRUCT_MISMATCH
+ACTION: 立即进入修复模式
+OUTPUT: 生成修复指令清单
+```
+
+### 数据异常  
+```
+ERROR: DATA_MISSING_SOURCE
+ACTION: 标记[信息暂缺]
+OUTPUT: 生成数据收集任务
+```
+
+### 趋势异常
+```
+ERROR: TREND_UNLINKED
+ACTION: 强制重新分析
+OUTPUT: 生成趋势关联报告
+```
+
+---
+
+## AI记忆与上下文管理
+
+### 长期记忆 (Persistent Memory)
+- 当前活跃模板版本
+- 历史变更记录
+- 项目重命名映射表
+- 趋势观察哨最新状态
+
+### 短期记忆 (Session Memory)  
+- 本次更新批次ID
+- 待验证清单
+- 临时发现的异常数据
+- 需要人工复核的项目
+
+### 上下文切换 (Context Switch)
+```
+当切换项目时，AI必须:
+1. 保存当前会话状态
+2. 加载新项目上下文
+3. 重置短期记忆
+4. 保持长期记忆
+```
+
+---
+
+## AI输出规范
+
+### 统一返回格式 (基于SuperAnnotate & OpenEvidence实操经验)
+```json
+{
+  "status": "SUCCESS|ERROR|WARNING",
+  "step": "当前执行步骤",
+  "project": "项目名称",
+  "changes": ["变更列表"],
+  "insights": ["趋势洞察"],
+  "quality_metrics": {
+    "accuracy": "96%",              // SuperAnnotate医疗标准
+    "completeness": "98%",
+    "consistency": "90%",
+    "source_reliability": "权重计算值",
+    "regulatory_compliance": "FDA/EMA/NMPA状态"
+  },
+  "validation_layers": [
+    "ai_preflight_passed",
+    "human_review_status", 
+    "expert_sampling_result"
+  ],
+  "error_classification": {
+    "type": "recoverable|manual_intervention|system_failure",
+    "impact": "low|medium|high",
+    "escalation": "level_1_auto_retry|level_2_human_notice|level_3_system_shutdown"
+  },
+  "compliance_check": {
+    "regulatory_status": "compliant|needs_review|non_compliant",
+    "audit_trail": "complete|partial|missing",
+    "retention_policy": "7_years_medical|standard|custom",
+    "certification_status": "FDA_510k|CE_mark|NMPA|pending"
+  },
+  "performance_metrics": {
+    "processing_time": "<2min_per_project",
+    "error_rate": "<0.1%",
+    "automation_rate": ">90%",
+    "cost_efficiency": "40%_reduction_target"
+  },
+  "risk_indicators": {
+    "model_drift": "accuracy_drop_threshold_3%",
+    "data_bias": "geographic_demographic_temporal",
+    "compliance_risk": "regulatory_change_24h_response",
+    "performance_degradation": "latency_sla_100ms_p95"
+  },
+  "next_action": "下一步指令",
+  "timestamp": "2025-07-18T10:30:00Z",
+  "batch_processing": {
+    "batch_id": "自动生成",
+    "project_count": "当前批次数量",
+    "completion_rate": "实时计算"
+  }
+}
+```
+
+### 错误码系统 (基于实操经验扩展)
+**基础错误码 (结构级)**
+- E001: 结构不匹配 → 立即进入修复模式
+- E002: 数据无来源 → 标记[INFO_MISSING]继续执行  
+- E003: 趋势未关联 → 强制重新分析
+- E004: 格式错误 → 自动修复并记录日志
+- E005: 归档路径错误 → 生成rename建议
+
+**质量错误码 (SuperAnnotate经验)**
+- E101: 模型漂移检测 (准确率下降>3%) → 触发重训练
+- E102: 数据偏见发现 (地域/人群不平衡) → 补充数据集
+
+
+**合规错误码 (OpenEvidence经验)**
+- E201: FDA合规性变化 → 24h内更新验证流程
+- E202: 医疗数据隐私违例 → 立即隔离并通知合规官
+- E203: 审计跟踪不完整 → 暂停处理直至补全
+
+**性能错误码**
+- E301: 性能SLA违例 (延迟>100ms) → 资源弹性调整
+- E302: 成本效益异常 → 启用AI辅助优化
+- E303: 批量处理失败 → 回退到单项目处理
+
+**业务错误码**
+- E401: 客户定制冲突 → 启动80/20平衡检查
+- E402: 模板版本不兼容 → 强制向后兼容检查
+- E403: 行业特定要求缺失 → 触发专家验证
+
+---
+
+## AI性能优化 (基于SuperAnnotate & OpenEvidence实战经验)
+
+### 批量处理策略 (优化版)
+```yaml
+# 基于SuperAnnotate 35亿美元估值项目的经验
+batch_processing:
+  optimal_size: 8_projects          # 实测最佳批次大小
+  max_concurrent: 5                 # 避免API限流
+  cache_strategy:
+    hot_cache: 10_projects         # 最近项目上下文
+    warm_cache: 50_projects        # 常用模板和规则
+    cold_storage: archive_after_7_days
+  
+  error_handling:
+    retry_logic:
+      max_attempts: 3               # SuperAnnotate标准
+      backoff_strategy: "exponential"
+      circuit_breaker: "5_failures_in_10_minutes"
+    fallback_mode: "single_project_processing"
+
+# 基于OpenEvidence医疗合规要求
+compliance_batch:
+  medical_projects: 3_max          # 医疗AI需要更严格验证
+  regular_projects: 8_max
+  segregation_policy: "medical_separate_from_regular"
+```
+
+### 效率指标 (经过验证)
+```yaml
+performance_targets:
+  processing_time: "<2min_per_project"     # SuperAnnotate标准
+  error_rate: "<0.1%"                      # OpenEvidence医疗级别
+  automation_rate: ">90%"                  # 实测可达95%
+  cost_efficiency: "40%_reduction"           # SuperAnnotate实际成果
+  
+  # 新增质量SLA
+  accuracy_sla: "96%"                        # 医疗AI基准
+  completeness_sla: "98%"
+  consistency_sla: "90%"
+  
+  # 实时监控指标
+  real_time_metrics:
+    - "latency_p95: <100ms"
+    - "throughput: >1000_qps"
+    - "api_quota_usage: <80%"
+    - "memory_usage: <70%"
+```
+
+### 资源弹性优化 (基于实际负载测试)
+```yaml
+resource_scaling:
+  triggers:
+    scale_up:
+      - "cpu_usage > 70%"
+      - "memory_usage > 80%"
+      - "queue_length > 20_projects"
+    
+    scale_down:
+      - "cpu_usage < 30%"
+      - "memory_usage < 40%"
+      - "queue_length < 5_projects"
+  
+  cooldown_periods:
+    scale_up: "2_minutes"
+    scale_down: "10_minutes"
+    emergency: "immediate"
+
+  # 成本优化策略
+  cost_optimization:
+    spot_instances: true
+    reserved_capacity: "80%_baseline"
+    auto_shutdown: "after_30min_idle"
+```
+
+### 质量保障机制 (实战验证)
+```yaml
+quality_assurance:
+  # 三层验证体系 (SuperAnnotate经验)
+  validation_layers:
+    layer_1_ai_preflight:
+      coverage: "100%"
+      checks: ["structure", "format", "basic_completeness"]
+      
+    layer_2_human_review:
+      coverage: "20%_sampling"
+      triggers: ["medical_projects", "high_value_projects"]
+      
+    layer_3_expert_audit:
+      coverage: "5%_random"
+      frequency: "weekly"
+  
+  # 性能监控仪表板
+  monitoring_dashboard:
+    - "project_completion_rate"
+    - "error_classification_breakdown"
+    - "compliance_score_trend"
+    - "cost_per_project"
+    - "customer_satisfaction_score"
+  
+  # 预警机制
+  early_warning:
+    drift_detection: "accuracy_drop > 3%"
+    bias_detection: "weekly_demographic_analysis"
+    compliance_alert: "regulatory_change_24h"
+    performance_degradation: "latency_increase > 50%"
+```
+
+---
+
+> **AI执行确认**: 本规则文件为AI原生优化版本，所有指令均可直接执行。每次更新后，AI必须在此处记录执行时间和结果摘要。
+>
+> **模版对齐确认**: 本规则已与knowledge/@外部项目内容模版_场景化增强版.md完全对齐，结构校验字段包含8大主体分区、23个关键子区、7个VI数据溯源区，所有自动化校验均以模版为唯一标准。

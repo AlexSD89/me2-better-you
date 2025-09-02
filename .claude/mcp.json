@@ -1,0 +1,152 @@
+{
+  "mcpServers": {
+    "tavily-search": {
+      "command": "uvx",
+      "args": ["mcp-server-tavily"],
+      "env": {
+        "TAVILY_API_KEY": "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"
+      },
+      "disabled": false,
+      "autoApprove": ["search", "get_search_results", "answer_question"],
+      "description": "Tavily search API for real-time information gathering and market research"
+    },
+    
+    "jina-reader": {
+      "command": "uvx", 
+      "args": ["mcp-server-jina"],
+      "env": {
+        "JINA_API_KEY": "jina_6e538c6492f2444197ee64397d7a4ca5CyXFjgbwy_VQ1NT2iwbf5x6RvPYM"
+      },
+      "disabled": true,
+      "autoApprove": ["read_url", "extract_content", "parse_document"],
+      "description": "Jina AI reader for intelligent content extraction and document parsing"
+    },
+    
+    "smithery-tools": {
+      "command": "uvx",
+      "args": ["mcp-server-smithery"],
+      "env": {
+        "SMITHERY_API_KEY": "86ba62ee-5972-40cb-aaba-596fee5e1ef7"
+      },
+      "disabled": true,
+      "autoApprove": ["validate_api", "test_endpoint", "check_service"],
+      "description": "Smithery development tools for API testing and service validation"
+    },
+    
+    "workspace-filesystem": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "/Users/dangsiyuan/Documents/obsidion/launch x"],
+      "disabled": false,
+      "autoApprove": ["read_file", "list_directory", "search_files", "write_file", "edit_file"],
+      "description": "Workspace filesystem access for LaunchX project files"
+    },
+    
+    "pocketcorn-data": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "/Users/dangsiyuan/Documents/obsidion/launch x/💻 技术开发/04_成熟项目 ✅/pocketcorn_v4"],
+      "disabled": false,
+      "autoApprove": ["read_file", "list_directory", "search_files", "write_file", "edit_file"],
+      "description": "PocketCorn investment analysis engine data access"
+    },
+    "knowledge-base": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "/Users/dangsiyuan/Documents/obsidion/launch x/🟣 knowledge"],
+      "disabled": false,
+      "autoApprove": ["read_file", "list_directory", "search_files", "write_file"],
+      "description": "LaunchX knowledge base and research repository"
+    },
+    
+    "methodology-library": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "/Users/dangsiyuan/Documents/obsidion/launch x/项目开发工具的规范和原理"],
+      "disabled": false,
+      "autoApprove": ["read_file", "list_directory", "search_files"],
+      "description": "Development methodology and framework library"
+    },
+    
+    "postgres-database": {
+      "command": "uvx",
+      "args": ["mcp-server-postgres"],
+      "env": {
+        "POSTGRES_CONNECTION_STRING": "${DATABASE_URL}"
+      },
+      "disabled": true,
+      "autoApprove": ["query", "schema", "explain"],
+      "description": "PostgreSQL database operations for LaunchX platforms"
+    },
+    
+    "redis-cache": {
+      "command": "uvx",
+      "args": ["mcp-server-redis"],
+      "env": {
+        "REDIS_URL": "${REDIS_URL}"
+      },
+      "disabled": true,
+      "autoApprove": ["get", "set", "del", "keys"],
+      "description": "Redis cache operations and session management"
+    },
+    
+    "github-official": {
+      "command": "npx",
+      "args": ["-y", "@github/github-mcp-server"],
+      "env": {
+        "GITHUB_TOKEN": "${GITHUB_TOKEN}"
+      },
+      "disabled": true,
+      "autoApprove": ["read_repository", "list_issues", "get_file", "search_code", "get_commit"],
+      "description": "GitHub official MCP server for repository management and code analysis"
+    },
+    
+    "posthog-analytics": {
+      "command": "uvx",
+      "args": ["mcp-server-posthog"],
+      "env": {
+        "POSTHOG_API_KEY": "${POSTHOG_API_KEY}",
+        "POSTHOG_HOST": "${POSTHOG_HOST:-https://app.posthog.com}"
+      },
+      "disabled": true,
+      "autoApprove": ["get_insights", "query_events", "get_feature_flags", "track_event"],
+      "description": "PostHog analytics for user behavior tracking and feature usage monitoring"
+    },
+    
+    "prometheus-monitoring": {
+      "command": "uvx", 
+      "args": ["mcp-server-prometheus"],
+      "env": {
+        "PROMETHEUS_URL": "${PROMETHEUS_URL:-http://localhost:9090}"
+      },
+      "disabled": true,
+      "autoApprove": ["query", "query_range", "get_metrics", "get_alerts"],
+      "description": "Prometheus monitoring server for system metrics and performance analysis"
+    },
+    
+    "python-sandbox": {
+      "command": "uvx",
+      "args": ["mcp-run-python"],
+      "disabled": false,
+      "autoApprove": ["run_python", "install_package", "list_packages"],
+      "description": "Secure Python code execution sandbox for testing and validation"
+    },
+    
+    "azure-cloud": {
+      "command": "uvx",
+      "args": ["mcp-server-azure"],
+      "env": {
+        "AZURE_CLIENT_ID": "${AZURE_CLIENT_ID}",
+        "AZURE_CLIENT_SECRET": "${AZURE_CLIENT_SECRET}",
+        "AZURE_TENANT_ID": "${AZURE_TENANT_ID}"
+      },
+      "disabled": true,
+      "autoApprove": ["list_resources", "get_database_info", "query_database", "get_service_status"],
+      "description": "Azure cloud services integration for infrastructure and database management"
+    },
+    
+    "serena-local": {
+      "command": "uv",
+      "args": ["run", "--directory", "/Users/dangsiyuan/Documents/obsidion/launch x/💻 技术开发/02_开发工具 🛠️/mcp-servers/serena", "serena", "start-mcp-server", "--context", "ide-assistant", "--project", "/Users/dangsiyuan/Documents/obsidion/launch x"],
+      "disabled": false,
+      "autoApprove": ["list_dir", "find_file", "search_for_pattern", "get_symbols_overview", "find_symbol", "activate_project", "check_onboarding_performed"],
+      "description": "Serena AI coding assistant with intelligent code analysis and editing tools"
+    }
+  }
+}

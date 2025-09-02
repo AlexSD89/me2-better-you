@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GEO生成式引擎优化深度研究报告 v4.0 - LaunchX投研团队</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .card-shadow { box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); }
+        .text-gradient { background: linear-gradient(45deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .chart-container { height: 400px; margin: 20px 0; }
+        .highlight-box { border-left: 4px solid #667eea; }
+        .metric-card { transition: transform 0.3s ease; }
+        .metric-card:hover { transform: translateY(-5px); }
+        @media print {
+            .no-print { display: none; }
+            .page-break { page-break-after: always; }
+        }
+        .executive-summary { background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); }
+        .market-highlight { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+    
+    <!-- Header -->
+    <header class="gradient-bg text-white py-16">
+        <div class="container mx-auto px-8 text-center">
+            <div class="flex items-center justify-center mb-6">
+                <i class="fas fa-chart-line text-4xl mr-4"></i>
+                <h1 class="text-5xl font-bold">GEO生成式引擎优化</h1>
+            </div>
+            <h2 class="text-3xl font-semibold mb-4">深度研究报告 v4.0</h2>
+            <div class="bg-white bg-opacity-20 rounded-lg p-6 mx-auto max-w-4xl mt-8">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+                    <div>
+                        <p class="text-xl font-semibold">报告生成日期</p>
+                        <p class="text-lg">2025-06-30</p>
+                    </div>
+                    <div>
+                        <p class="text-xl font-semibold">报告版本</p>
+                        <p class="text-lg">4.0 (最新市场数据版)</p>
+                    </div>
+                    <div>
+                        <p class="text-xl font-semibold">报告作者</p>
+                        <p class="text-lg">LaunchX投研团队</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 核心看点 -->
+    <section class="py-12 market-highlight">
+        <div class="container mx-auto px-8">
+            <div class="text-center mb-10">
+                <h2 class="text-4xl font-bold text-gray-800 mb-4">
+                    <i class="fas fa-lightbulb text-yellow-500 mr-3"></i>本文核心看点
+                </h2>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="bg-white rounded-lg p-8 card-shadow">
+                    <h3 class="text-2xl font-bold text-blue-600 mb-4">
+                        <i class="fas fa-rocket mr-2"></i>万亿市场的范式革命
+                    </h3>
+                    <p class="text-gray-700 leading-relaxed">GEO并非SEO的延伸，而是对价值万亿的全球数字营销市场的直接重塑。它将成为品牌在AI时代最核心的数字资产。</p>
+                </div>
+                <div class="bg-white rounded-lg p-8 card-shadow">
+                    <h3 class="text-2xl font-bold text-green-600 mb-4">
+                        <i class="fas fa-chart-bar mr-2"></i>爆发式增长数据
+                    </h3>
+                    <p class="text-gray-700 leading-relaxed">全球GEO市场2024年8.86亿美元，预计2031年达到<strong>73.18亿美元</strong>，年复合增长率<strong>34%</strong>。传统SEO市场从890亿增长至1440亿美元。</p>
+                </div>
+                <div class="bg-white rounded-lg p-8 card-shadow">
+                    <h3 class="text-2xl font-bold text-purple-600 mb-4">
+                        <i class="fas fa-chess mr-2"></i>竞争格局重塑
+                    </h3>
+                    <p class="text-gray-700 leading-relaxed">Profound获得Kleiner Perkins领投的2000万美元A轮融资，BrightEdge年营收达1.2亿美元。中国市场由源易信息、质安华等头部玩家主导。</p>
+                </div>
+                <div class="bg-white rounded-lg p-8 card-shadow">
+                    <h3 class="text-2xl font-bold text-red-600 mb-4">
+                        <i class="fas fa-target mr-2"></i>投资策略核心
+                    </h3>
+                    <p class="text-gray-700 leading-relaxed">"数据-模型-客户"飞轮效应是唯一可靠护城河。当前应聚焦已建立先发优势和标杆客户的平台型公司。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 执行摘要 -->
+    <section class="py-16 executive-summary">
+        <div class="container mx-auto px-8">
+            <h2 class="text-4xl font-bold text-center mb-12 text-gradient">
+                <i class="fas fa-clipboard-list mr-3"></i>执行摘要
+            </h2>
+            <div class="bg-white rounded-lg p-10 card-shadow max-w-6xl mx-auto">
+                <div class="prose prose-lg max-w-none">
+                    <p class="text-xl leading-relaxed mb-6 text-gray-700">
+                        本报告基于2025年6月最新市场数据，深度剖析生成式引擎优化（GEO）市场的现状、潜力与未来。我们的核心结论是：<strong>GEO并非传统SEO的增量补充，而是对全球数字营销生态的一场颠覆性范式革命。</strong>
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 my-8">
+                        <div class="highlight-box pl-6">
+                            <h4 class="text-xl font-semibold mb-3 text-blue-600">市场规模突破</h4>
+                            <ul class="space-y-2 text-gray-700">
+                                <li><strong>全球GEO市场：</strong>2024年8.86亿美元 → 2031年73.18亿美元（CAGR 34%）</li>
+                                <li><strong>传统SEO市场：</strong>2024年890亿美元 → 2030年1440亿美元</li>
+                                <li><strong>中国GEO市场：</strong>2024年95亿元，增速12%</li>
+                            </ul>
+                        </div>
+                        <div class="highlight-box pl-6">
+                            <h4 class="text-xl font-semibold mb-3 text-purple-600">技术变革加速</h4>
+                            <ul class="space-y-2 text-gray-700">
+                                <li><strong>AI搜索渗透：</strong>从2022年15%激增至2024年30-35%</li>
+                                <li><strong>ChatGPT搜索：</strong>市场份额12个月内增长740%</li>
+                                <li><strong>多模态内容：</strong>视频搜索流量占比突破38%</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <p class="text-lg leading-relaxed text-gray-700">
+                        随着Google SGE等AI原生搜索体验成为主流，品牌影响力的构建方式正从"关键词排名"转向"AI答案塑造"。当前，AI回答中超过60%的链接来源于非传统头部网站，凸显了UGC社区、独立媒体等新内容生态的崛起，为GEO创造了全新的价值空间。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 市场规模分析 -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-8">
+            <h2 class="text-4xl font-bold text-center mb-12 text-gradient">
+                <i class="fas fa-globe-americas mr-3"></i>全球市场规模分析
+            </h2>
+            
+            <!-- 市场规模概览 -->
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-12">
+                <div class="bg-gradient-to-br from-blue-500 to-blue-600 text-white rounded-lg p-6 metric-card">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-blue-100 text-sm">全球GEO市场 2024</p>
+                            <p class="text-3xl font-bold">$8.86亿</p>
+                        </div>
+                        <i class="fas fa-chart-line text-3xl text-blue-200"></i>
+                    </div>
+                </div>
+                <div class="bg-gradient-to-br from-green-500 to-green-600 text-white rounded-lg p-6 metric-card">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-green-100 text-sm">预测 2031</p>
+                            <p class="text-3xl font-bold">$73.18亿</p>
+                        </div>
+                        <i class="fas fa-rocket text-3xl text-green-200"></i>
+                    </div>
+                </div>
+                <div class="bg-gradient-to-br from-purple-500 to-purple-600 text-white rounded-lg p-6 metric-card">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-purple-100 text-sm">年复合增长率</p>
+                            <p class="text-3xl font-bold">34%</p>
+                        </div>
+                        <i class="fas fa-percentage text-3xl text-purple-200"></i>
+                    </div>
+                </div>
+                <div class="bg-gradient-to-br from-red-500 to-red-600 text-white rounded-lg p-6 metric-card">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-red-100 text-sm">传统SEO市场 2024</p>
+                            <p class="text-3xl font-bold">$890亿</p>
+                        </div>
+                        <i class="fas fa-search text-3xl text-red-200"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 市场增长趋势图表 -->
+            <div class="bg-gray-50 rounded-lg p-8 mb-12">
+                <h3 class="text-2xl font-bold mb-4 text-center">全球GEO vs 传统SEO市场增长对比</h3>
+                <div class="chart-container">
+                    <canvas id="marketGrowthChart"></canvas>
+                </div>
+            </div>
+
+            <!-- 区域市场分析 -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="bg-gray-50 rounded-lg p-8">
+                    <h3 class="text-2xl font-bold mb-6 text-blue-600">
+                        <i class="fas fa-flag-usa mr-2"></i>北美市场
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-700">市场规模（2024）</span>
+                            <span class="font-semibold">$4.2亿</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-700">预期增长率</span>
+                            <span class="font-semibold text-green-600">32%</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-700">主要驱动因素</span>
+                            <span class="font-semibold">企业级采用</span>
+                        </div>
+                        <div class="bg-white p-4 rounded">
+                            <p class="text-sm text-gray-600">北美地区企业级GEO平台需求旺盛，Profound、BrightEdge等头部玩家积极布局，预计2025年企业级客户渗透率将达45%。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-8">
+                    <h3 class="text-2xl font-bold mb-6 text-red-600">
+                        <i class="fas fa-flag mr-2"></i>中国市场
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-700">市场规模（2024）</span>
+                            <span class="font-semibold">95亿元</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-700">增长率</span>
+                            <span class="font-semibold text-yellow-600">12%</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-700">发展阶段</span>
+                            <span class="font-semibold">存量博弈</span>
+                        </div>
+                        <div class="bg-white p-4 rounded">
+                            <p class="text-sm text-gray-600">中国市场已形成源易信息、质安华等头部格局，AI生成内容合规检测工具渗透率达88%，垂直行业定制化方案占比65%。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 竞争格局分析 -->
+    <section class="py-16 bg-gray-100">
+        <div class="container mx-auto px-8">
+            <h2 class="text-4xl font-bold text-center mb-12 text-gradient">
+                <i class="fas fa-chess-board mr-3"></i>竞争格局与主要玩家
+            </h2>
+
+            <!-- 全球头部玩家 -->
+            <div class="mb-12">
+                <h3 class="text-3xl font-bold mb-8 text-center">全球头部玩家</h3>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div class="bg-white rounded-lg p-8 card-shadow">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold text-xl mr-4">P</div>
+                            <div>
+                                <h4 class="text-xl font-bold">Profound</h4>
+                                <p class="text-gray-600">AI可见性平台</p>
+                            </div>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="flex justify-between">
+                                <span class="text-gray-700">融资轮次</span>
+                                <span class="font-semibold">Series A</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-700">融资金额</span>
+                                <span class="font-semibold text-green-600">$20M</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-700">领投方</span>
+                                <span class="font-semibold">Kleiner Perkins</span>
+                            </div>
+                            <div class="bg-blue-50 p-3 rounded">
+                                <p class="text-sm text-gray-700">为Ramp提升7倍AI搜索曝光，客户包括Brex、Jasper等顶级科技公司</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-lg p-8 card-shadow">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center text-white font-bold text-xl mr-4">B</div>
+                            <div>
+                                <h4 class="text-xl font-bold">BrightEdge</h4>
+                                <p class="text-gray-600">企业SEO平台</p>
+                            </div>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="flex justify-between">
+                                <span class="text-gray-700">年营收</span>
+                                <span class="font-semibold text-green-600">$120M</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-700">客户数量</span>
+                                <span class="font-semibold">8,500+</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-700">Fortune 100渗透</span>
+                                <span class="font-semibold">57%</span>
+                            </div>
+                            <div class="bg-green-50 p-3 rounded">
+                                <p class="text-sm text-gray-700">首家推出生成式AI分析器，跟踪OpenAI、Perplexity等AI搜索引擎表现</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-lg p-8 card-shadow">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center text-white font-bold text-xl mr-4">J</div>
+                            <div>
+                                <h4 class="text-xl font-bold">Jasper AI</h4>
+                                <p class="text-gray-600">AI内容营销</p>
+                            </div>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="flex justify-between">
+                                <span class="text-gray-700">年营收</span>
+                                <span class="font-semibold text-purple-600">$55M</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-700">企业客户</span>
+                                <span class="font-semibold">850+</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-700">用户总数</span>
+                                <span class="font-semibold">100K+</span>
+                            </div>
+                            <div class="bg-purple-50 p-3 rounded">
+                                <p class="text-sm text-gray-700">企业营收同比翻倍，推出营销工作流自动化和80+AI应用</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 中国市场头部玩家 -->
+            <div class="mb-12">
+                <h3 class="text-3xl font-bold mb-8 text-center">中国市场领导者</h3>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="bg-white rounded-lg p-8 card-shadow">
+                        <h4 class="text-2xl font-bold mb-4 text-red-600">第一梯队（年营收>1亿元）</h4>
+                        <div class="space-y-4">
+                            <div class="border-l-4 border-red-500 pl-4">
+                                <h5 class="font-bold">上海青山不语网络科技</h5>
+                                <p class="text-sm text-gray-600">连续三年入选《中国GEO优化技术应用白皮书》标杆企业，与华工科技、岳一科技等上市公司合作</p>
+                            </div>
+                            <div class="border-l-4 border-blue-500 pl-4">
+                                <h5 class="font-bold">杭州迅量网络科技</h5>
+                                <p class="text-sm text-gray-600">杭州市场占有率73%，全国市场份额43%，华东地区领先</p>
+                            </div>
+                            <div class="border-l-4 border-green-500 pl-4">
+                                <h5 class="font-bold">上海莱仁文化</h5>
+                                <p class="text-sm text-gray-600">全国市场份额38%，优化订单交付率93%，主攻电商、线下门店、律所等行业</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-lg p-8 card-shadow">
+                        <h4 class="text-2xl font-bold mb-4 text-blue-600">市场特征分析</h4>
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center">
+                                <span>技术合规成本上涨</span>
+                                <span class="bg-red-100 text-red-800 px-2 py-1 rounded text-sm">+45%</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span>AI生成内容合规检测</span>
+                                <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-sm">88%渗透率</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span>垂直行业定制方案</span>
+                                <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm">65%占比</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span>实时优化系统响应</span>
+                                <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-sm">&lt;0.5秒</span>
+                            </div>
+                        </div>
+                        <div class="mt-6 bg-gray-50 p-4 rounded">
+                            <p class="text-sm text-gray-700"><strong>关键趋势：</strong>受《生成式人工智能服务管理暂行办法》影响，超过40%的服务商进行技术架构改造，合规成本成为新的竞争门槛。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI搜索市场份额 -->
+            <div class="bg-white rounded-lg p-8 card-shadow">
+                <h3 class="text-2xl font-bold mb-6 text-center">AI搜索引擎市场份额变化</h3>
+                <div class="chart-container">
+                    <canvas id="aiSearchShareChart"></canvas>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mt-6">
+                    <div class="text-center">
+                        <h4 class="font-bold text-blue-600">Google Search</h4>
+                        <p class="text-2xl font-bold">89.57%</p>
+                        <p class="text-sm text-gray-600">仍占主导地位</p>
+                    </div>
+                    <div class="text-center">
+                        <h4 class="font-bold text-green-600">ChatGPT Search</h4>
+                        <p class="text-2xl font-bold">+740%</p>
+                        <p class="text-sm text-gray-600">12个月增长率</p>
+                    </div>
+                    <div class="text-center">
+                        <h4 class="font-bold text-purple-600">Perplexity</h4>
+                        <p class="text-2xl font-bold">+524%</p>
+                        <p class="text-sm text-gray-600">2024年使用增长</p>
+                    </div>
+                    <div class="text-center">
+                        <h4 class="font-bold text-red-600">Bing</h4>
+                        <p class="text-2xl font-bold">3.98%</p>
+                        <p class="text-sm text-gray-600">市场份额稳定</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 细分赛道分析 -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-8">
+            <h2 class="text-4xl font-bold text-center mb-12 text-gradient">
+                <i class="fas fa-sitemap mr-3"></i>核心赛道深度剖析
+            </h2>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+                <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-8 card-shadow">
+                    <h3 class="text-2xl font-bold mb-4 text-blue-700">
+                        <i class="fas fa-building mr-2"></i>企业级GEO平台
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="bg-white p-4 rounded">
+                            <h4 class="font-bold mb-2">市场规模</h4>
+                            <p class="text-2xl font-bold text-blue-600">$300-400亿</p>
+                            <p class="text-sm text-gray-600">占GEO总市场的60-70%</p>
+                        </div>
+                        <div class="bg-white p-4 rounded">
+                            <h4 class="font-bold mb-2">典型客户</h4>
+                            <p class="text-sm">Fortune 500企业、科技独角兽、中大型B2B公司</p>
+                        </div>
+                        <div class="bg-white p-4 rounded">
+                            <h4 class="font-bold mb-2">关键痛点</h4>
+                            <ul class="text-sm space-y-1">
+                                <li>• AI搜索结果可见性低</li>
+                                <li>• 品牌声誉管理复杂</li>
+                                <li>• ROI难以量化</li>
+                            </ul>
+                        </div>
+                        <div class="bg-blue-500 text-white p-4 rounded">
+                            <p class="font-bold">投资逻辑：</p>
+                            <p class="text-sm">企业级客户付费能力强，客单价高，具备网络效应潜力</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg p-8 card-shadow">
+                    <h3 class="text-2xl font-bold mb-4 text-purple-700">
+                        <i class="fas fa-users mr-2"></i>UGC内容优化
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="bg-white p-4 rounded">
+                            <h4 class="font-bold mb-2">市场规模</h4>
+                            <p class="text-2xl font-bold text-purple-600">$80-120亿</p>
+                            <p class="text-sm text-gray-600">快速增长的垂直赛道</p>
+                        </div>
+                        <div class="bg-white p-4 rounded">
+                            <h4 class="font-bold mb-2">核心平台</h4>
+                            <p class="text-sm">Reddit、Stack Overflow、Quora、知乎、小红书</p>
+                        </div>
+                        <div class="bg-white p-4 rounded">
+                            <h4 class="font-bold mb-2">技术要求</h4>
+                            <ul class="text-sm space-y-1">
+                                <li>• 社区网络理解</li>
+                                <li>• 内容合规检测</li>
+                                <li>• 实时监控系统</li>
+                            </ul>
+                        </div>
+                        <div class="bg-purple-500 text-white p-4 rounded">
+                            <p class="font-bold">关键洞察：</p>
+                            <p class="text-sm">AI回答中60%链接来自UGC平台，Reddit推出AI Answers功能</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-8 card-shadow">
+                    <h3 class="text-2xl font-bold mb-4 text-green-700">
+                        <i class="fas fa-shopping-cart mr-2"></i>电商与产品GEO
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="bg-white p-4 rounded">
+                            <h4 class="font-bold mb-2">市场规模</h4>
+                            <p class="text-2xl font-bold text-green-600">$50-80亿</p>
+                            <p class="text-sm text-gray-600">电商AI搜索渗透加速</p>
+                        </div>
+                        <div class="bg-white p-4 rounded">
+                            <h4 class="font-bold mb-2">应用场景</h4>
+                            <p class="text-sm">产品推荐、价格比较、评论分析、购买决策</p>
+                        </div>
+                        <div class="bg-white p-4 rounded">
+                            <h4 class="font-bold mb-2">技术优势</h4>
+                            <ul class="text-sm space-y-1">
+                                <li>• 产品数据结构化</li>
+                                <li>• 评论情感分析</li>
+                                <li>• 购买意图识别</li>
+                            </ul>
+                        </div>
+                        <div class="bg-green-500 text-white p-4 rounded">
+                            <p class="font-bold">增长驱动：</p>
+                            <p class="text-sm">AI购物助手普及，消费者购买决策模式改变</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-gradient-to-br from-red-50 to-red-100 rounded-lg p-8 card-shadow">
+                    <h3 class="text-2xl font-bold mb-4 text-red-700">
+                        <i class="fas fa-shield-alt mr-2"></i>品牌声誉管理
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="bg-white p-4 rounded">
+                            <h4 class="font-bold mb-2">市场规模</h4>
+                            <p class="text-2xl font-bold text-red-600">$30-50亿</p>
+                            <p class="text-sm text-gray-600">危机管理需求旺盛</p>
+                        </div>
+                        <div class="bg-white p-4 rounded">
+                            <h4 class="font-bold mb-2">服务内容</h4>
+                            <p class="text-sm">负面信息监控、危机公关、品牌形象修复</p>
+                        </div>
+                        <div class="bg-white p-4 rounded">
+                            <h4 class="font-bold mb-2">客户类型</h4>
+                            <ul class="text-sm space-y-1">
+                                <li>• 上市公司</li>
+                                <li>• 知名品牌</li>
+                                <li>• 政府机构</li>
+                            </ul>
+                        </div>
+                        <div class="bg-red-500 text-white p-4 rounded">
+                            <p class="font-bold">市场特点：</p>
+                            <p class="text-sm">客单价高、续费率高、抗周期性强</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 赛道机会评估表 -->
+            <div class="bg-gray-50 rounded-lg p-8">
+                <h3 class="text-2xl font-bold mb-6 text-center">细分赛道投资机会评估</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full bg-white rounded-lg overflow-hidden card-shadow">
+                        <thead class="bg-gray-800 text-white">
+                            <tr>
+                                <th class="px-6 py-4 text-left">细分赛道</th>
+                                <th class="px-6 py-4 text-left">市场规模</th>
+                                <th class="px-6 py-4 text-left">增长率</th>
+                                <th class="px-6 py-4 text-left">竞争强度</th>
+                                <th class="px-6 py-4 text-left">进入壁垒</th>
+                                <th class="px-6 py-4 text-left">投资评级</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200">
+                            <tr>
+                                <td class="px-6 py-4 font-semibold">企业级GEO平台</td>
+                                <td class="px-6 py-4">$300-400亿</td>
+                                <td class="px-6 py-4 text-green-600">35%+</td>
+                                <td class="px-6 py-4 text-yellow-600">中等</td>
+                                <td class="px-6 py-4 text-red-600">高</td>
+                                <td class="px-6 py-4"><span class="bg-green-100 text-green-800 px-2 py-1 rounded text-sm font-bold">A+</span></td>
+                            </tr>
+                            <tr class="bg-gray-50">
+                                <td class="px-6 py-4 font-semibold">UGC内容优化</td>
+                                <td class="px-6 py-4">$80-120亿</td>
+                                <td class="px-6 py-4 text-green-600">40%+</td>
+                                <td class="px-6 py-4 text-green-600">低</td>
+                                <td class="px-6 py-4 text-yellow-600">中等</td>
+                                <td class="px-6 py-4"><span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm font-bold">A</span></td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 font-semibold">电商与产品GEO</td>
+                                <td class="px-6 py-4">$50-80亿</td>
+                                <td class="px-6 py-4 text-green-600">30%+</td>
+                                <td class="px-6 py-4 text-red-600">高</td>
+                                <td class="px-6 py-4 text-yellow-600">中等</td>
+                                <td class="px-6 py-4"><span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-sm font-bold">B+</span></td>
+                            </tr>
+                            <tr class="bg-gray-50">
+                                <td class="px-6 py-4 font-semibold">品牌声誉管理</td>
+                                <td class="px-6 py-4">$30-50亿</td>
+                                <td class="px-6 py-4 text-green-600">25%+</td>
+                                <td class="px-6 py-4 text-yellow-600">中等</td>
+                                <td class="px-6 py-4 text-red-600">高</td>
+                                <td class="px-6 py-4"><span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm font-bold">A-</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 技术趋势与创新 -->
+    <section class="py-16 bg-gray-100">
+        <div class="container mx-auto px-8">
+            <h2 class="text-4xl font-bold text-center mb-12 text-gradient">
+                <i class="fas fa-cogs mr-3"></i>技术变革与创新趋势
+            </h2>
+
+            <!-- 核心技术趋势 -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+                <div class="bg-white rounded-lg p-8 card-shadow">
+                    <div class="text-center mb-6">
+                        <i class="fas fa-brain text-4xl text-blue-500 mb-4"></i>
+                        <h3 class="text-xl font-bold">多模态AI优化</h3>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex justify-between">
+                            <span class="text-gray-700">视频搜索流量占比</span>
+                            <span class="font-bold text-blue-600">38%</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-700">图像识别准确率</span>
+                            <span class="font-bold text-blue-600">95%+</span>
+                        </div>
+                        <div class="bg-blue-50 p-4 rounded">
+                            <p class="text-sm text-gray-700">AI搜索引擎正从纯文本向多模态演进，视频、图像、音频内容的语义标签优化成为新战场。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg p-8 card-shadow">
+                    <div class="text-center mb-6">
+                        <i class="fas fa-clock text-4xl text-green-500 mb-4"></i>
+                        <h3 class="text-xl font-bold">实时优化系统</h3>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex justify-between">
+                            <span class="text-gray-700">系统响应时间</span>
+                            <span class="font-bold text-green-600">&lt;0.5秒</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-700">预测准确率</span>
+                            <span class="font-bold text-green-600">97.5%</span>
+                        </div>
+                        <div class="bg-green-50 p-4 rounded">
+                            <p class="text-sm text-gray-700">实时流量预测和动态策略调整能力成为竞争核心，支持分钟级别的优化策略迭代。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg p-8 card-shadow">
+                    <div class="text-center mb-6">
+                        <i class="fas fa-shield-alt text-4xl text-red-500 mb-4"></i>
+                        <h3 class="text-xl font-bold">合规与安全</h3>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex justify-between">
+                            <span class="text-gray-700">合规检测渗透率</span>
+                            <span class="font-bold text-red-600">88%</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-700">合规成本增长</span>
+                            <span class="font-bold text-red-600">+45%</span>
+                        </div>
+                        <div class="bg-red-50 p-4 rounded">
+                            <p class="text-sm text-gray-700">《生成式人工智能服务管理暂行办法》等监管政策推动技术架构改造，合规成为新门槛。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 算法演进时间线 -->
+            <div class="bg-white rounded-lg p-8 card-shadow mb-12">
+                <h3 class="text-2xl font-bold mb-8 text-center">GEO技术演进路线图</h3>
+                <div class="relative">
+                    <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-gray-300"></div>
+                    <div class="space-y-8">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold text-sm mr-6">1</div>
+                            <div>
+                                <h4 class="text-lg font-bold text-blue-600">2024年：基础设施建设期</h4>
+                                <p class="text-gray-700">关键词追踪、基础内容分析、简单答案优化</p>
+                                <div class="mt-2 flex flex-wrap gap-2">
+                                    <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">文本分析</span>
+                                    <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">基础追踪</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white font-bold text-sm mr-6">2</div>
+                            <div>
+                                <h4 class="text-lg font-bold text-green-600">2025年：智能化升级期</h4>
+                                <p class="text-gray-700">多模态内容理解、实时优化、个性化推荐</p>
+                                <div class="mt-2 flex flex-wrap gap-2">
+                                    <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">多模态AI</span>
+                                    <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">实时优化</span>
+                                    <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">个性化</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center text-white font-bold text-sm mr-6">3</div>
+                            <div>
+                                <h4 class="text-lg font-bold text-purple-600">2026-2027年：生态化整合期</h4>
+                                <p class="text-gray-700">跨平台数据融合、全域营销整合、预测性优化</p>
+                                <div class="mt-2 flex flex-wrap gap-2">
+                                    <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-xs">生态整合</span>
+                                    <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-xs">预测优化</span>
+                                    <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-xs">全域营销</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 w-8 h-8 bg-red-500 rounded-full flex items-center justify-center text-white font-bold text-sm mr-6">4</div>
+                            <div>
+                                <h4 class="text-lg font-bold text-red-600">2028+年：智能自主期</h4>
+                                <p class="text-gray-700">自主学习系统、AI代理优化、无人值守运营</p>
+                                <div class="mt-2 flex flex-wrap gap-2">
+                                    <span class="bg-red-100 text-red-800 px-2 py-1 rounded text-xs">自主学习</span>
+                                    <span class="bg-red-100 text-red-800 px-2 py-1 rounded text-xs">AI代理</span>
+                                    <span class="bg-red-100 text-red-800 px-2 py-1 rounded text-xs">无人运营</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 技术创新热点 -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="bg-white rounded-lg p-8 card-shadow">
+                    <h3 class="text-2xl font-bold mb-6 text-blue-600">
+                        <i class="fas fa-lightbulb mr-2"></i>突破性创新
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="border-l-4 border-blue-500 pl-4">
+                            <h4 class="font-bold">知识图谱+GEO融合</h4>
+                            <p class="text-sm text-gray-600">结合度将提升60%，实现语义级别的内容优化</p>
+                        </div>
+                        <div class="border-l-4 border-green-500 pl-4">
+                            <h4 class="font-bold">大模型驱动内容生成</h4>
+                            <p class="text-sm text-gray-600">智能撰稿工具普及率71%，合规率提升至89%</p>
+                        </div>
+                        <div class="border-l-4 border-purple-500 pl-4">
+                            <h4 class="font-bold">跨平台数据中台</h4>
+                            <p class="text-sm text-gray-600">区域化GEO中台需求增长，应对跨境数据限制</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg p-8 card-shadow">
+                    <h3 class="text-2xl font-bold mb-6 text-red-600">
+                        <i class="fas fa-exclamation-triangle mr-2"></i>技术挑战
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="border-l-4 border-red-500 pl-4">
+                            <h4 class="font-bold">算法可解释性</h4>
+                            <p class="text-sm text-gray-600">服务商年均投入超500万元进行算法改造</p>
+                        </div>
+                        <div class="border-l-4 border-yellow-500 pl-4">
+                            <h4 class="font-bold">版权确权问题</h4>
+                            <p class="text-sm text-gray-600">AI生成内容占比超65%后的法律争议亟待解决</p>
+                        </div>
+                        <div class="border-l-4 border-blue-500 pl-4">
+                            <h4 class="font-bold">人才短缺</h4>
+                            <p class="text-sm text-gray-600">内容风控工程师成本上涨45%，成人才争夺焦点</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 投资逻辑与策略 -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-8">
+            <h2 class="text-4xl font-bold text-center mb-12 text-gradient">
+                <i class="fas fa-chart-line mr-3"></i>投资逻辑与策略框架
+            </h2>
+
+            <!-- 核心投资逻辑 -->
+            <div class="mb-12">
+                <h3 class="text-3xl font-bold mb-8 text-center">核心投资逻辑</h3>
+                <div class="bg-gradient-to-br from-blue-50 to-purple-50 rounded-lg p-8 card-shadow">
+                    <div class="text-center mb-8">
+                        <h4 class="text-2xl font-bold text-blue-600 mb-4">"数据-模型-客户"增长飞轮</h4>
+                        <p class="text-gray-700 text-lg">GEO领域唯一可靠的护城河是构建自强化的增长飞轮</p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">1</div>
+                            <h5 class="text-xl font-bold mb-2">数据积累</h5>
+                            <p class="text-gray-600">多源数据采集、清洗、标注，建立行业领先的数据资产</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-purple-500 rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">2</div>
+                            <h5 class="text-xl font-bold mb-2">模型优化</h5>
+                            <p class="text-gray-600">基于数据训练专有模型，提升预测精度和优化效果</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">3</div>
+                            <h5 class="text-xl font-bold mb-2">客户成功</h5>
+                            <p class="text-gray-600">客户成功案例带来更多数据和客户，强化飞轮效应</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 投资框架 -->
+            <div class="mb-12">
+                <h3 class="text-3xl font-bold mb-8 text-center">投资评估框架</h3>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="bg-white rounded-lg p-8 card-shadow border-2 border-green-200">
+                        <h4 class="text-2xl font-bold mb-6 text-green-600">
+                            <i class="fas fa-check-circle mr-2"></i>优选投资标的特征
+                        </h4>
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <i class="fas fa-star text-yellow-500 mt-1 mr-3"></i>
+                                <div>
+                                    <h5 class="font-bold">已启动飞轮效应</h5>
+                                    <p class="text-sm text-gray-600">拥有标杆客户案例，数据积累达到临界规模</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-users text-blue-500 mt-1 mr-3"></i>
+                                <div>
+                                    <h5 class="font-bold">强大客户网络</h5>
+                                    <p class="text-sm text-gray-600">服务Fortune 500或独角兽企业，客户质量高</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-cogs text-purple-500 mt-1 mr-3"></i>
+                                <div>
+                                    <h5 class="font-bold">技术差异化</h5>
+                                    <p class="text-sm text-gray-600">拥有专有技术或独特数据源，非纯工具型</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-chart-line text-green-500 mt-1 mr-3"></i>
+                                <div>
+                                    <h5 class="font-bold">可量化ROI</h5>
+                                    <p class="text-sm text-gray-600">能为客户提供明确的投资回报率证明</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg p-8 card-shadow border-2 border-red-200">
+                        <h4 class="text-2xl font-bold mb-6 text-red-600">
+                            <i class="fas fa-exclamation-triangle mr-2"></i>风险警示信号
+                        </h4>
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <i class="fas fa-times-circle text-red-500 mt-1 mr-3"></i>
+                                <div>
+                                    <h5 class="font-bold">纯工具型产品</h5>
+                                    <p class="text-sm text-gray-600">缺乏数据积累和网络效应，易被替代</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-user-times text-orange-500 mt-1 mr-3"></i>
+                                <div>
+                                    <h5 class="font-bold">过度依赖人工</h5>
+                                    <p class="text-sm text-gray-600">服务交付主要依靠人力，难以规模化</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-ban text-purple-500 mt-1 mr-3"></i>
+                                <div>
+                                    <h5 class="font-bold">合规风险高</h5>
+                                    <p class="text-sm text-gray-600">技术架构不符合监管要求，面临合规成本</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-question-circle text-gray-500 mt-1 mr-3"></i>
+                                <div>
+                                    <h5 class="font-bold">商业模式不清</h5>
+                                    <p class="text-sm text-gray-600">缺乏清晰的盈利路径和客户获取策略</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 投资时机与策略 -->
+            <div class="bg-gray-50 rounded-lg p-8 card-shadow">
+                <h3 class="text-2xl font-bold mb-8 text-center">投资时机与策略建议</h3>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div class="bg-white rounded-lg p-6">
+                        <h4 class="text-xl font-bold mb-4 text-blue-600">
+                            <i class="fas fa-clock mr-2"></i>当前阶段 (2024-2025)
+                        </h4>
+                        <div class="space-y-3">
+                            <div class="bg-blue-50 p-3 rounded">
+                                <p class="font-semibold text-blue-800">聚焦头部平台</p>
+                                <p class="text-sm text-blue-600">投资已获得A轮以上融资的头部企业级平台</p>
+                            </div>
+                            <div class="bg-green-50 p-3 rounded">
+                                <p class="font-semibold text-green-800">关注标杆案例</p>
+                                <p class="text-sm text-green-600">重点关注有Fortune 500客户成功案例的公司</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg p-6">
+                        <h4 class="text-xl font-bold mb-4 text-purple-600">
+                            <i class="fas fa-seedling mr-2"></i>成长阶段 (2025-2027)
+                        </h4>
+                        <div class="space-y-3">
+                            <div class="bg-purple-50 p-3 rounded">
+                                <p class="font-semibold text-purple-800">垂直赛道机会</p>
+                                <p class="text-sm text-purple-600">挖掘UGC优化、电商GEO等垂直领域创新者</p>
+                            </div>
+                            <div class="bg-yellow-50 p-3 rounded">
+                                <p class="font-semibold text-yellow-800">技术创新驱动</p>
+                                <p class="text-sm text-yellow-600">关注多模态、实时优化等技术突破</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg p-6">
+                        <h4 class="text-xl font-bold mb-4 text-red-600">
+                            <i class="fas fa-rocket mr-2"></i>成熟阶段 (2027+)
+                        </h4>
+                        <div class="space-y-3">
+                            <div class="bg-red-50 p-3 rounded">
+                                <p class="font-semibold text-red-800">并购整合</p>
+                                <p class="text-sm text-red-600">头部玩家通过并购完善生态布局</p>
+                            </div>
+                            <div class="bg-gray-50 p-3 rounded">
+                                <p class="font-semibold text-gray-800">IPO退出</p>
+                                <p class="text-sm text-gray-600">领先企业具备上市条件，投资退出时机</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 风险评估 -->
+    <section class="py-16 bg-red-50">
+        <div class="container mx-auto px-8">
+            <h2 class="text-4xl font-bold text-center mb-12 text-red-600">
+                <i class="fas fa-exclamation-triangle mr-3"></i>风险评估与缓解策略
+            </h2>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="bg-white rounded-lg p-8 card-shadow">
+                    <h3 class="text-2xl font-bold mb-6 text-red-600">
+                        <i class="fas fa-shield-alt mr-2"></i>主要风险因素
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="border-l-4 border-red-500 pl-4">
+                            <h4 class="font-bold text-red-700">技术风险</h4>
+                            <p class="text-sm text-gray-600">算法变更、平台政策调整可能影响优化效果</p>
+                            <div class="mt-2">
+                                <span class="bg-red-100 text-red-800 px-2 py-1 rounded text-xs">高影响</span>
+                                <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs">中概率</span>
+                            </div>
+                        </div>
+                        <div class="border-l-4 border-orange-500 pl-4">
+                            <h4 class="font-bold text-orange-700">监管风险</h4>
+                            <p class="text-sm text-gray-600">AI内容监管政策趋严，合规成本持续上升</p>
+                            <div class="mt-2">
+                                <span class="bg-orange-100 text-orange-800 px-2 py-1 rounded text-xs">中影响</span>
+                                <span class="bg-red-100 text-red-800 px-2 py-1 rounded text-xs">高概率</span>
+                            </div>
+                        </div>
+                        <div class="border-l-4 border-yellow-500 pl-4">
+                            <h4 class="font-bold text-yellow-700">竞争风险</h4>
+                            <p class="text-sm text-gray-600">大厂入局、技术同质化导致价格战</p>
+                            <div class="mt-2">
+                                <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs">中影响</span>
+                                <span class="bg-orange-100 text-orange-800 px-2 py-1 rounded text-xs">中概率</span>
+                            </div>
+                        </div>
+                        <div class="border-l-4 border-blue-500 pl-4">
+                            <h4 class="font-bold text-blue-700">客户风险</h4>
+                            <p class="text-sm text-gray-600">客户预算削减、ROI期望过高</p>
+                            <div class="mt-2">
+                                <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">中影响</span>
+                                <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs">低概率</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg p-8 card-shadow">
+                    <h3 class="text-2xl font-bold mb-6 text-green-600">
+                        <i class="fas fa-lightbulb mr-2"></i>缓解策略
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="border-l-4 border-green-500 pl-4">
+                            <h4 class="font-bold text-green-700">技术多元化</h4>
+                            <p class="text-sm text-gray-600">投资组合覆盖多种技术路线，降低单点风险</p>
+                        </div>
+                        <div class="border-l-4 border-blue-500 pl-4">
+                            <h4 class="font-bold text-blue-700">合规前置</h4>
+                            <p class="text-sm text-gray-600">优选已建立完善合规体系的公司</p>
+                        </div>
+                        <div class="border-l-4 border-purple-500 pl-4">
+                            <h4 class="font-bold text-purple-700">差异化定位</h4>
+                            <p class="text-sm text-gray-600">关注有独特价值主张的垂直化解决方案</p>
+                        </div>
+                        <div class="border-l-4 border-indigo-500 pl-4">
+                            <h4 class="font-bold text-indigo-700">客户粘性</h4>
+                            <p class="text-sm text-gray-600">投资能构建强客户粘性的平台型公司</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 风险矩阵 -->
+            <div class="mt-12 bg-white rounded-lg p-8 card-shadow">
+                <h3 class="text-2xl font-bold mb-6 text-center">风险影响矩阵</h3>
+                <div class="chart-container">
+                    <canvas id="riskMatrixChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 结论与建议 -->
+    <section class="py-16 bg-gray-800 text-white">
+        <div class="container mx-auto px-8">
+            <h2 class="text-4xl font-bold text-center mb-12">
+                <i class="fas fa-flag-checkered mr-3"></i>结论与投资建议
+            </h2>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-12">
+                <div>
+                    <h3 class="text-2xl font-bold mb-6 text-blue-400">
+                        <i class="fas fa-bullseye mr-2"></i>核心结论
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="bg-gray-700 p-4 rounded-lg">
+                            <h4 class="font-bold text-yellow-400 mb-2">万亿级市场机遇</h4>
+                            <p class="text-gray-300">GEO正在重塑全球数字营销格局，从8.86亿美元增长至73.18亿美元的爆发式增长仅是开始。</p>
+                        </div>
+                        <div class="bg-gray-700 p-4 rounded-lg">
+                            <h4 class="font-bold text-green-400 mb-2">飞轮效应为王</h4>
+                            <p class="text-gray-300">"数据-模型-客户"飞轮是唯一可靠护城河，能够启动并维持飞轮的公司将获得终局优势。</p>
+                        </div>
+                        <div class="bg-gray-700 p-4 rounded-lg">
+                            <h4 class="font-bold text-purple-400 mb-2">时机窗口有限</h4>
+                            <p class="text-gray-300">当前是投资GEO赛道的黄金时期，头部玩家格局尚未完全固化，存在巨大投资机会。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-2xl font-bold mb-6 text-green-400">
+                        <i class="fas fa-rocket mr-2"></i>投资建议
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="bg-gray-700 p-4 rounded-lg border-l-4 border-green-400">
+                            <h4 class="font-bold text-green-400 mb-2">立即行动</h4>
+                            <p class="text-gray-300">重点关注Profound等已获顶级VC投资的头部平台，把握A轮后续轮次机会。</p>
+                        </div>
+                        <div class="bg-gray-700 p-4 rounded-lg border-l-4 border-blue-400">
+                            <h4 class="font-bold text-blue-400 mb-2">垂直挖掘</h4>
+                            <p class="text-gray-300">深度研究UGC优化、电商GEO等细分赛道，寻找有独特壁垒的创新公司。</p>
+                        </div>
+                        <div class="bg-gray-700 p-4 rounded-lg border-l-4 border-yellow-400">
+                            <h4 class="font-bold text-yellow-400 mb-2">长期布局</h4>
+                            <p class="text-gray-300">构建GEO投资组合，平衡风险与收益，准备3-5年投资周期。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 行动清单 -->
+            <div class="bg-gray-700 rounded-lg p-8">
+                <h3 class="text-2xl font-bold mb-6 text-center text-white">
+                    <i class="fas fa-tasks mr-2"></i>投资行动清单
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="text-center">
+                        <div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-white text-xl font-bold mx-auto mb-3">1</div>
+                        <h4 class="font-bold mb-2">Due Diligence</h4>
+                        <p class="text-sm text-gray-300">深度调研头部GEO平台的技术能力和客户质量</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center text-white text-xl font-bold mx-auto mb-3">2</div>
+                        <h4 class="font-bold mb-2">团队接触</h4>
+                        <p class="text-sm text-gray-300">建立与Profound、BrightEdge等头部企业的直接联系</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center text-white text-xl font-bold mx-auto mb-3">3</div>
+                        <h4 class="font-bold mb-2">市场跟踪</h4>
+                        <p class="text-sm text-gray-300">持续监控AI搜索市场变化和新兴玩家动态</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center text-white text-xl font-bold mx-auto mb-3">4</div>
+                        <h4 class="font-bold mb-2">投资决策</h4>
+                        <p class="text-sm text-gray-300">基于飞轮效应评估框架做出投资决策</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-8 text-center">
+            <div class="mb-8">
+                <h3 class="text-2xl font-bold mb-4">LaunchX投研团队</h3>
+                <p class="text-gray-400 max-w-2xl mx-auto">专注于前沿科技投资研究，为投资者提供深度的行业洞察和投资策略建议。我们致力于发现和分析具有颠覆性潜力的技术趋势和商业机会。</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                <div>
+                    <h4 class="text-lg font-semibold mb-3">联系信息</h4>
+                    <p class="text-gray-400 text-sm">research@launchx.vc</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-3">研究领域</h4>
+                    <p class="text-gray-400 text-sm">AI、企业服务、数字营销</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-3">免责声明</h4>
+                    <p class="text-gray-400 text-sm">本报告仅供参考，不构成投资建议</p>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 pt-8">
+                <p class="text-gray-500 text-sm">© 2025 LaunchX投研团队. 版权所有. | GEO生成式引擎优化深度研究报告 v4.0</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 市场增长趋势图表
+        const ctx1 = document.getElementById('marketGrowthChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['2024', '2025', '2026', '2027', '2028', '2029', '2030', '2031'],
+                datasets: [
+                    {
+                        label: 'GEO市场规模 (亿美元)',
+                        data: [8.86, 12.1, 16.5, 22.5, 30.7, 41.9, 57.1, 73.18],
+                        borderColor: '#667eea',
+                        backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                        fill: true,
+                        tension: 0.4,
+                        pointBackgroundColor: '#667eea',
+                        pointBorderColor: '#667eea',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: '#667eea'
+                    },
+                    {
+                        label: '传统SEO市场规模 (百亿美元)',
+                        data: [8.9, 9.8, 10.8, 11.9, 13.1, 13.7, 14.4, 15.2],
+                        borderColor: '#f093fb',
+                        backgroundColor: 'rgba(240, 147, 251, 0.1)',
+                        fill: true,
+                        tension: 0.4,
+                        pointBackgroundColor: '#f093fb',
+                        pointBorderColor: '#f093fb',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: '#f093fb'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'GEO vs 传统SEO市场规模对比 (2024-2031)',
+                        font: { size: 16, weight: 'bold' }
+                    },
+                    legend: {
+                        position: 'top'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: '市场规模'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: '年份'
+                        }
+                    }
+                }
+            }
+        });
+
+        // AI搜索市场份额图表
+        const ctx2 = document.getElementById('aiSearchShareChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'doughnut',
+            data: {
+                labels: ['Google Search', 'Bing', 'ChatGPT Search', 'Perplexity', '其他'],
+                datasets: [{
+                    data: [89.57, 3.98, 2.1, 1.5, 2.85],
+                    backgroundColor: [
+                        '#4285f4',
+                        '#00a1f1',
+                        '#10a37f',
+                        '#7c3aed',
+                        '#9ca3af'
+                    ],
+                    borderWidth: 2,
+                    borderColor: '#fff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '2024年AI搜索引擎市场份额分布',
+                        font: { size: 16, weight: 'bold' }
+                    },
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+
+        // 风险矩阵图表
+        const ctx3 = document.getElementById('riskMatrixChart').getContext('2d');
+        new Chart(ctx3, {
+            type: 'scatter',
+            data: {
+                datasets: [{
+                    label: '技术风险',
+                    data: [{x: 6, y: 8}],
+                    backgroundColor: '#ef4444',
+                    borderColor: '#ef4444',
+                    pointRadius: 10
+                }, {
+                    label: '监管风险',
+                    data: [{x: 8, y: 6}],
+                    backgroundColor: '#f97316',
+                    borderColor: '#f97316',
+                    pointRadius: 10
+                }, {
+                    label: '竞争风险',
+                    data: [{x: 5, y: 5}],
+                    backgroundColor: '#f59e0b',
+                    borderColor: '#f59e0b',
+                    pointRadius: 10
+                }, {
+                    label: '客户风险',
+                    data: [{x: 3, y: 5}],
+                    backgroundColor: '#3b82f6',
+                    borderColor: '#3b82f6',
+                    pointRadius: 10
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '风险影响 vs 发生概率矩阵',
+                        font: { size: 16, weight: 'bold' }
+                    }
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: '发生概率 (1-10)'
+                        },
+                        min: 0,
+                        max: 10
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: '影响程度 (1-10)'
+                        },
+                        min: 0,
+                        max: 10
+                    }
+                }
+            }
+        });
+
+        // 平滑滚动效果
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // 卡片悬停效果
+        document.querySelectorAll('.metric-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px)';
+            });
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
+</body>
+</html>
