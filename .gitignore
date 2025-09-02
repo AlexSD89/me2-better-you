@@ -130,3 +130,43 @@ mcp_config_standardized.json
 **/node_modules/**
 **/__pycache__/**
 **/.venv/**
+
+# Security hardening
+# Secrets and sensitive artifacts
+secrets/**
+**/secrets/**
+**/.secrets/**
+**/.tokens/**
+**/*.token
+**/*.secret
+**/*.secrets.json
+**/*credentials*.json
+**/*oauth*
+**/*.p12
+**/*.jks
+**/*.keystore
+**/*.pfx
+**/*.pem
+**/*.key
+**/*.crt
+**/*.cer
+**/*.der
+**/*.csr
+
+# Build caches and heavy outputs
+**/.cache/**
+**/.next/**
+**/dist/**
+**/build/**
+**/coverage/**
+
+# Env and IDE
+**/.env
+**/.env.*
+**/.vscode/**
+**/.idea/**
+
+# Explicit sensitive paths
+I.💻 技术开发/02_开发工具 🛠️/mcp-servers/git-mcp/**
+💻 技术开发/02_开发工具 🛠️/mcp-servers/git-mcp/**
+📱 平台配置 IDE/.obsidian/plugins/remotely-save/**
